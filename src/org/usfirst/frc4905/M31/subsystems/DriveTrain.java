@@ -11,15 +11,11 @@
 
 package org.usfirst.frc4905.M31.subsystems;
 
-import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
-import org.usfirst.frc4905.M31.OI;
-
 import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -55,32 +51,5 @@ public class DriveTrain extends Subsystem {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
-    
-   public void teleopDrive(Joystick driveGamepad){
-	   
-	   
-	   robotDrive.mecanumDrive_Cartesian(-OI.getLeftStickVertical(driveGamepad), 
-			   -OI.getLeftStickHorizontal(driveGamepad), 0, 0);//that last 0 is a placeholder for a gyro reading
-	   double rightHoriz = OI.getRightStickHorizontal(driveGamepad);
-	   if(rightHoriz <-0.1 || rightHoriz > 0.1){
-		   frontRight.set(rightHoriz);
-		   frontLeft.set(rightHoriz);
-		   backRight.set(-rightHoriz);
-		   backLeft.set(-rightHoriz);
-	   }
-	   
-	   //backLeft.changeControlMode(TalonControlMode.Position);
-   }
-   public void stop(){
-	   frontLeft.set(0);
-	   frontRight.set(0);
-	   backLeft.set(0);
-	   backRight.set(0);
-   }
-   
-   public void getEncPos(){
-	   
-	   System.out.println(backLeft.getPosition());
-   }
 }
 

@@ -1,0 +1,20 @@
+Axes:
+
+0 - Left Stick X (Horizontal) Axis
+1 - Left Stick Y (Vertical) Axis
+2 - Left Trigger (T/F)
+3 - Right Trigger (T/F)
+4 - Right Stick X (Horizontal) Axis
+5 - Right Stick Y (Vertical) Axis
+
+Buttons:
+
+1 - A Button
+2 - B Button
+3 - X Button
+4 - Y Button
+5 - Left Button
+6 - Right Button
+7 - Back Button
+8 - Start Button
+9-10 - Joystick Button
