@@ -1,0 +1,43 @@
+package NavXGyro;
+
+import com.kauailabs.navx.frc.*;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+public class NavxGyro {
+	
+	// gyroEncoder PID controller
+	private PIDController m_gyroEncoderPID;
+	// gyroEncoder PID controller variables
+	private static final double gyroEncoderKp = 0.017;
+	private static final double gyroEncoderKi = 0.000;
+	private static final double gyroEncoderKd = 0.000;
+	private static final double gyroEncoderKf = 0.000;
+	private static final double gyroEncoderTolerance = 2.0;
+	private static final double gyroEncoderOutputMax = 0.5;
+	private double m_initialAngleReading = 0;
+	
+	private static AHRS m_navX;
+	public NavxGyro() {
+		try {
+			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
+			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+			m_navX = new AHRS(SPI.Port.kMXP);
+			System.out.println("Created NavX instance");
+			SmartDashboard.putBoolean("NavXgyro Connected", m_navX.isConnected());
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
+					true);
+		}
+	}
+	public static AHRS getAHRS() {
+		return m_navX;
+	}
+	public void setInitialAngleReading() {
+		m_initialAngleReading = m_navX.getAngle();
+	}
+}

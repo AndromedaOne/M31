@@ -20,6 +20,7 @@ import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -100,7 +101,7 @@ public class DriveTrain extends Subsystem {
    }
    
    public void getEncPos(){
-	   
+
 	   System.out.println("Back Left Pos:" +backLeft.getPosition());
 	   System.out.println("Back Right Pos:" + backRight.getPosition());
 	   System.out.println("Front Right Pos:" + frontRight.getPosition());
@@ -123,6 +124,30 @@ public class DriveTrain extends Subsystem {
 	   sum += Math.abs(frontRight.getPosition());
 	   return sum;
    }
+
+   // Gyro PID code 
+   private class GyroPIDoutput implements PIDOutput {
+
+	   @Override
+	   public void pidWrite(double output) {
+
+	   }
+
+   }
+
+   public void initializeGyroPID() {
+
+
+   }
+
+   public boolean doneTurningWithGyro() {
+	   // TODO Auto-generated method stub
+	   return false;
+   }
+
+   public void stopGyroPID() {
+	   // TODO Auto-generated method stub
+
    
    public void moveInAuto(double sideways, double forward){
 	   
