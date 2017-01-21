@@ -19,6 +19,7 @@ import org.usfirst.frc4905.M31.OI;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -79,8 +80,33 @@ public class DriveTrain extends Subsystem {
    }
    
    public void getEncPos(){
-	   
+
 	   System.out.println(backLeft.getPosition());
+   }
+
+   // Gyro PID code 
+   private class GyroPIDoutput implements PIDOutput {
+
+	   @Override
+	   public void pidWrite(double output) {
+
+	   }
+
+   }
+
+   public void initializeGyroPID() {
+
+
+   }
+
+   public boolean doneTurningWithGyro() {
+	   // TODO Auto-generated method stub
+	   return false;
+   }
+
+   public void stopGyroPID() {
+	   // TODO Auto-generated method stub
+
    }
 }
 
