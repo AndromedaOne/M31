@@ -20,7 +20,7 @@ public class TurnToAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeGyroPID();
+    	Robot.driveTrain.initializeGyroPID(m_angleToTurnTo);
     }
 
     // Called repeatedly when this Command is scheduled to run
