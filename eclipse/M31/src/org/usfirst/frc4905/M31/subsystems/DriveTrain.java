@@ -130,23 +130,25 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-
+			robotDrive.mecanumDrive_Cartesian(0, 0, output/2, 0);
 		}
 
 	}
 
-	public void initializeGyroPID() {
-
+	public void initializeGyroPID(double angleToTurnTo) {
+		GyroPIDoutput gyroPIDout = new GyroPIDoutput();
+		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDout);
+		RobotMap.getNavxGyro().turnWithGyroPID(angleToTurnTo);
 
 	}
 
 	public boolean doneTurningWithGyro() {
 		// TODO Auto-generated method stub
-		return false;
+		return RobotMap.getNavxGyro().isDoneGyroPID();
 	}
 
 	public void stopGyroPID() {
-		// TODO Auto-generated method stub
+		RobotMap.getNavxGyro().stopGyroPID();
 	}   
 
 	// End of Gyro PID Code
