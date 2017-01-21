@@ -89,6 +89,23 @@ Children:
           value: DriveTrain FrontLeft
       Base: Robot Drive 4
       Name: RobotDrive
+    - Children: []
+      Properties:
+        Type: !!robotbuilder.data.properties.ChoicesProperty
+          choices: [Victor, Jaguar, Talon, VictorSP, TalonSRX, Spark, SD540]
+          default: Talon
+          name: Type
+          validators: null
+          value: VictorSP
+        Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14', '15', '16', '17', '18', '19']
+          default: '0'
+          name: Output Channel (PWM)
+          validators: [PWMOutput]
+          value: '4'
+      Base: Speed Controller
+      Name: Climber
     Properties:
       Default command parameters: !!robotbuilder.data.properties.ParametersProperty
         default: []
