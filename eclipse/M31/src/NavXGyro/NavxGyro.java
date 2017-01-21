@@ -83,6 +83,7 @@ public class NavxGyro {
 	}
 	
 	public boolean isDoneGyroPID() {
+		System.out.println("angle = " + getRobotAngle());
 		return m_gyroEncoderPID.onTarget();
 	}
 	public void stopGyroPID() {
