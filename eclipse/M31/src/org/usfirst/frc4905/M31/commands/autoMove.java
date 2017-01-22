@@ -10,7 +10,9 @@
 
 
 package org.usfirst.frc4905.M31.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.usfirst.frc4905.M31.Robot;
 
 /**
@@ -63,7 +65,8 @@ public class autoMove extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("Ending: " + Robot.driveTrain.getDistance());
-    	
+    	Robot.driveTrain.resetEncPos();
+    	Timer.delay(0.1);
     }
 
     // Called when another command which requires one or more of the same

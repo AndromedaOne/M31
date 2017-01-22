@@ -122,6 +122,7 @@ public class DriveTrain extends Subsystem {
 	   sum += Math.abs(frontLeft.getPosition());
 	   sum += Math.abs(frontRight.getPosition());
 	   return sum;
+	   
    }
    
    public void moveInAuto(double sideways, double forward){
