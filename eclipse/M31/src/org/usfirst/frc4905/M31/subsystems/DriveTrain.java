@@ -134,9 +134,19 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
+			if((Math.abs(output) < 0.08) && (output != 0)) {
+				double minVal = 0.1; 
+				if(output < 0) {
+					output = -minVal;
+				} else {
+					output = minVal;				
+				}
+			}
 			System.out.println("Output = " + output + " Angle = " +
-					RobotMap.getNavxGyro().getRobotAngle());
-			robotDrive.mecanumDrive_Cartesian(0, 0, -output/2, 0);
+					RobotMap.getNavxGyro().getRobotAngle() + " AvgErr " +
+					RobotMap.getNavxGyro().getPIDcontroller().getAvgError() + 
+					" IsDone " + RobotMap.getNavxGyro().getPIDcontroller().onTarget());
+			robotDrive.mecanumDrive_Cartesian(0, 0, output, 0);
 		}
 
 	}

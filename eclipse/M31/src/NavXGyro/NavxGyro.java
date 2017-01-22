@@ -16,12 +16,12 @@ public class NavxGyro {
 	// gyroEncoder PID controller
 	private PIDController m_gyroEncoderPID;
 	// gyroEncoder PID controller variables
-	private static final double gyroEncoderKp = 0.017;
+	private static final double gyroEncoderKp = 0.012;
 	private static final double gyroEncoderKi = 0.000;
 	private static final double gyroEncoderKd = 0.000;
 	private static final double gyroEncoderKf = 0.000;
-	private static final double gyroEncoderTolerance = 2.0;
-	private static final double gyroEncoderOutputMax = 0.5;
+	private static final double gyroEncoderTolerance = 1.0;
+	private static final double gyroEncoderOutputMax = 1.0; 
 	private double m_initialAngleReading = 0;
 	
 	private static AHRS m_navX;
@@ -43,6 +43,10 @@ public class NavxGyro {
 	}
 	public void setInitialAngleReading() {
 		m_initialAngleReading = m_navX.getAngle();
+	}
+	
+	public PIDController getPIDcontroller() {
+		return m_gyroEncoderPID; 
 	}
 	
 	public double getRobotAngle() {
@@ -72,7 +76,7 @@ public class NavxGyro {
 		GyroPIDin gyroPIDin = new GyroPIDin();
 		m_gyroEncoderPID = new PIDController(gyroEncoderKp, gyroEncoderKi, 
 				gyroEncoderKd, gyroEncoderKf, gyroPIDin, gyroPIDout);
-		m_gyroEncoderPID.setOutputRange(gyroEncoderOutputMax, gyroEncoderOutputMax);
+		m_gyroEncoderPID.setOutputRange(-gyroEncoderOutputMax, gyroEncoderOutputMax);
 		m_gyroEncoderPID.setAbsoluteTolerance(gyroEncoderTolerance);
 		LiveWindow.addActuator("DriveTrain", "GyroPID", m_gyroEncoderPID);
 	}
