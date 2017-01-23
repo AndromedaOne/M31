@@ -37,12 +37,12 @@ public class Shoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ballShooter.initMaintainSpeed();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ballShooter.maintainSpeed(Robot.oi.getDriveController());
+    	//Robot.ballShooter.testShoot(Robot.oi.getDriveController());
     }
 
     // Make this return true when this Command no longer needs to run execute()

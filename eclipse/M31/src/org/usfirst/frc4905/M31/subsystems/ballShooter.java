@@ -16,6 +16,7 @@ import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -53,25 +54,29 @@ public class ballShooter extends Subsystem {
     
     
     
-    public void initMaintainSpeed(){
-    	//shooterMotor.changeControlMode(TalonControlMode.Speed);
-    	shooterMotor.setProfile(0);
-    	shooterMotor.setP(0);
-    	shooterMotor.setI(0);
-    	shooterMotor.setD(0);
-    	shooterMotor.setF(0);
-    }
-    
-    public void maintainSpeed(Joystick driveGamepad){
-    	
-    	double input = OI.getLeftStickVertical(driveGamepad);
-    	
-    	shooterMotor.set(input);
-    	
-    	System.out.print("Input: " + input);
-    	System.out.println("Speed: " + shooterMotor.getSpeed());
-    	
-    	
-    }
+   public void setSpeed(){
+	   shooterMotor.reverseSensor(true);
+	   shooterMotor.changeControlMode(TalonControlMode.Speed);;
+	   shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+	   shooterMotor.configEncoderCodesPerRev(48);
+	   shooterMotor.setP(01);
+	   shooterMotor.set(40);
+	   
+   }
+   
+   public void debug(){
+	   System.out.println(shooterMotor.getSpeed());
+   }
+   
+   public void amAtSpeed(){
+	   
+   }
+   
+   public void testShoot(Joystick driveGamepad){
+	   double speed = OI.getLeftStickVertical(driveGamepad);
+	   shooterMotor.set(speed);
+   }
+   
+   
 }
 
