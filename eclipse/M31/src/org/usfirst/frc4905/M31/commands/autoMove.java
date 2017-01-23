@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc4905.M31.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc4905.M31.Robot;
 
@@ -52,17 +53,20 @@ public class autoMove extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.driveTrain.moveInAuto(m_xSpeed, -m_ySpeed);
+    	System.out.println(Robot.driveTrain.getDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return Robot.driveTrain.isDoneAuto(m_distance, Robot.driveTrain.getDistance());
-    	
+        
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("Ending: " + Robot.driveTrain.getDistance());
+    	Robot.driveTrain.resetEncPos();
+    	Timer.delay(0.1);
     	
     }
 

@@ -17,8 +17,6 @@ import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.OI;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -136,5 +134,9 @@ public class DriveTrain extends Subsystem {
 		   return true;
 	   }
    }
+   public void autoRotate(double speed) {
+	 robotDrive.mecanumDrive_Cartesian(0, 0, speed, 0);  
+   }
+
 }
 
