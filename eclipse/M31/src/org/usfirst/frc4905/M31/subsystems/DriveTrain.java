@@ -20,11 +20,15 @@ import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 
 /**
@@ -50,7 +54,7 @@ public class DriveTrain extends Subsystem {
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 	}
- 	
+
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -127,7 +131,79 @@ public class DriveTrain extends Subsystem {
 		sum += Math.abs(frontLeft.getPosition());
 		sum += Math.abs(frontRight.getPosition());
 		return sum;
-	   
+
+	}
+
+	// Encoder PID code
+
+	// Encoder PID controller
+	private PIDController m_encoderPID;
+	// Encoder PID controller variables
+	private static final double encoderKp = 0.012;
+	private static final double encoderKi = 0.000;
+	private static final double encoderKd = 0.000;
+	private static final double encoderKf = 0.000;
+	private static final double encoderTolerance = 1.0;
+	private static final double encoderOutputMax = 0.5;
+
+	public PIDController getPIDcontroller() {
+		return m_encoderPID;
+	}
+
+	private class EncoderPIDin implements PIDSource {
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+
+
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			return PIDSourceType.kDisplacement;
+		}
+
+		@Override
+		public double pidGet() {
+			return frontLeft.getPosition();
+		}
+
+	}
+
+	private class EncoderPIDout implements PIDOutput {
+
+		@Override
+		public void pidWrite(double output) {
+			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
+
+		}
+
+	}
+
+
+	public void initializeEncoderPID(double distanceToMove) {
+		EncoderPIDin encoderPIDin = new EncoderPIDin();
+		EncoderPIDout encoderPIDout = new EncoderPIDout();
+		m_encoderPID = new PIDController(encoderKp, encoderKi, 
+				encoderKd, encoderKf, encoderPIDin, encoderPIDout);
+		m_encoderPID.setOutputRange(-encoderOutputMax, encoderOutputMax);
+		m_encoderPID.setAbsoluteTolerance(encoderTolerance);
+		LiveWindow.addActuator("DriveTrain", "EncoderPID", m_encoderPID);
+	}
+
+	public void moveWithEncoderPID(double DistanceToMove) {
+		m_encoderPID.setSetpoint(DistanceToMove);
+		m_encoderPID.enable();
+	}
+
+	public boolean isDoneEncoderPID() {
+		System.out.println("encoder distance = " + frontLeft.getPosition());
+		return m_encoderPID.onTarget();
+	}
+
+	public void stopEncoderPID() {
+		m_encoderPID.disable();
+
 	}
 
 	// Gyro PID code 
@@ -169,7 +245,7 @@ public class DriveTrain extends Subsystem {
 	}   
 
 	// End of Gyro PID Code
-	
+
 	public void moveInAuto(double sideways, double forward){
 
 		robotDrive.mecanumDrive_Cartesian(sideways, forward, 0, 0);
@@ -182,5 +258,6 @@ public class DriveTrain extends Subsystem {
 			return true;
 		}
 	}
+
 }
 
