@@ -11,6 +11,8 @@
 
 package org.usfirst.frc4905.M31.subsystems;
 
+import java.awt.Robot;
+
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
@@ -21,6 +23,8 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.hal.HAL;
+import edu.wpi.first.wpilibj.hal.HALUtil;
 
 
 /**
@@ -50,9 +54,10 @@ public class ballShooter extends Subsystem {
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
+        
     }
     
-    
+    double targetSpeed = 0; 
     
    public void setSpeed(){
 	   shooterMotor.reverseSensor(true);
@@ -77,6 +82,34 @@ public class ballShooter extends Subsystem {
 	   shooterMotor.set(speed);
    }
    
-   
+   public CANTalon getShooterMotor(){
+	   return shooterMotor;
+   }
+   public void shootWithPID(Joystick driveGamepad){
+	   double leftYStick = OI.getLeftStickVertical(driveGamepad);
+	   
+       if(OI.getAButton(driveGamepad)){
+       	
+       	shooterMotor.changeControlMode(TalonControlMode.Speed);
+       	shooterMotor.set(targetSpeed);
+       	
+       	System.out.print("Error: " + shooterMotor.getClosedLoopError() 
+       	+ " ttrg: " + targetSpeed + 
+       	" Time: " + HALUtil.getFPGATime());;
+       } else {
+       		if(leftYStick > 0.1){
+       			targetSpeed++;
+       		}else if(leftYStick < -0.1){
+       			targetSpeed--;
+       		}
+    	   System.out.println("Target Speed: " + targetSpeed);
+    	  
+       	  
+       	 shooterMotor.changeControlMode(TalonControlMode.PercentVbus);
+       	shooterMotor.set(0);//this is here to stop it when A button is not pressed. if we want it to go, use leftYStick*1020 as param
+    	   
+       }
+       System.out.println(" Talonspd:" + shooterMotor.getSpeed());
+   }
 }
 
