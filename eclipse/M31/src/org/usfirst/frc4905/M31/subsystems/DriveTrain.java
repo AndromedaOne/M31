@@ -53,6 +53,7 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
+		initializeEncoderPID(500);
 	}
 
 	// Put methods for controlling this subsystem
@@ -165,6 +166,7 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public double pidGet() {
+			System.out.println("Encoder Position = " + frontLeft.getPosition());
 			return frontLeft.getPosition();
 		}
 
@@ -174,7 +176,7 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
+			robotDrive.mecanumDrive_Cartesian(0, -output, 0, 0);
 
 		}
 
