@@ -2,40 +2,46 @@ package org.usfirst.frc4905.M31.commands;
 
 import org.usfirst.frc4905.M31.Robot;
 
+import NavXGyro.NavxGyro;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveToEncoderDistance extends Command {
+public class TurnToCompassHeading extends Command {
 	
-	private double m_distanceToMove;
+	private double m_heading;
 
-    public MoveToEncoderDistance(double distanceToMove) {
+    public TurnToCompassHeading(double heading) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	m_distanceToMove = distanceToMove;
+    	m_heading = heading;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeEncoderPID(m_distanceToMove);
+    	m_heading = Robot.driveTrain.initializeTurnToCompass(m_heading);
+    	Robot.driveTrain.initializeGyroPID(m_heading);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//m_heading = Robot.driveTrain.getRobotAngle() % 360 ;
     }
+
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneEncoderPID();
+    	return Robot.driveTrain.doneTurningWithGyro();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveTrain.stop();
-    	Robot.driveTrain.stopEncoderPID();
+    	Robot.driveTrain.stopGyroPID();
+ 
     }
 
     // Called when another command which requires one or more of the same

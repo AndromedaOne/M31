@@ -1,5 +1,7 @@
 package NavXGyro;
 
+import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
+
 import com.kauailabs.navx.frc.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -24,7 +26,7 @@ public class NavxGyro {
 	private static final double gyroEncoderOutputMax = 1.0; 
 	private double m_initialAngleReading = 0;
 	
-	private AHRS m_navX;
+	private static AHRS m_navX;
 	public NavxGyro() {
 		try {
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
@@ -38,7 +40,7 @@ public class NavxGyro {
 					true);
 		}
 	}
-	public AHRS getAHRS() {
+	public static AHRS getAHRS() {
 		return m_navX;
 	}
 	public void setInitialAngleReading() {
@@ -73,6 +75,7 @@ public class NavxGyro {
 	}
 	
 	public void initializeGyroPID(PIDOutput gyroPIDout) {
+		System.out.println("InitGyroPID");
 		GyroPIDin gyroPIDin = new GyroPIDin();
 		m_gyroEncoderPID = new PIDController(gyroEncoderKp, gyroEncoderKi, 
 				gyroEncoderKd, gyroEncoderKf, gyroPIDin, gyroPIDout);
@@ -94,6 +97,7 @@ public class NavxGyro {
 		m_gyroEncoderPID.disable();
 		
 	}
+	
 	
 }
 
