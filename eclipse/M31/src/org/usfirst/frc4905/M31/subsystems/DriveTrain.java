@@ -11,19 +11,15 @@
 
 package org.usfirst.frc4905.M31.subsystems;
 
-import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.OI;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -75,26 +71,7 @@ public class DriveTrain extends Subsystem {
 
 
 		if(yaw > -0.05 && yaw < 0.05){ yaw = 0;}
-		robotDrive.mecanumDrive_Cartesian(x, y, yaw, 0);//that last 0 is a placeholder for a gyro reading
-		/*double rightHoriz = OI.getRightStickHorizontal(driveGamepad);
-	   if(rightHoriz <-0.1 || rightHoriz > 0.1){
-		   frontRight.set(rightHoriz);
-		   frontLeft.set(rightHoriz);
-		   backRight.set(-rightHoriz);
-		   backLeft.set(-rightHoriz);
-	   }*/
-
-		//backLeft.changeControlMode(TalonControlMode.Position);
-
-		/* double x = OI.getLeftStickHorizontal(driveGamepad);
-	   double y = -OI.getLeftStickVertical(driveGamepad);
-	   double yaw = OI.getRightStickHorizontal(driveGamepad);
-	   backLeft.set(-x + y + yaw);
-	   frontLeft.set(x + y + yaw);
-	   frontRight.set(x - y + yaw);
-	   backRight.set(-x - y + yaw);*/
-
-		//System.out.println(OI.getLeftStickHorizontal(driveGamepad));
+		robotDrive.mecanumDrive_Cartesian(x, y, yaw, 0);
 
 	}
 	public void stop(){
