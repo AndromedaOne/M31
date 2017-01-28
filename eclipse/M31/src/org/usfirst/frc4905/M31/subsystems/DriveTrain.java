@@ -45,8 +45,10 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
+		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
 	}
- 	
+
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -104,7 +106,7 @@ public class DriveTrain extends Subsystem {
 		sum += Math.abs(frontLeft.getPosition());
 		sum += Math.abs(frontRight.getPosition());
 		return sum;
-	   
+
 	}
 
 	// Gyro PID code 
@@ -146,7 +148,7 @@ public class DriveTrain extends Subsystem {
 	}   
 
 	// End of Gyro PID Code
-	
+
 	public void moveInAuto(double sideways, double forward){
 
 		robotDrive.mecanumDrive_Cartesian(sideways, forward, 0, 0);
@@ -157,6 +159,16 @@ public class DriveTrain extends Subsystem {
 			return false;
 		}else{
 			return true;
+		}
+	}
+
+	// UltrasonnicPID code
+	private class UltrasonicPIDOutput implements PIDOutput {
+
+		@Override
+		public void pidWrite(double output) {
+			robotDrive.mecanumDrive_Cartesian(-output, 0, 0, 0);
+
 		}
 	}
 }
