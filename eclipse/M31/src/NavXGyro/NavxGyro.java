@@ -24,7 +24,7 @@ public class NavxGyro {
 	private static final double gyroEncoderOutputMax = 1.0; 
 	private double m_initialAngleReading = 0;
 	
-	private static AHRS m_navX;
+	private AHRS m_navX;
 	public NavxGyro() {
 		try {
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
@@ -38,7 +38,7 @@ public class NavxGyro {
 					true);
 		}
 	}
-	public static AHRS getAHRS() {
+	public AHRS getAHRS() {
 		return m_navX;
 	}
 	public void setInitialAngleReading() {
