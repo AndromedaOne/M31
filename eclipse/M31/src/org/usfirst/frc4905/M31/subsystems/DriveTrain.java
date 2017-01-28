@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -134,17 +135,37 @@ public class DriveTrain extends Subsystem {
 		return sum;
 
 	}
+	
+	public double getEncoderPosition() {
+		return getEncoderPosition();
+	}
+	
+	public void displayEncoderPosition() {
+		SmartDashboard.putNumber("Encoder Value", getEncoderPosition());
+	}
 
+	private double raiseOutputAboveMin(double output) {
+		if((Math.abs(output) < 0.03) && (output != 0)) {
+			double minVal = 0.03; 
+			if(output < 0) {
+				output = -minVal;
+			} else {
+				output = minVal;				
+			}
+		}
+		return output;
+	}
+	
 	// Encoder PID code
 
 	// Encoder PID controller
 	private PIDController m_encoderPID;
 	// Encoder PID controller variables
-	private static final double encoderKp = 0.012;
+	private static final double encoderKp = 0.0003;
 	private static final double encoderKi = 0.000;
 	private static final double encoderKd = 0.000;
 	private static final double encoderKf = 0.000;
-	private static final double encoderTolerance = 1.0;
+	private static final double encoderTolerance = 100.0;
 	private static final double encoderOutputMax = 0.5;
 
 	public PIDController getPIDcontroller() {
@@ -166,8 +187,8 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public double pidGet() {
-			System.out.println("Encoder Position = " + frontLeft.getPosition());
-			return frontLeft.getPosition();
+			System.out.println("Encoder Position = " + getEncoderPosition());
+			return getEncoderPosition();
 		}
 
 	}
@@ -176,7 +197,10 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			robotDrive.mecanumDrive_Cartesian(0, -output, 0, 0);
+			output = raiseOutputAboveMin(output);
+			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
+			System.out.println("Encoder Output = " + output 
+					+ " Average Error = " + m_encoderPID.getAvgError());
 
 		}
 
@@ -184,6 +208,7 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeEncoderPID(double distanceToMove) {
+		resetEncPos();
 		EncoderPIDin encoderPIDin = new EncoderPIDin();
 		EncoderPIDout encoderPIDout = new EncoderPIDout();
 		m_encoderPID = new PIDController(encoderKp, encoderKi, 
@@ -199,7 +224,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public boolean isDoneEncoderPID() {
-		System.out.println("encoder distance = " + frontLeft.getPosition());
+		System.out.println("encoder distance = " + getEncoderPosition());
 		return m_encoderPID.onTarget();
 	}
 
@@ -213,14 +238,7 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			if((Math.abs(output) < 0.08) && (output != 0)) {
-				double minVal = 0.1; 
-				if(output < 0) {
-					output = -minVal;
-				} else {
-					output = minVal;				
-				}
-			}
+			output = raiseOutputAboveMin(output);
 			System.out.println("Output = " + output + " Angle = " +
 					RobotMap.getNavxGyro().getRobotAngle() + " AvgErr " +
 					RobotMap.getNavxGyro().getPIDcontroller().getAvgError() + 
