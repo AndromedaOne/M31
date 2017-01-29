@@ -176,7 +176,7 @@ public class DriveTrain extends Subsystem {
 	
 	public double initializeTurnToCompass(double angle) {
 		m_heading = Robot.driveTrain.getRobotAngle() % 360;
-		m_heading = m_heading - angle;
+		m_heading = angle - m_heading;
 		m_heading = m_heading + Robot.driveTrain.getRobotAngle();
 		return m_heading;
 	}
