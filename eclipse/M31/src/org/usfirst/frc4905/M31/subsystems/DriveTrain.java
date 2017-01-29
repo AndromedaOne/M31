@@ -182,6 +182,9 @@ public class DriveTrain extends Subsystem {
 			return true;
 		}
 	}
+	public CANTalon[] getCANTal() {
+		return m_motorCtrls;
+	}
 
 }
 
