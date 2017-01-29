@@ -66,16 +66,26 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void teleopDrive(Joystick driveGamepad){
-
-
-
+		
 		double x = OI.getLeftStickHorizontal(driveGamepad);
 		double y = OI.getLeftStickVertical(driveGamepad);
 		double yaw = OI.getRightStickHorizontal(driveGamepad);
+		
+		if (OI.getLeftButton(driveGamepad)) {
+			x = x*0.5;
+			y = y*0.5;
+			yaw = yaw*0.5;
+			System.out.println("We called it!");
+		}else {
+			System.out.println("Dana was stupid and distracted me!");
+			if(yaw > -0.05 && yaw < 0.05){ yaw = 0;}
+			robotDrive.mecanumDrive_Cartesian(x, y, yaw, 0);//that last 0 is a placeholder for a gyro reading
+		}
 
 
-		if(yaw > -0.05 && yaw < 0.05){ yaw = 0;}
-		robotDrive.mecanumDrive_Cartesian(x, y, yaw, 0);//that last 0 is a placeholder for a gyro reading
+
+
+		
 		/*double rightHoriz = OI.getRightStickHorizontal(driveGamepad);
 	   if(rightHoriz <-0.1 || rightHoriz > 0.1){
 		   frontRight.set(rightHoriz);

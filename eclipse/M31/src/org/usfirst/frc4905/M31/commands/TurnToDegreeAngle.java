@@ -2,6 +2,7 @@ package org.usfirst.frc4905.M31.commands;
 
 import org.usfirst.frc4905.M31.Robot;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -17,10 +18,18 @@ public class TurnToDegreeAngle extends Command {
     	requires(Robot.driveTrain);
     	m_angleToTurnTo = angleToTurnTo;
     }
+    
+    public TurnToDegreeAngle() {
+    	requires(Robot.driveTrain);
+    	Preferences prefs =  Preferences.getInstance();
+    	m_angleToTurnTo = prefs.getDouble("Angle", 0);
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveTrain.initializeGyroPID(m_angleToTurnTo);
+    	Preferences prefs =  Preferences.getInstance();
+    	m_angleToTurnTo = prefs.getDouble("Angle", 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
