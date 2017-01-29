@@ -137,7 +137,7 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double getEncoderPosition() {
-		return getEncoderPosition();
+		return frontRight.getPosition();
 	}
 	
 	public void displayEncoderPosition() {
@@ -198,7 +198,7 @@ public class DriveTrain extends Subsystem {
 		@Override
 		public void pidWrite(double output) {
 			output = raiseOutputAboveMin(output);
-			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
+			robotDrive.mecanumDrive_Cartesian(0, output, 0, RobotMap.getNavxGyro().getRobotAngle());
 			System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_encoderPID.getAvgError());
 
