@@ -11,6 +11,8 @@
 
 package org.usfirst.frc4905.M31.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc4905.M31.Robot;
 
 /**
@@ -43,6 +45,9 @@ public class Shoot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.ballShooter.shootWithPID(Robot.oi.getDriveController());
+    	SmartDashboard.putNumber("Output Voltage", Robot.ballShooter.getShooterMotor().getOutputVoltage());
+    	SmartDashboard.putNumber("Bus Voltage:", Robot.ballShooter.getShooterMotor().getBusVoltage());
+    	SmartDashboard.putNumber("Talon Speed", Robot.ballShooter.getShooterMotor().getSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -110,6 +110,8 @@ public class ballShooter extends Subsystem {
     	   
        }
        System.out.println(" Talonspd:" + shooterMotor.getSpeed());
+       
+       
    }
 }
 

@@ -78,12 +78,12 @@ public class Robot extends IterativeRobot {
         Robot.ballShooter.getShooterMotor().reverseSensor(true);
         Robot.ballShooter.getShooterMotor().configEncoderCodesPerRev(48);
         Robot.ballShooter.getShooterMotor().setProfile(0);
-        Robot.ballShooter.getShooterMotor().setP(11);
+        Robot.ballShooter.getShooterMotor().setP(11.3);
         Robot.ballShooter.getShooterMotor().setI(0);
         Robot.ballShooter.getShooterMotor().setD(0);
         Robot.ballShooter.getShooterMotor().setF(3);
         Robot.ballShooter.getShooterMotor().configPeakOutputVoltage(11.2, -11.2);
-        Robot.ballShooter.getShooterMotor().configNominalOutputVoltage(0, -0);
+        //Robot.ballShooter.getShooterMotor().configNominalOutputVoltage(0, -0);
        
         System.out.println("HI");
     }
