@@ -56,16 +56,15 @@ public class Robot extends IterativeRobot {
         
         //Camera code
         //If cameras exceed bandwidth, lower resolution but keep 16:9 Aspect Ratio
-        //Or lower refresh/frame rate NO LOWER THAN TWENTY FPS!
+        //Or lower refresh/frame rate NO LOWER THAN TEN FPS!
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
         	//Camera 1
-        camera.setResolution(640, 360);
-        camera.setFPS(10);
+        camera.setResolution(200, 200);
+        camera.setFPS(20);
         	//Camera 2   
-        camera1.setResolution(640, 360);
-        camera1.setFPS(10);
-        camera1.setExposureAuto();
+        camera1.setResolution(480, 252);
+        camera1.setFPS(20);
        //end camera code
         
         oi = new OI();
