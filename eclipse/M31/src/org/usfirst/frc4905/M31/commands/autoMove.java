@@ -58,13 +58,13 @@ public class autoMove extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneAuto(m_distance, Robot.driveTrain.getDistance());
+        return Robot.driveTrain.isDoneAuto(m_distance, Robot.driveTrain.getEncoderDistance());
     	
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("Ending: " + Robot.driveTrain.getDistance());
+    	System.out.println("Ending: " + Robot.driveTrain.getEncoderDistance());
     	Robot.driveTrain.resetEncPos();
     	Timer.delay(0.1);
     }

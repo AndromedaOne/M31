@@ -1,5 +1,10 @@
 package org.usfirst.frc4905.M31.commands;
 
+
+
+import org.usfirst.frc4905.M31.Robot;
+import org.usfirst.frc4905.M31.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,30 +12,39 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveUsingUltrasonic extends Command {
 
-    public MoveUsingUltrasonic() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	private double m_distanceToDriveTo=0;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public MoveUsingUltrasonic(double distanceToDriveTo) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.driveTrain);
+		m_distanceToDriveTo = distanceToDriveTo;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.driveTrain.intializeUltrasonicPID(m_distanceToDriveTo);
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return Robot.driveTrain.doneMovingWithUltrasoncPID();
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.driveTrain.stop();
+		Robot.driveTrain.stopUltrasonicPID();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 }
