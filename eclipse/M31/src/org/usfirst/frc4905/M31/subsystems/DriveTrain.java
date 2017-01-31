@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -47,6 +48,7 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+
 	}
 
 	// Put methods for controlling this subsystem
@@ -99,7 +101,7 @@ public class DriveTrain extends Subsystem {
 
 
 	}
-	public double getDistance(){
+	public double getEncoderDistance(){
 		double sum = 0;
 		sum += Math.abs(backLeft.getPosition());
 		sum += Math.abs(backRight.getPosition());
@@ -167,9 +169,28 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			robotDrive.mecanumDrive_Cartesian(-output, 0, 0, 0);
+			SmartDashboard.putNumber("Output", output);
+			SmartDashboard.putNumber("Distance",
+					RobotMap.getUltrasonicSubsystem().getUltrasonicDistance());
+			robotDrive.mecanumDrive_Cartesian(output, 0, 0, 0);
 
 		}
+	}
+
+	public void intializeUltrasonicPID(double distanceToDriveTo) {
+		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+		RobotMap.getUltrasonicSubsystem().moveWithUltrasonicPID(distanceToDriveTo);
+
+	}
+
+	public boolean doneMovingWithUltrasoncPID() {
+		return RobotMap.getUltrasonicSubsystem().doneUltrasonicPID();
+	}
+
+	public void stopUltrasonicPID() {
+		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
+
 	}
 }
 
