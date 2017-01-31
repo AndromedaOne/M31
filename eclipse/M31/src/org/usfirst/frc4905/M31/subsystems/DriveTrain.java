@@ -234,6 +234,33 @@ public class DriveTrain extends Subsystem {
 
 	}
 
+	//1519 Example code
+	private int m_iterationsSinceRotationCommanded = 0;
+	private double m_desiredHeading;
+	
+	public void mecanumDriveAutoInTeleop(double xIn, double yIn, double rotation) {
+		
+		// update count of iterations since rotation last commanded
+		if ((-0.01 < rotation) && (rotation < 0.01)) {
+			// rotation is practically zero, so just set it to zero and
+			// increment iterations
+			rotation = 0.0;
+			m_iterationsSinceRotationCommanded++;
+		} else {
+			// rotation is being commanded, so clear iteration counter
+			m_iterationsSinceRotationCommanded = 0;
+		}
+
+		// preserve heading when recently stopped commanding rotations
+		if (m_iterationsSinceRotationCommanded == 5) {
+			m_desiredHeading = RobotMap.getNavxGyro().getRobotAngle();
+		} else if (m_iterationsSinceRotationCommanded > 5) {
+			rotation = (m_desiredHeading - RobotMap.getNavxGyro().getRobotAngle()) / 40.0;
+		}
+		
+		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
+	}
+	
 	// Gyro PID code 
 	private class GyroPIDoutput implements PIDOutput {
 
