@@ -61,11 +61,10 @@ public class Robot extends IterativeRobot {
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
         	//Camera 1
         camera.setResolution(640, 360);
-        camera.setFPS(25);
-        camera.setExposureAuto();
+        camera.setFPS(10);
         	//Camera 2   
         camera1.setResolution(640, 360);
-        camera1.setFPS(25);
+        camera1.setFPS(10);
         camera1.setExposureAuto();
        //end camera code
         
