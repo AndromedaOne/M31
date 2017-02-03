@@ -48,8 +48,7 @@ public class TeleopDrive extends Command {
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
 		double rotation = OI.getRightStickHorizontal(driveGamepad);
-		Robot.driveTrain.mecanumDriveAutoInTeleop(xIn, yIn, rotation);
-    	//Robot.driveTrain.teleopDrive(Robot.oi.getDriveController());
+		Robot.driveTrain.teleopDrive(xIn, yIn, rotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()
