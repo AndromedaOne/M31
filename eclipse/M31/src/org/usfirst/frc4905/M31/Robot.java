@@ -54,17 +54,17 @@ public class Robot extends IterativeRobot {
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
         
-        //Camera code
-        //If cameras exceed bandwidth, lower resolution but keep 16:9 Aspect Ratio
-        //Or lower refresh/frame rate NO LOWER THAN TEN FPS!
+        /*Camera code!
+        If cameras exceed bandwidth, lower resolution but keep 16:9 Aspect Ratio
+        Or lower refresh/frame rate NO LOWER THAN TEN FPS!*/
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
         	//Camera 1
         camera.setResolution(200, 200);
-        camera.setFPS(20);
-        	//Camera 2   
+        camera.setFPS(15);
+        	//Camera 2
         camera1.setResolution(480, 252);
-        camera1.setFPS(20);
+        camera1.setFPS(10);
        //end camera code
         
         oi = new OI();
