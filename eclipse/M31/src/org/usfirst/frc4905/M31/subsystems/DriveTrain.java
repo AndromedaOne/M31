@@ -11,7 +11,6 @@
 
 package org.usfirst.frc4905.M31.subsystems;
 
-import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.OI;
@@ -19,7 +18,6 @@ import org.usfirst.frc4905.M31.OI;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -27,7 +25,6 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -68,6 +65,9 @@ public class DriveTrain extends Subsystem {
 		}
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
+		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+
 		initializeEncoderPID(500);
 	}
 
@@ -97,7 +97,6 @@ public class DriveTrain extends Subsystem {
 			// rotation is being commanded, so clear iteration counter
 			m_iterationsSinceRotationCommanded = 0;
 		}
-
 		// preserve heading when recently stopped commanding rotations
 		if (m_iterationsSinceRotationCommanded == 5) {
 			m_desiredHeading = RobotMap.getNavxGyro().getRobotAngle();
@@ -132,7 +131,7 @@ public class DriveTrain extends Subsystem {
 
 
 	}
-	public double getDistance(){
+	public double getEncoderDistance(){
 		double sum = 0;
 		sum += Math.abs(backLeft.getPosition());
 		sum += Math.abs(backRight.getPosition());
@@ -288,5 +287,33 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
+	// UltrasonnicPID code
+	private class UltrasonicPIDOutput implements PIDOutput {
+
+		@Override
+		public void pidWrite(double output) {
+			SmartDashboard.putNumber("Output", output);
+			SmartDashboard.putNumber("Distance",
+					RobotMap.getUltrasonicSubsystem().getUltrasonicDistance());
+			robotDrive.mecanumDrive_Cartesian(output, 0, 0, 0);
+
+		}
+	}
+
+	public void intializeUltrasonicPID(double distanceToDriveTo) {
+		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+		RobotMap.getUltrasonicSubsystem().moveWithUltrasonicPID(distanceToDriveTo);
+
+	}
+
+	public boolean doneMovingWithUltrasoncPID() {
+		return RobotMap.getUltrasonicSubsystem().doneUltrasonicPID();
+	}
+
+	public void stopUltrasonicPID() {
+		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
+
+	}
 }
 

@@ -1,26 +1,30 @@
 package org.usfirst.frc4905.M31.commands;
 
+
+
 import org.usfirst.frc4905.M31.Robot;
+import org.usfirst.frc4905.M31.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TurnToDegreeAngle extends Command {
+public class MoveUsingUltrasonic extends Command {
 
-	private double m_angleToTurnTo;
+	private double m_distanceToDriveTo=0;
 
-	public TurnToDegreeAngle(double angleToTurnTo) {
+	public MoveUsingUltrasonic(double distanceToDriveTo) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
-		m_angleToTurnTo = angleToTurnTo;
+		m_distanceToDriveTo = distanceToDriveTo;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.initializeGyroPID(m_angleToTurnTo);
+		Robot.driveTrain.intializeUltrasonicPID(m_distanceToDriveTo);
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -29,13 +33,13 @@ public class TurnToDegreeAngle extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.driveTrain.doneTurningWithGyro();
+		return Robot.driveTrain.doneMovingWithUltrasoncPID();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveTrain.stop();
-		Robot.driveTrain.stopGyroPID();
+		Robot.driveTrain.stopUltrasonicPID();
 	}
 
 	// Called when another command which requires one or more of the same
