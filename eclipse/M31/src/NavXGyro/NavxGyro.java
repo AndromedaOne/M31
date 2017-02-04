@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NavxGyro {
-	
+
 	// gyroEncoder PID controller
 	private PIDController m_gyroEncoderPID;
 	// gyroEncoder PID controller variables
@@ -23,9 +23,9 @@ public class NavxGyro {
 	private static final double gyroEncoderKd = 0.000;
 	private static final double gyroEncoderKf = 0.000;
 	private static final double gyroEncoderTolerance = 1.0;
-	private static final double gyroEncoderOutputMax = 1.0; 
+	private static final double gyroEncoderOutputMax = 1.0/2; 
 	private double m_initialAngleReading = 0;
-	
+
 	private static AHRS m_navX;
 	public NavxGyro() {
 		try {
@@ -34,7 +34,6 @@ public class NavxGyro {
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			m_navX = new AHRS(SPI.Port.kMXP);
 			System.out.println("Created NavX instance");
-			SmartDashboard.putBoolean("NavXgyro Connected", m_navX.isConnected());
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
 					true);
@@ -46,20 +45,22 @@ public class NavxGyro {
 	public void setInitialAngleReading() {
 		m_initialAngleReading = m_navX.getAngle();
 	}
-	
+
 	public PIDController getPIDcontroller() {
 		return m_gyroEncoderPID; 
 	}
-	
+
 	public double getRobotAngle() {
-		return m_navX.getAngle() - m_initialAngleReading;
+		double correctedAngle = m_navX.getAngle() - m_initialAngleReading;
+		SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
+		return correctedAngle;
 	}
-	
+
 	private class GyroPIDin implements PIDSource {
 
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
-			
+
 		}
 
 		@Override
@@ -71,9 +72,9 @@ public class NavxGyro {
 		public double pidGet() {
 			return getRobotAngle();
 		}
-		
+
 	}
-	
+
 	public void initializeGyroPID(PIDOutput gyroPIDout) {
 		System.out.println("InitGyroPID");
 		GyroPIDin gyroPIDin = new GyroPIDin();
@@ -83,22 +84,23 @@ public class NavxGyro {
 		m_gyroEncoderPID.setAbsoluteTolerance(gyroEncoderTolerance);
 		LiveWindow.addActuator("DriveTrain", "GyroPID", m_gyroEncoderPID);
 	}
-	
-	public void turnWithGyroPID(double AngleToTurnTo) {
-		m_gyroEncoderPID.setSetpoint(AngleToTurnTo);
+
+	public void turnWithGyroPID(double deltaAngle) {
+		double finalAngle = getRobotAngle() + deltaAngle;
+		m_gyroEncoderPID.setSetpoint(finalAngle);
 		m_gyroEncoderPID.enable();
 	}
-	
+
 	public boolean isDoneGyroPID() {
-		System.out.println("angle = " + getRobotAngle());
+		//System.out.println("angle = " + getRobotAngle());
 		return m_gyroEncoderPID.onTarget();
 	}
 	public void stopGyroPID() {
 		m_gyroEncoderPID.disable();
-		
+
 	}
-	
-	
+
+
 }
 
 
