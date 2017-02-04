@@ -66,7 +66,7 @@ public class DriveTrain extends Subsystem {
 			m_motors[i].enableBrakeMode(true);
 			m_motors[i].setVoltageRampRate(48);
 		}
-		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
+		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
@@ -153,9 +153,10 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Encoder Value", getEncoderPosition());
 	}
 
-	private double raiseOutputAboveMin(double output) {
-		if((Math.abs(output) < 0.03) && (output != 0)) {
-			double minVal = 0.03; 
+	private double raiseOutputAboveMin(double output, 
+			double minimumOutput) {
+		if((Math.abs(output) < minimumOutput) && (output != 0)) {
+			double minVal = minimumOutput; 
 			if(output < 0) {
 				output = -minVal;
 			} else {
@@ -206,7 +207,7 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			output = raiseOutputAboveMin(output);
+			output = raiseOutputAboveMin(output,0.03);
 			robotDrive.mecanumDrive_Cartesian(0, -output, 0, RobotMap.getNavxGyro().getRobotAngle());
 			System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_encoderPID.getAvgError());
@@ -246,17 +247,24 @@ public class DriveTrain extends Subsystem {
 	
 	// Gyro PID code 
 	private class GyroPIDoutput implements PIDOutput {
+	
+		public GyroPIDoutput(double minimumOutput) {
+			m_minimumOutput = minimumOutput;
+		}
+		
+		private double m_minimumOutput = 0;
 
 		@Override
 		public void pidWrite(double output) {
-			output = raiseOutputAboveMin(output);
+			output = raiseOutputAboveMin(output,m_minimumOutput);
 			robotDrive.mecanumDrive_Cartesian(0, 0, output, 0);
+			m_iterationsSinceRotationCommanded = 0;
 		}
 
 	}
 	
 	public void initializeGyroPID(double deltaAngle) {
-		GyroPIDoutput gyroPIDout = new GyroPIDoutput();
+		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDout);
 		RobotMap.getNavxGyro().turnWithGyroPID(deltaAngle);
 	}
@@ -275,7 +283,7 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double initializeTurnToCompass(double angle) {
-		double initialAngle = Robot.driveTrain.getRobotAngle();
+		double initialAngle = getRobotAngle();
 		double angleMod = initialAngle % 360;
 		System.out.println("AngleMod = " + angleMod + 
 				" Initial Angle = " + initialAngle);

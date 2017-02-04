@@ -42,9 +42,8 @@ public class TurnToCompassHeading extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveTrain.stop();
 		Robot.driveTrain.stopGyroPID();
-
+		Robot.driveTrain.stop();
 	}
 
 	// Called when another command which requires one or more of the same
