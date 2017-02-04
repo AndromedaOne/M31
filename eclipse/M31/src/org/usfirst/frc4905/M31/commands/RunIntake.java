@@ -1,5 +1,7 @@
 package org.usfirst.frc4905.M31.commands;
 
+
+
 import org.usfirst.frc4905.M31.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,32 +9,26 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VisionTest extends Command {
+public class RunIntake extends Command {
 
-    public VisionTest() {
+    public RunIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.fuelIntake.stopIntake();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	    System.out.println("Starting");
-		Robot.visionProcessing.initDataForLift();
-		System.out.println("Found target: " + Robot.visionProcessing.getFoundLift());
-		if (Robot.visionProcessing.getFoundLift() == true){
-			System.out.println("Angle to turn: " + Robot.visionProcessing.getDeltaAngle());
-			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
-			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
-		}
+    	Robot.fuelIntake.toggle();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

@@ -7,27 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveY extends Command {
+public class TurnToRadianAngle extends Command {
 	
-	private double m_distance = 0;
+	private double m_degreesAngleToTurnTo;
 
-    public MoveY() {
+    public TurnToRadianAngle(double radianAngleToTurnTo) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    }
-    
-    public MoveY(double distance) {
-    	
-    	requires (Robot.driveTrain);
-    	m_distance = distance;
+    	m_degreesAngleToTurnTo = radianAngleToTurnTo * 180 / Math.PI; 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	Robot.driveTrain.moveToYEncoderRevolutions(m_distance);
-    	
+    	Robot.driveTrain.initializeGyroPID(m_degreesAngleToTurnTo);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,12 +29,13 @@ public class MoveY extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneMovingToYEncoderRevolutions();
+        return Robot.driveTrain.doneTurningWithGyro();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stopMovingToYEncoderRevolutions();
+    	Robot.driveTrain.stop();
+    	Robot.driveTrain.stopGyroPID();
     }
 
     // Called when another command which requires one or more of the same
