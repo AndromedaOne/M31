@@ -87,7 +87,7 @@ public class RobotMap {
         LiveWindow.addSensor("UltraSonic", "Ultrasonic1", 
         		m_ultrasonicSubsystem.getUltrasonic());
         
-       intakeMotor = new VictorSP(1);
+       intakeMotor = new VictorSP(2);
        LiveWindow.addActuator("IntakeMotor", "FuelIntake", (VictorSP) intakeMotor);
         
         
