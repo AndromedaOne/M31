@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ControlledFeederStop extends Command {
-	private int m_safetyCount;
-    public ControlledFeederStop() {
+public class openGearHandler extends Command {
+
+    public openGearHandler() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.gearHandler);
     }
 
     // Called just before this Command runs the first time
@@ -20,29 +21,16 @@ public class ControlledFeederStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.Shooter.getSafetySwitch() == true){
-    		m_safetyCount++;
-    	}
-    	else{
-    		m_safetyCount = 0;
-    	}
-		if(m_safetyCount < 25){
-			Robot.Shooter.moveFeederUntilSwitchPressed();
-		}
-		else{
-			Robot.Shooter.spinFeederCCW();
-		}
-    	
+    	Robot.gearHandler.openHandler();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.Shooter.getSafetySwitch();
+        return Robot.gearHandler.isDoneOpen();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.Shooter.stopFeeder();
     }
 
     // Called when another command which requires one or more of the same
