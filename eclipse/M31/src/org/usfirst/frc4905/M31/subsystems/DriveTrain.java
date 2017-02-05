@@ -178,14 +178,8 @@ public class DriveTrain extends Subsystem {
 
 	}
 	
-	public double getEncoderPosition() {
-		return frontRight.getPosition();
-		//return (frontLeft.getPosition() + backLeft.getPosition()
-		//- frontRight.getPosition() - backRight.getPosition()) / 4;
-	}
-	
 	public void displayEncoderPosition() {
-		SmartDashboard.putNumber("Encoder Value", getEncoderPosition());
+		SmartDashboard.putNumber("Encoder Value", getEncoderDistance());
 	}
 
 	private double raiseOutputAboveMin(double output) {
@@ -209,7 +203,7 @@ public class DriveTrain extends Subsystem {
 	private static final double encoderKi = 0.000;
 	private static final double encoderKd = 0.000;
 	private static final double encoderKf = 0.000;
-	private static final double encoderTolerance = 100.0;
+	private static final double encoderTolerance = 1;
 	private static final double encoderOutputMax = 0.5;
 
 	public PIDController getPIDcontroller() {
@@ -217,7 +211,12 @@ public class DriveTrain extends Subsystem {
 	}
 
 	private class EncoderPIDin implements PIDSource {
-
+		private double getEncoderPosition() {
+			//Used when moving in y direction
+			return (frontRight.getPosition() + backLeft.getPosition()
+			- frontRight.getPosition() - backRight.getPosition()) / 4;
+		}
+		
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
 
@@ -241,8 +240,8 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			output = raiseOutputAboveMin(output);
-			robotDrive.mecanumDrive_Cartesian(0, -output, 0, RobotMap.getNavxGyro().getRobotAngle());
+			//output = raiseOutputAboveMin(output);
+			teleopDrive(0, -output, 0);
 			System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_encoderPID.getAvgError());
 
@@ -268,7 +267,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public boolean isDoneEncoderPID() {
-		System.out.println("encoder distance = " + getEncoderPosition());
+		System.out.println("encoder distance = " + getEncoderDistance());
 		return m_encoderPID.onTarget();
 	}
 
