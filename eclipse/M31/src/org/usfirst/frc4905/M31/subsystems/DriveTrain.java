@@ -89,6 +89,9 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void teleopDrive(double xIn, double yIn, double rotation){
+		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
+		//With Current Angle
+		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
 		if ((-0.01 < rotation) && (rotation < 0.01)) {
@@ -102,9 +105,9 @@ public class DriveTrain extends Subsystem {
 		}
 		// preserve heading when recently stopped commanding rotations
 		if (m_iterationsSinceRotationCommanded == 5) {
-			m_desiredHeading = RobotMap.getNavxGyro().getRobotAngle();
+			m_desiredHeading = gyroReading;
 		} else if (m_iterationsSinceRotationCommanded > 5) {
-			rotation = (m_desiredHeading - RobotMap.getNavxGyro().getRobotAngle()) / 40.0;
+			rotation = (m_desiredHeading - gyroReading) / 40.0;
 		}
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
