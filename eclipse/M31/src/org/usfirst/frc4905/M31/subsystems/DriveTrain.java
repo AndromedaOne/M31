@@ -55,16 +55,17 @@ public class DriveTrain extends Subsystem {
 	private int m_iterationsSinceRotationCommanded = 0;
 	private double m_desiredHeading;
 	
-	private double m_RPMConversion = 700;
+	private double m_RPMConversion = 883;
 	
+	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
 	
 	
 	
 	public DriveTrain() {
-		double kp = 0;
-		double ki = 0;
-		double kd = 0;
+		double kp = 0.15;
+		double ki = 0.00015;
+		double kd = 1.5;
 		// 700/60/10*1 = 1.167  1023/1.167 -- Page 80 in CTR Documentation
 		double kf = 0.214;
 		int izone = 0;
@@ -72,7 +73,7 @@ public class DriveTrain extends Subsystem {
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
 			m_motors[i].reverseSensor(false);
-			m_motors[i].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+			m_motors[i].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 			m_motors[i].setPosition(0);
 			m_motors[i].configNominalOutputVoltage(0, 0);
 			m_motors[i].configPeakOutputVoltage(12.0, -12.0);
@@ -82,9 +83,7 @@ public class DriveTrain extends Subsystem {
 			m_motors[i].set(0);
 			m_motors[i].changeControlMode(TalonControlMode.Speed);
 		}
-		//Right side sensors are inverted
-		frontLeft.reverseSensor(true);
-		backLeft.reverseSensor(true);
+		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput();
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
@@ -108,23 +107,22 @@ public class DriveTrain extends Subsystem {
 	}
 	int m_loops = 0;
 	public void teleopDrive(double xIn, double yIn, double rotation){
-		xIn *= m_RPMConversion;
-		yIn *= m_RPMConversion;
-		
-		double motorOutput = frontLeft.getOutputVoltage() / frontLeft.getBusVoltage();
-		m_sb.append("\tout:");
-		m_sb.append(motorOutput);
-		m_sb.append("\tspd:");
-		m_sb.append(frontLeft.getSpeed() );
-		m_sb.append("\terr:");
-		m_sb.append(frontLeft.getClosedLoopError());
-		m_sb.append("\ttrg:");
-		m_sb.append(yIn);
-		if(++m_loops >= 10) {
-			m_loops = 0;
-			System.out.println(m_sb.toString());
+		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
+		if(kNoisyDebug) {
+			m_sb.append("\tout:");
+			m_sb.append(motorOutput);
+			m_sb.append("\tspd:");
+			m_sb.append(frontRight.getSpeed() );
+			m_sb.append("\terr:");
+			m_sb.append(frontRight.getClosedLoopError() * 600 / 4096);
+			m_sb.append("\ttrg:");
+			m_sb.append(-yIn*m_RPMConversion);
+			if(++m_loops >= 10) {
+				m_loops = 0;
+				System.out.println(m_sb.toString());
+			}
+			m_sb.setLength(0);
 		}
-		m_sb.setLength(0);
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
 		if ((-0.01 < rotation) && (rotation < 0.01)) {
@@ -137,9 +135,9 @@ public class DriveTrain extends Subsystem {
 			m_iterationsSinceRotationCommanded = 0;
 		}
 		// preserve heading when recently stopped commanding rotations
-		if (m_iterationsSinceRotationCommanded == 5) {
+		if (m_iterationsSinceRotationCommanded == 20) {
 			m_desiredHeading = RobotMap.getNavxGyro().getRobotAngle();
-		} else if (m_iterationsSinceRotationCommanded > 5) {
+		} else if (m_iterationsSinceRotationCommanded > 20) {
 			rotation = (m_desiredHeading - RobotMap.getNavxGyro().getRobotAngle()) / 40.0;
 		}
 		
