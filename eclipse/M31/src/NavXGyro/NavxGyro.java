@@ -50,9 +50,15 @@ public class NavxGyro {
 		return m_gyroEncoderPID; 
 	}
 
+	private int m_getRobotAngleCount = 0;
+	
 	public double getRobotAngle() {
 		double correctedAngle = m_navX.getAngle() - m_initialAngleReading;
-		SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
+		if((m_getRobotAngleCount % 10) == 0) {
+			SmartDashboard.putNumber("Raw Anlge", m_navX.getAngle());
+			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
+		}
+	
 		return correctedAngle;
 	}
 
@@ -98,6 +104,10 @@ public class NavxGyro {
 	public void stopGyroPID() {
 		m_gyroEncoderPID.disable();
 
+	}
+	public boolean isCalibrating() {
+		
+		return m_navX.isCalibrating();
 	}
 
 
