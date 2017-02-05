@@ -11,6 +11,8 @@
 
 package org.usfirst.frc4905.M31;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -49,6 +51,20 @@ public class Robot extends IterativeRobot {
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
         // pointers. Bad news. Don't move it.
+        
+        /*Camera code!
+        If cameras exceed bandwidth, lower resolution but keep 16:9 Aspect Ratio
+        Or lower refresh/frame rate NO LOWER THAN TEN FPS!*/
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture();
+        	//Camera 1
+        camera.setResolution(150, 150);
+        camera.setFPS(20);
+        	//Camera 2
+        camera1.setResolution(150, 150);
+        camera1.setFPS(20);
+       //end camera code
+        
         oi = new OI();
 
         // instantiate the command used for the autonomous period
