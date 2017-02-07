@@ -14,6 +14,7 @@ package org.usfirst.frc4905.M31.subsystems;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.OI;
+import org.usfirst.frc4905.M31.Robot;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -352,5 +353,30 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
 
 	}
+	
+	public void moveToYEncoderRevolutions(double targetY) {
+		
+	}
+
+	public boolean isDoneMovingToYEncoderRevolutions() {
+		return true;
+		
+	}
+	public void stopMovingToYEncoderRevolutions() {
+		
+	}
+	
+	public void moveToXEncoderRevolutions(double targetX) {
+		
+	}
+	
+	public boolean isDoneMovingToXEncoderPosition() {
+		return true;
+	}
+	
+	public void stopMovingToXEncoderRevolutions() {
+		
+	}
+	
 }
 
