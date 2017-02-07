@@ -154,7 +154,7 @@ public class DriveTrain extends Subsystem {
 
 	public void getEncPos(){
 
-		System.out.println("Back Left Pos:" +backLeft.getPosition());
+		System.out.println("Back Left Pos:" + backLeft.getPosition());
 		System.out.println("Back Right Pos:" + backRight.getPosition());
 		System.out.println("Front Right Pos:" + frontRight.getPosition());
 		System.out.println("Front Left Pos:" + frontLeft.getPosition());
@@ -213,7 +213,7 @@ public class DriveTrain extends Subsystem {
 	private class EncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in y direction
-			return (frontRight.getPosition() + backLeft.getPosition()
+			return (frontLeft.getPosition() + backLeft.getPosition()
 			- frontRight.getPosition() - backRight.getPosition()) / 4;
 		}
 		
