@@ -14,12 +14,15 @@ package org.usfirst.frc4905.M31.subsystems;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.OI;
+import org.usfirst.frc4905.M31.Robot;
 import Utilities.*;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -56,16 +59,35 @@ public class DriveTrain extends Subsystem {
 	private int m_iterationsSinceRotationCommanded = 0;
 	private double m_desiredHeading;
 	
+	private double m_RPMConversion = 883;
+	
+	private final boolean kNoisyDebug = false;
+	StringBuilder m_sb = new StringBuilder();
+	
+	
+	
 	public DriveTrain() {
+		double kp = 0.15;
+		double ki = 0.00015;
+		double kd = 1.5;
+		// 700/60/10*1 = 1.167  1023/1.167 -- Page 80 in CTR Documentation
+		double kf = 0.214;
+		int izone = 0;
+		double ramprate = 36;
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
 			m_motors[i].reverseSensor(false);
-			m_motors[i].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+			m_motors[i].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 			m_motors[i].setPosition(0);
+			m_motors[i].configNominalOutputVoltage(0, 0);
 			m_motors[i].configPeakOutputVoltage(12.0, -12.0);
 			m_motors[i].enableBrakeMode(true);
 			m_motors[i].setVoltageRampRate(48);
+			m_motors[i].setPID(kp, ki, kd, kf, izone, ramprate, 0);
+			m_motors[i].set(0);
+			m_motors[i].changeControlMode(TalonControlMode.Speed);
 		}
+		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
@@ -87,11 +109,27 @@ public class DriveTrain extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
-
+	int m_loops = 0;
 	public void teleopDrive(double xIn, double yIn, double rotation){
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
+		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
+		if(kNoisyDebug) {
+			m_sb.append("\tout:");
+			m_sb.append(motorOutput);
+			m_sb.append("\tspd:");
+			m_sb.append(frontRight.getSpeed() );
+			m_sb.append("\terr:");
+			m_sb.append(frontRight.getClosedLoopError() * 600 / 4096);
+			m_sb.append("\ttrg:");
+			m_sb.append(-yIn*m_RPMConversion);
+			if(++m_loops >= 10) {
+				m_loops = 0;
+				System.out.println(m_sb.toString());
+			}
+			m_sb.setLength(0);
+		}
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
 		if ((-0.01 < rotation) && (rotation < 0.01)) {
@@ -104,9 +142,9 @@ public class DriveTrain extends Subsystem {
 			m_iterationsSinceRotationCommanded = 0;
 		}
 		// preserve heading when recently stopped commanding rotations
-		if (m_iterationsSinceRotationCommanded == 5) {
+		if (m_iterationsSinceRotationCommanded == 20) {
 			m_desiredHeading = gyroReading;
-		} else if (m_iterationsSinceRotationCommanded > 5) {
+		} else if (m_iterationsSinceRotationCommanded > 20) {
 			rotation = (m_desiredHeading - gyroReading) / 40.0;
 		}
 		
@@ -123,7 +161,7 @@ public class DriveTrain extends Subsystem {
 
 	public void getEncPos(){
 
-		System.out.println("Back Left Pos:" +backLeft.getPosition());
+		System.out.println("Back Left Pos:" + backLeft.getPosition());
 		System.out.println("Back Right Pos:" + backRight.getPosition());
 		System.out.println("Front Right Pos:" + frontRight.getPosition());
 		System.out.println("Front Left Pos:" + frontLeft.getPosition());
@@ -147,13 +185,8 @@ public class DriveTrain extends Subsystem {
 
 	}
 	
-	public double getEncoderPosition() {
-		return (frontLeft.getPosition() + backLeft.getPosition()
-		- frontRight.getPosition() - backRight.getPosition()) / 4;
-	}
-	
 	public void displayEncoderPosition() {
-		SmartDashboard.putNumber("Encoder Value", getEncoderPosition());
+		SmartDashboard.putNumber("Encoder Value", getEncoderDistance());
 	}
 
 	private double raiseOutputAboveMin(double output, 
@@ -178,7 +211,7 @@ public class DriveTrain extends Subsystem {
 	private static final double encoderKi = 0.000;
 	private static final double encoderKd = 0.000;
 	private static final double encoderKf = 0.000;
-	private static final double encoderTolerance = 100.0;
+	private static final double encoderTolerance = 1;
 	private static final double encoderOutputMax = 0.5;
 
 	public PIDController getPIDcontroller() {
@@ -186,7 +219,12 @@ public class DriveTrain extends Subsystem {
 	}
 
 	private class EncoderPIDin implements PIDSource {
-
+		private double getEncoderPosition() {
+			//Used when moving in y direction
+			return (frontLeft.getPosition() + backLeft.getPosition()
+			- frontRight.getPosition() - backRight.getPosition()) / 4;
+		}
+		
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
 
@@ -211,7 +249,7 @@ public class DriveTrain extends Subsystem {
 		@Override
 		public void pidWrite(double output) {
 			output = raiseOutputAboveMin(output,0.03);
-			robotDrive.mecanumDrive_Cartesian(0, -output, 0, RobotMap.getNavxGyro().getRobotAngle());
+			teleopDrive(0, -output, 0);
 			System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_encoderPID.getAvgError());
 
@@ -237,7 +275,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public boolean isDoneEncoderPID() {
-		System.out.println("encoder distance = " + getEncoderPosition());
+		System.out.println("encoder distance = " + getEncoderDistance());
 		return m_encoderPID.onTarget();
 	}
 
@@ -352,5 +390,30 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
 
 	}
+	
+	public void moveToYEncoderRevolutions(double targetY) {
+		
+	}
+
+	public boolean isDoneMovingToYEncoderRevolutions() {
+		return true;
+		
+	}
+	public void stopMovingToYEncoderRevolutions() {
+		
+	}
+	
+	public void moveToXEncoderRevolutions(double targetX) {
+		
+	}
+	
+	public boolean isDoneMovingToXEncoderPosition() {
+		return true;
+	}
+	
+	public void stopMovingToXEncoderRevolutions() {
+		
+	}
+	
 }
 
