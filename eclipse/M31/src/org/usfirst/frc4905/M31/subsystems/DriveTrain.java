@@ -205,7 +205,7 @@ public class DriveTrain extends Subsystem {
 	// Encoder PID code
 
 	// Encoder PID controller
-	private PIDController m_encoderPID;
+	private PIDController m_moveToTheYEncoderPID;
 	// Encoder PID controller variables
 	private static final double encoderKp = 0.0003;
 	private static final double encoderKi = 0.000;
@@ -214,11 +214,11 @@ public class DriveTrain extends Subsystem {
 	private static final double encoderTolerance = 1;
 	private static final double encoderOutputMax = 0.5;
 
-	public PIDController getPIDcontroller() {
-		return m_encoderPID;
+	public PIDController getYPIDcontroller() {
+		return m_moveToTheYEncoderPID;
 	}
 
-	private class EncoderPIDin implements PIDSource {
+	private class MovingInTheYEncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in y direction
 			return (frontLeft.getPosition() + backLeft.getPosition()
@@ -244,14 +244,14 @@ public class DriveTrain extends Subsystem {
 
 	}
 
-	private class EncoderPIDout implements PIDOutput {
+	private class MovingInTheYEncoderPIDout implements PIDOutput {
 
 		@Override
 		public void pidWrite(double output) {
 			output = raiseOutputAboveMin(output,0.03);
 			teleopDrive(0, -output, 0);
 			System.out.println("Encoder Output = " + output 
-					+ " Average Error = " + m_encoderPID.getAvgError());
+					+ " Average Error = " + m_moveToTheYEncoderPID.getAvgError());
 
 		}
 
@@ -260,27 +260,27 @@ public class DriveTrain extends Subsystem {
 
 	public void initializeEncoderPID(double distanceToMove) {
 		resetEncPos();
-		EncoderPIDin encoderPIDin = new EncoderPIDin();
-		EncoderPIDout encoderPIDout = new EncoderPIDout();
-		m_encoderPID = new PIDController(encoderKp, encoderKi, 
+		MovingInTheYEncoderPIDin encoderPIDin = new MovingInTheYEncoderPIDin();
+		MovingInTheYEncoderPIDout encoderPIDout = new MovingInTheYEncoderPIDout();
+		m_moveToTheYEncoderPID = new PIDController(encoderKp, encoderKi, 
 				encoderKd, encoderKf, encoderPIDin, encoderPIDout);
-		m_encoderPID.setOutputRange(-encoderOutputMax, encoderOutputMax);
-		m_encoderPID.setAbsoluteTolerance(encoderTolerance);
-		LiveWindow.addActuator("DriveTrain", "EncoderPID", m_encoderPID);
+		m_moveToTheYEncoderPID.setOutputRange(-encoderOutputMax, encoderOutputMax);
+		m_moveToTheYEncoderPID.setAbsoluteTolerance(encoderTolerance);
+		LiveWindow.addActuator("DriveTrain", "EncoderPID", m_moveToTheYEncoderPID);
 	}
 
-	public void moveWithEncoderPID(double DistanceToMove) {
-		m_encoderPID.setSetpoint(DistanceToMove);
-		m_encoderPID.enable();
+	public void moveToYEncoderRevolutions(double revolutionsToMove) {
+		m_moveToTheYEncoderPID.setSetpoint(revolutionsToMove);
+		m_moveToTheYEncoderPID.enable();
 	}
 
-	public boolean isDoneEncoderPID() {
+	public boolean isDoneMovingToYEncoder() {
 		System.out.println("encoder distance = " + getEncoderDistance());
-		return m_encoderPID.onTarget();
+		return m_moveToTheYEncoderPID.onTarget();
 	}
 
-	public void stopEncoderPID() {
-		m_encoderPID.disable();
+	public void stopMovingToYEncoderRevolutions() {
+		m_moveToTheYEncoderPID.disable();
 
 	}
 
@@ -390,19 +390,7 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
 
 	}
-	
-	public void moveToYEncoderRevolutions(double targetY) {
 		
-	}
-
-	public boolean isDoneMovingToYEncoderRevolutions() {
-		return true;
-		
-	}
-	public void stopMovingToYEncoderRevolutions() {
-		
-	}
-	
 	public void moveToXEncoderRevolutions(double targetX) {
 		
 	}
@@ -414,6 +402,6 @@ public class DriveTrain extends Subsystem {
 	public void stopMovingToXEncoderRevolutions() {
 		
 	}
-	
+
 }
 
