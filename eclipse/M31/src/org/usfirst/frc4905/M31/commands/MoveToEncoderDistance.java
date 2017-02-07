@@ -29,7 +29,7 @@ public class MoveToEncoderDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneMovingToYEncoder();
+        return Robot.driveTrain.isDoneMovingToYEncoderRevolutions();
     }
 
     // Called once after isFinished returns true
