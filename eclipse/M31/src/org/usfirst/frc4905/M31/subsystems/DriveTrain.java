@@ -93,7 +93,8 @@ public class DriveTrain extends Subsystem {
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
 
-		initializeEncoderPID(500);
+		initializeYEncoderPID(500);
+		initializeXEncoderPID(500);
 	}
 
 	// Put methods for controlling this subsystem
@@ -259,7 +260,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 
-	public void initializeEncoderPID(double distanceToMove) {
+	public void initializeYEncoderPID(double distanceToMove) {
 		resetEncPos();
 		MovingInTheYEncoderPIDin encoderPIDin = new MovingInTheYEncoderPIDin();
 		MovingInTheYEncoderPIDout encoderPIDout = new MovingInTheYEncoderPIDout();

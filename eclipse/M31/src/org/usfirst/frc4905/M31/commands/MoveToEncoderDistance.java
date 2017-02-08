@@ -20,7 +20,7 @@ public class MoveToEncoderDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeEncoderPID(m_distanceToMove);
+    	Robot.driveTrain.initializeYEncoderPID(m_distanceToMove);
     }
 
     // Called repeatedly when this Command is scheduled to run
