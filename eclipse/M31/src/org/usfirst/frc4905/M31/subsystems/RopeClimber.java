@@ -20,6 +20,12 @@ public class RopeClimber extends Subsystem {
 		ropeMotor.setSpeed(0.2);
 		
 	}
+	
+	public void stopClimber(){
+		ropeMotor.setSpeed(0);
+		
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
