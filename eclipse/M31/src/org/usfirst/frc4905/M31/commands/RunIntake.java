@@ -14,16 +14,22 @@ public class RunIntake extends Command {
     public RunIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.fuelIntake);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     	Robot.fuelIntake.stopIntake();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.fuelIntake.toggle();
+    	if(Robot.oi.getSubGamePad().getRawButton(3)){
+    		Robot.fuelIntake.toggle();
+    	}
+    
+    	//Robot.fuelIntake.startIntake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
