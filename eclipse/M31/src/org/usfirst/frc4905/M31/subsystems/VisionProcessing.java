@@ -20,6 +20,7 @@ public class VisionProcessing extends Subsystem {
 	public double m_distanceToDriveLaterally = 0;
 	public double m_distanceToDriveForwardLift = 0;
 	public double m_liftTimestamp = 0;
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -29,6 +30,25 @@ public class VisionProcessing extends Subsystem {
     	m_networkTable = NetworkTable.getTable(table);
     	m_robotCommands = NetworkTable.getTable("RobotCommmands");
     }
+    
+    //start of public interface methods
+    public boolean doesVisionSeeTarget(){
+    	return(false);
+    }
+    public boolean isVisionReady(){
+    	return(false);
+    }
+    public double getDeltaAngle(){
+    	return(0);
+    }
+    public double getLateralDistance(){
+    	return(0);
+    }
+    public double getForwardDistance(){
+    	return(0);
+    }
+    //end of public interface methods
+    
     public class dataForLift{
     	public boolean foundLift;
     	public double angletoTurn;
