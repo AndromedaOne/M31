@@ -26,7 +26,7 @@ public class GroupBoilerVisionLeft extends CommandGroup {
         // arm.
     	
     	//Start with the robot's "front" Facing the left wall on the left side
-    	addSequential(new MoveY(10));
+    	addSequential(new MoveX(5));
     	addSequential(new TurnDeltaAngleDegree(30));
     	//vision code
     }
