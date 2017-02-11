@@ -17,7 +17,7 @@ public class RopeClimber extends Subsystem {
 	//declarations
 	public VictorSP ropeMotor;
 	public void climbRope() {
-		ropeMotor.setSpeed(0.2);
+		ropeMotor.setSpeed(0.4);
 		
 	}
     public void initDefaultCommand() {
