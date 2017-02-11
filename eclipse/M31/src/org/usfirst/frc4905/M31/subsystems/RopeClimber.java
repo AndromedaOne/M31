@@ -25,5 +25,9 @@ public class RopeClimber extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new climbRope());
     }
+    
+    public void stopClimbing() {
+    	ropeMotor.setSpeed(0);
+    }
 }
 
