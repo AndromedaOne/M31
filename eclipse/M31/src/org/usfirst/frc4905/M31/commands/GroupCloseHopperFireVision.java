@@ -1,13 +1,14 @@
 package org.usfirst.frc4905.M31.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupShootFromStartCrossBaseLine extends CommandGroup {
+public class GroupCloseHopperFireVision extends CommandGroup {
 
-    public GroupShootFromStartCrossBaseLine() {
+    public GroupCloseHopperFireVision() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,12 +26,13 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(1));
-    	//Turn Towards the Boiler
-    	addSequential(new TurnDeltaAngleDegree(90));
-    	//Begin Shooting into the Boiler
-    	addSequential(new TurnDeltaAngleDegree(-90));
-    	addSequential(new MoveY(5));
-    	
+    	//Start With Gear Handler Facing Foward
+    	addSequential(new MoveX(-10));
+    	//Use Vision to put the gear on the hook
+    	//Activate Gear Pusher
+    	Timer.delay(1.5);
+    	addSequential(new MoveX(2));
+    	addSequential(new MoveY (-2.2));
+    	addSequential(new MoveX (10));
     }
 }
