@@ -17,12 +17,12 @@ public class FuelIntake extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	//setDefaultCommand(new RunIntake());
+    	setDefaultCommand(new RunIntake());
     }
     
     public void startIntake() {
     	
-    	intakeMotor.setSpeed(-0.2);
+    	intakeMotor.setSpeed(-1.0);
     	
     }   
     
