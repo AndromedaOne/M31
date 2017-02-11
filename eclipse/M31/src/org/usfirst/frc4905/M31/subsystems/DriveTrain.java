@@ -110,15 +110,8 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public boolean toggleSlowFast(){
-		if(isSlow == true){
-			//return that we're  going slow
-			isSlow = false;
-			return !isSlow;
-		}else{
-			//return that we're not going slow
-			isSlow = true;
-			return !isSlow;
-		}
+		isSlow = !isSlow;
+		return !isSlow;
 	}
 
 		
