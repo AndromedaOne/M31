@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.subsystems.*;
 
+import com.ctre.CANTalon;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -70,6 +72,14 @@ public class Robot extends IterativeRobot {
 
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        
+        // As per section 21.18 of the Talon SRX Software manual,
+        // set an innocuous setting (such as the profile, which
+        // we only use profile 0).
+    	RobotMap.driveTrainFrontLeft.setProfile(0);
+    	RobotMap.driveTrainBackRight.setProfile(0);
+    	RobotMap.driveTrainFrontRight.setProfile(0);
+    	RobotMap.driveTrainBackLeft.setProfile(0);
     }
 
     public void autonomousInit() {
