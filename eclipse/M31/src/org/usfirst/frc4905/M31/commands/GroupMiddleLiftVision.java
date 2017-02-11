@@ -29,13 +29,13 @@ public class GroupMiddleLiftVision extends CommandGroup {
         // arm.
 		
 		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
+		addSequential(new MoveX(14));
+		//addSequential(new TurnDeltaAngleDegree(-90));
 		//Move Forward With Vision
 		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(4));
+		//addSequential(new MoveX(-1.5));
+	//	addSequential(new MoveY(-3));
+		//addSequential(new MoveX(4));
 
 
     	

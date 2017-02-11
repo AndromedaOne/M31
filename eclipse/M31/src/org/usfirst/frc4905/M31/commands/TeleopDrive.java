@@ -12,6 +12,7 @@
 package org.usfirst.frc4905.M31.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
@@ -57,7 +58,14 @@ public class TeleopDrive extends Command {
 		if(rotation < kDeadzone && rotation > -kDeadzone) {
 			rotation = 0;
 		}
+		if(Robot.oi.getDriveController().getRawButton(5)){
+			xIn = 0;
+		}
+		if(Robot.oi.getDriveController().getRawButton(6)){
+			yIn = 0;
+		}
 		Robot.driveTrain.teleopDrive(xIn, yIn, rotation);
+		
     }
 
     // Make this return true when this Command no longer needs to run execute()
