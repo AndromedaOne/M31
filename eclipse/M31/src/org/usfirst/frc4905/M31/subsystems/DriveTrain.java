@@ -208,11 +208,11 @@ public class DriveTrain extends Subsystem {
 	// Encoder PID controller
 	private PIDController m_moveToTheYEncoderPID;
 	// Encoder PID controller variables
-	private static final double yEncoderKp = 0.0003;
+	private static final double yEncoderKp = 0.25;
 	private static final double yEncoderKi = 0.000;
 	private static final double yEncoderKd = 0.000;
 	private static final double yEncoderKf = 0.000;
-	private static final double yEncoderTolerance = 1;
+	private static final double yEncoderTolerance = 0.1;
 	private static final double yEncoderOutputMax = 0.5;
 
 	public PIDController getYPIDcontroller() {
@@ -240,7 +240,9 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public double pidGet() {
-			System.out.println("Encoder Position = " + getEncoderPosition());
+			if (kNoisyDebug) {
+				System.out.println("Encoder Position = " + getEncoderPosition());
+			}
 			return getEncoderPosition();
 		}
 
@@ -250,11 +252,12 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			output = raiseOutputAboveMin(output,0.03);
+			//output = raiseOutputAboveMin(output,0.03);
 			teleopDrive(0, -output, 0);
-			System.out.println("Encoder Output = " + output 
+			if (kNoisyDebug) {
+					System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheYEncoderPID.getAvgError());
-
+			}
 		}
 
 	}
@@ -277,7 +280,9 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public boolean isDoneMovingToYEncoderRevolutions() {
-		System.out.println("encoder distance = " + getEncoderDistance());
+		if (kNoisyDebug) {
+			System.out.println("encoder distance = " + getEncoderDistance());
+		}
 		return m_moveToTheYEncoderPID.onTarget();
 	}
 
@@ -289,11 +294,11 @@ public class DriveTrain extends Subsystem {
 	//X stuff
 	private PIDController m_moveToTheXEncoderPID;
 	// Encoder PID controller variables
-	private static final double xEncoderKp = 0.0003;
+	private static final double xEncoderKp = 0.25;
 	private static final double xEncoderKi = 0.000;
 	private static final double xEncoderKd = 0.000;
 	private static final double xEncoderKf = 0.000;
-	private static final double xEncoderTolerance = 1;
+	private static final double xEncoderTolerance = 0.1;
 	private static final double xEncoderOutputMax = 0.5;
 
 	public PIDController getXPIDcontroller() {
@@ -320,7 +325,9 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public double pidGet() {
-			System.out.println("Encoder Position = " + getEncoderPosition());
+			if (kNoisyDebug){
+				System.out.println("Encoder Position = " + getEncoderPosition());
+			}
 			return getEncoderPosition();
 		}
 
@@ -330,11 +337,12 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			output = raiseOutputAboveMin(output,0.03);
+			//output = raiseOutputAboveMin(output,0.03);
 			teleopDrive(output, 0, 0);
-			System.out.println("Encoder Output = " + output 
+			if (kNoisyDebug) {
+				System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheXEncoderPID.getAvgError());
-
+			}
 		}
 
 	}
@@ -357,7 +365,9 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public boolean isDoneMovingToXEncoderRevolutions() {
-		System.out.println("encoder distance = " + getEncoderDistance());
+		if (kNoisyDebug) {
+			System.out.println("encoder distance = " + getEncoderDistance());
+		}
 		return m_moveToTheXEncoderPID.onTarget();
 	}
 
