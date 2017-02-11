@@ -7,20 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveToEncoderDistance extends Command {
-	
-	private double m_distanceToMove;
+public class MoveX extends Command {
 
-    public MoveToEncoderDistance(double distanceToMove) {
+	private double m_distance = 0;
+	
+    public MoveX() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	m_distanceToMove = distanceToMove;
+    }
+    
+    public MoveX(double distance) {
+    	
+    	requires (Robot.driveTrain);
+    	m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeYEncoderPID(m_distanceToMove);
+    	
+    	Robot.driveTrain.moveToXEncoderRevolutions(m_distance);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,13 +36,13 @@ public class MoveToEncoderDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneMovingToYEncoderRevolutions();
+    	
+        return Robot.driveTrain.isDoneMovingToXEncoderRevolutions();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stop();
-    	Robot.driveTrain.stopMovingToYEncoderRevolutions();
+    	Robot.driveTrain.stopMovingToXEncoderRevolutions();
     }
 
     // Called when another command which requires one or more of the same
