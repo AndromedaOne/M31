@@ -5,12 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class groupMiddleLift extends CommandGroup {
-	
-	private	boolean m_boiler = false;
-    
-	public groupMiddleLift() {
-    	
+public class GroupBoilerVisionLeft extends CommandGroup {
+
+    public GroupBoilerVisionLeft() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,18 +24,10 @@ public class groupMiddleLift extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-		
-		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-		addSequential(new MoveUsingUltrasonic(4));
-		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(4));
-
-
     	
-    	
+    	//Start with the robot's "front" Facing the left wall on the left side
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(30));
+    	//vision code
     }
 }

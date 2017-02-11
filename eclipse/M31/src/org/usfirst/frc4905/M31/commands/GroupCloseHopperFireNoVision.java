@@ -1,15 +1,14 @@
 package org.usfirst.frc4905.M31.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class groupMiddleLiftNoMoveVision extends CommandGroup {
-	
-    
-	public groupMiddleLiftNoMoveVision() {
-    	
+public class GroupCloseHopperFireNoVision extends CommandGroup {
+
+    public GroupCloseHopperFireNoVision() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,12 +26,16 @@ public class groupMiddleLiftNoMoveVision extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-		//Move Foward With Vision
-		//Push Gear On
-		addSequential(new MoveX(-1));
+    	addSequential(new MoveX(-10));
+    	addSequential(new MoveUsingUltrasonic(1));
+    	addSequential(new MoveY(1));
+    	Timer.delay(1.5);
+    	addSequential(new MoveY (-2.2));
+    	addSequential(new MoveX (10));
+    	addSequential(new TurnDeltaAngleDegree(45));
+    	//shooting stuff!!!! :D
+    	
+    	
     	
     	
     }

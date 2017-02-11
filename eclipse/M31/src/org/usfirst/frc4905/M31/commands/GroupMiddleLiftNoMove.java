@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class groupMiddleLiftNoMove extends CommandGroup {
+public class GroupMiddleLiftNoMove extends CommandGroup {
 	
     
-	public groupMiddleLiftNoMove() {
+	public GroupMiddleLiftNoMove() {
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

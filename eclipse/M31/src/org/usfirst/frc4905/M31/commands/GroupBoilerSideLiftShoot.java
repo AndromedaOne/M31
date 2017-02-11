@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class groupBoilerSideLiftShoot extends CommandGroup {
+public class GroupBoilerSideLiftShoot extends CommandGroup {
 
-    public groupBoilerSideLiftShoot() {
+    public GroupBoilerSideLiftShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

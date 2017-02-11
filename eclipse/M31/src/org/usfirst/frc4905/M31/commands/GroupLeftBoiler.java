@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class groupBoilerVisionRight extends CommandGroup {
+public class GroupLeftBoiler extends CommandGroup {
 
-    public groupBoilerVisionRight() {
+    public GroupLeftBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,9 +25,9 @@ public class groupBoilerVisionRight extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	//Start with the robot's "front" Facing the left wall on the rightS side
     	addSequential(new MoveY(10));
     	addSequential(new TurnDeltaAngleDegree(-30));
-    	//vision code
+    	addSequential(new MoveUsingUltrasonic(7));
+    	//GEAR SPIT COMMAND
     }
 }
