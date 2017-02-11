@@ -303,8 +303,12 @@ public class DriveTrain extends Subsystem {
 	private class MovingInTheXEncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in x direction
-			return (frontLeft.getPosition() + backLeft.getPosition()
-			- frontRight.getPosition() - backRight.getPosition()) / 4;
+			System.out.println("backRight:  " + backRight.getPosition() + // -
+					           "frontRight: " + frontRight.getPosition() + // +
+					           "frontLeft:  " + frontLeft.getPosition() +  // +
+					           "backLeft:   " + backLeft.getPosition());   // -
+			return (frontRight.getPosition() - backRight.getPosition()
+					+ frontLeft.getPosition() - backLeft.getPosition()) / 4;
 		}
 		
 		@Override
@@ -331,7 +335,7 @@ public class DriveTrain extends Subsystem {
 		@Override
 		public void pidWrite(double output) {
 			output = raiseOutputAboveMin(output,0.03);
-			teleopDrive(0, -output, 0);
+			teleopDrive(output, 0, 0);
 			System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheXEncoderPID.getAvgError());
 
