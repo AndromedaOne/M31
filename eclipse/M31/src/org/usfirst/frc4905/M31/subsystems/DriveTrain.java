@@ -84,8 +84,8 @@ public class DriveTrain extends Subsystem {
 			m_motors[i].enableBrakeMode(true);
 			m_motors[i].setVoltageRampRate(48);
 			m_motors[i].setPID(kp, ki, kd, kf, izone, ramprate, 0);
-			m_motors[i].set(0);
 			m_motors[i].changeControlMode(TalonControlMode.Speed);
+			m_motors[i].set(0);
 		}
 		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
@@ -303,10 +303,6 @@ public class DriveTrain extends Subsystem {
 	private class MovingInTheXEncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in x direction
-			System.out.println("backRight:  " + backRight.getPosition() + // -
-					           "frontRight: " + frontRight.getPosition() + // +
-					           "frontLeft:  " + frontLeft.getPosition() +  // +
-					           "backLeft:   " + backLeft.getPosition());   // -
 			return (frontRight.getPosition() - backRight.getPosition()
 					+ frontLeft.getPosition() - backLeft.getPosition()) / 4;
 		}
