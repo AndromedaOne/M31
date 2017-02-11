@@ -21,10 +21,10 @@ public class GroupMovePastBaselien extends CommandGroup {
 
         // A command group will require all of the subsystems that each member
         // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
+        // e.g. if Command1 reqires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//All values are NOT permanent
-    	addSequential(new MoveY(5));
+    	addSequential(new MoveY(30));
     }
 }
