@@ -61,7 +61,6 @@ public class DriveTrain extends Subsystem {
 	
 	private double m_RPMConversion = 883;
 	
-	
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
 	
@@ -152,8 +151,7 @@ public class DriveTrain extends Subsystem {
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
-	
-	
+
 		
 	public void stop(){
 		frontLeft.set(0);

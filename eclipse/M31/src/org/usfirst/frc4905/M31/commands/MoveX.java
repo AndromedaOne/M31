@@ -7,39 +7,42 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GetShooterToSpeed extends Command {
-	private int m_speed = 0;
-    public GetShooterToSpeed(int speed) {
+public class MoveX extends Command {
+
+	private double m_distance = 0;
+	
+    public MoveX() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-		requires(Robot.Shooter);
-		
-		m_speed = speed;
+    	requires(Robot.driveTrain);
+    }
+    
+    public MoveX(double distance) {
+    	
+    	requires (Robot.driveTrain);
+    	m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
+    	Robot.driveTrain.moveToXEncoderRevolutions(m_distance);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.Shooter.setShooterTargetSpeed(m_speed);
-    	System.out.print("Shooter Speed" + Robot.Shooter.getShooterMotor().getSpeed());
-    	System.out.println("Encoder Speed" + Robot.Shooter.getShooterMotor().getEncVelocity());
-    	Robot.Shooter.setWhetherAmAtSpeed();
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       return false;
+    	
+        return Robot.driveTrain.isDoneMovingToXEncoderRevolutions();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.Shooter.stopShooter();
-    	Robot.Shooter.setWhetherAmAtSpeed(false);
+    	Robot.driveTrain.stopMovingToXEncoderRevolutions();
     }
 
     // Called when another command which requires one or more of the same
