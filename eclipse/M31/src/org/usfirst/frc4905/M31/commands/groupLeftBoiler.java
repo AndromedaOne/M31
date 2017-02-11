@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GroupMovePastBaselien extends CommandGroup {
+public class groupLeftBoiler extends CommandGroup {
 
-    public GroupMovePastBaselien() {
+    public groupLeftBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,7 +24,10 @@ public class GroupMovePastBaselien extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//All values are NOT permanent
-    	addSequential(new MoveY(10000));
+    	
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-30));
+    	addSequential(new MoveUsingUltrasonic(7));
+    	//GEAR SPIT COMMAND
     }
 }

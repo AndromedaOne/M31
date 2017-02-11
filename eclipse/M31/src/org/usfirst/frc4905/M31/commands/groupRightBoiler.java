@@ -1,15 +1,15 @@
 package org.usfirst.frc4905.M31.commands;
 
+import java.util.Timer;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMiddleLiftNoMoveVision extends CommandGroup {
-	
-    
-	public GroupMiddleLiftNoMoveVision() {
-    	
+public class groupRightBoiler extends CommandGroup {
+
+    public groupRightBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,13 +27,13 @@ public class GroupMiddleLiftNoMoveVision extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-		//Move Foward With Vision
-		//Push Gear On
-		addSequential(new MoveX(-1));
+    	//CODE DESIGNED FOR THE RIGHT LIFT  OF THE FIELD
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-160));
+    	addSequential(new MoveUsingUltrasonic(7));
+    	//GEAR SPITTER COMMAND
     	
+    	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
     	
     }
 }
