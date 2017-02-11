@@ -53,6 +53,8 @@ public class DriveTrain extends Subsystem {
 	private int m_iterationsSinceRotationCommanded = 0;
 	private double m_desiredHeading;
 	
+	private boolean isSlow = false;
+	
 	public DriveTrain() {
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
@@ -105,6 +107,18 @@ public class DriveTrain extends Subsystem {
 		}
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
+	}
+	
+	public boolean toggleSlowFast(){
+		if(isSlow == true){
+			//return that we're  going slow
+			isSlow = false;
+			return !isSlow;
+		}else{
+			//return that we're not going slow
+			isSlow = true;
+			return !isSlow;
+		}
 	}
 
 		

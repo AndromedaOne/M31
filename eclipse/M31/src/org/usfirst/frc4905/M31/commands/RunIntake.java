@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RunIntake extends Command {
-
+	private int m_delay = 25;
     public RunIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -21,15 +21,17 @@ public class RunIntake extends Command {
     protected void initialize() {
     	
     	Robot.fuelIntake.stopIntake();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.getSubGamePad().getRawButton(3)){
+    	if(Robot.oi.getSubGamePad().getRawButton(3) && m_delay > 24){
     		Robot.fuelIntake.toggle();
+    		m_delay = 0;
     	}
-    
-    	//Robot.fuelIntake.startIntake();
+    	m_delay++;
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
