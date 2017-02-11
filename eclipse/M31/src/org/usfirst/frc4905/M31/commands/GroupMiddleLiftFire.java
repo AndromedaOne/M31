@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class groupLeftBoiler extends CommandGroup {
+public class GroupMiddleLiftFire extends CommandGroup {
 
-    public groupLeftBoiler() {
+    public GroupMiddleLiftFire() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,9 +25,14 @@ public class groupLeftBoiler extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-30));
-    	addSequential(new MoveUsingUltrasonic(7));
-    	//GEAR SPIT COMMAND
+    	addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+    	addSequential(new MoveX(4));
+    	//Push Gear On
+    	addSequential(new MoveX(-1));
+		addSequential(new TurnDeltaAngleDegree(120));
+		addSequential(new MoveY(3));
+		//Shoot 10 Balls into the Boiler
+		
     }
 }
