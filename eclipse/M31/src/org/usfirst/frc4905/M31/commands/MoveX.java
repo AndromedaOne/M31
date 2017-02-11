@@ -37,7 +37,7 @@ public class MoveX extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return Robot.driveTrain.isDoneMovingToXEncoderPosition();
+        return Robot.driveTrain.isDoneMovingToXEncoderRevolutions();
     }
 
     // Called once after isFinished returns true

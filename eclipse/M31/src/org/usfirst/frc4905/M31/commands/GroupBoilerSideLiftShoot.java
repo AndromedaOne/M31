@@ -1,14 +1,13 @@
 package org.usfirst.frc4905.M31.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class groupCloseHopperFireNoVision extends CommandGroup {
+public class GroupBoilerSideLiftShoot extends CommandGroup {
 
-    public groupCloseHopperFireNoVision() {
+    public GroupBoilerSideLiftShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -26,17 +25,12 @@ public class groupCloseHopperFireNoVision extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveX(-10));
-    	addSequential(new MoveUsingUltrasonic(1));
-    	addSequential(new MoveY(1));
-    	Timer.delay(1.5);
-    	addSequential(new MoveY (-2.2));
-    	addSequential(new MoveX (10));
-    	addSequential(new TurnDeltaAngleDegree(45));
-    	//shooting stuff!!!! :D
-    	
-    	
-    	
-    	
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-160));
+    	//SEAN'S VISION CODE FOR PUTTING THE GEAR ON
+    	addSequential(new MoveY(-2));
+    	addSequential(new TurnDeltaAngleDegree(-20));
+    	//Potentially add a move forward here after facing boiler
+    	//Sean's vision code
     }
 }
