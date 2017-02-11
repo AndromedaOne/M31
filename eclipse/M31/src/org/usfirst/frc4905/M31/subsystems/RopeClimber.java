@@ -15,17 +15,17 @@ public class RopeClimber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	//declarations
-	public VictorSP ropeMotor;
-	public void climbRope() {
-		ropeMotor.setSpeed(0.4);
-		
-	}
+	public VictorSP ropeMotor = RobotMap.ropeClimbMotor;
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new climbRope());
+    	//setDefaultCommand(new climbRope());
     }
-    
+    public void climbRope() {
+		ropeMotor.setSpeed(1);
+		
+	}
     public void stopClimbing() {
     	ropeMotor.setSpeed(0);
     }
