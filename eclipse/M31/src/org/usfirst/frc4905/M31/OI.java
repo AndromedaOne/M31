@@ -71,7 +71,7 @@ public class OI {
 		getEncButton = new JoystickButton(driveController, 1);
 		getEncButton.whenPressed(new GetEncPos());
 		saveImageButton = new JoystickButton(driveController, 3);
-		saveImageButton.whenPressed(new SaveTimestamp());
+		saveImageButton.whenPressed(new PutTimeStampOnNetworkTables());
 		placeGearAutomatically = new JoystickButton(driveController, 4);
 		placeGearAutomatically.whenPressed(new placeGearAutomatically());
 

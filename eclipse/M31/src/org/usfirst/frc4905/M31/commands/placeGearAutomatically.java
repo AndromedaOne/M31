@@ -26,11 +26,11 @@ public class placeGearAutomatically extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new getLiftVisionProcessingInformation());
-    	if (Robot.visionProcessing.m_foundTargetLift == true){
-    		addSequential(new TurnToCompassHeading(Robot.visionProcessing.m_angleToTurnLift));
-    		addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveLaterally));
-    		addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveForwardLift));
-    	}
+    	//addSequential(new getLiftVisionProcessingInformation());
+    	//if (Robot.visionProcessing.m_foundTargetLift == true){
+    		//addSquential(new TurnToCompassHeading(Robot.visionProcessing.m_angleToTurnLift));
+    		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveLaterally));
+    		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveForwardLift));
+    	addSequential(new VisionTest());
     }
 }

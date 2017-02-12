@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SaveTimestamp extends Command {
+public class VisionTest extends Command {
 
-    public SaveTimestamp() {
+    public VisionTest() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -20,8 +20,14 @@ public class SaveTimestamp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double timestamp = Robot.visionProcessing.getLastTimestamp();
-    	Robot.visionProcessing.saveTimestamp(timestamp);
+	    System.out.println("Starting");
+		Robot.visionProcessing.initDataForLift();
+		System.out.println("Found target: " + Robot.visionProcessing.getFoundLift());
+		if (Robot.visionProcessing.getFoundLift() == true){
+			System.out.println("Angle to turn: " + Robot.visionProcessing.getDeltaAngle());
+			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
+			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
