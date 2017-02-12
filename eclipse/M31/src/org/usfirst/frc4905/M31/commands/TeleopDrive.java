@@ -20,6 +20,7 @@ import org.usfirst.frc4905.M31.Robot;
  *
  */
 public class TeleopDrive extends Command {
+	private final double kDeadzone = 0.1;
 	private int m_delay = 25;
 	private boolean slowModeEnabled = false;
 	double mod = 1;
@@ -50,7 +51,16 @@ public class TeleopDrive extends Command {
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
 		double rotation = OI.getRightStickHorizontal(driveGamepad);
-		
+		if(xIn < kDeadzone && xIn > -kDeadzone) {
+			xIn = 0;
+		}
+		if(yIn < kDeadzone && yIn > -kDeadzone) {
+			yIn = 0;
+		}
+		if(rotation < kDeadzone && rotation > -kDeadzone) {
+			rotation = 0;
+		}
+		//24 = about half a second
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
