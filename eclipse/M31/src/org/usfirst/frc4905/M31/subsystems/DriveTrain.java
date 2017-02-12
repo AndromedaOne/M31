@@ -228,13 +228,7 @@ public class DriveTrain extends Subsystem {
 
 	// Encoder PID controller
 	private PIDController m_moveToTheYEncoderPID;
-	// Encoder PID controller variables
-	private static final double yEncoderKp = 0.25;
-	private static final double yEncoderKi = 0.000;
-	private static final double yEncoderKd = 0.000;
-	private static final double yEncoderKf = 0.000;
-	private static final double yEncoderTolerance = 0.1;
-	private static final double yEncoderOutputMax = 0.3;
+
 
 	public PIDController getYPIDcontroller() {
 		return m_moveToTheYEncoderPID;
@@ -286,6 +280,16 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeYEncoderPID(double distanceToMove) {
+		
+		// Encoder PID controller variables
+		double yEncoderKp = prefs.getDouble("YEncoderP", 0.25);
+		double yEncoderKi = prefs.getDouble("YEncoderI", 0.000);
+		double yEncoderKd = prefs.getDouble("YEncoderD", 0.000);
+		double yEncoderKf = prefs.getDouble("YEncoderF", 0.000);
+		double yEncoderTolerance = prefs.getDouble("YEncoderTolerance", 0.1);
+		double yEncoderOutputMax = prefs.getDouble("YEncoderOutputMax", 0.3);
+		
+		
 		resetEncPos();
 		MovingInTheYEncoderPIDin encoderPIDin = new MovingInTheYEncoderPIDin();
 		MovingInTheYEncoderPIDout encoderPIDout = new MovingInTheYEncoderPIDout();
@@ -316,13 +320,7 @@ public class DriveTrain extends Subsystem {
 	
 	//X stuff
 	private PIDController m_moveToTheXEncoderPID;
-	// Encoder PID controller variables
-	private static final double xEncoderKp = 0.25;
-	private static final double xEncoderKi = 0.000;
-	private static final double xEncoderKd = 0.000;
-	private static final double xEncoderKf = 0.000;
-	private static final double xEncoderTolerance = 0.1;
-	private static final double xEncoderOutputMax = 0.3;
+
 
 	public PIDController getXPIDcontroller() {
 		return m_moveToTheXEncoderPID;
@@ -375,6 +373,15 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeXEncoderPID(double distanceToMove) {
+		
+		// Encoder PID controller variables
+		double xEncoderKp = prefs.getDouble("XEncoderP", 0.25);
+		double xEncoderKi = prefs.getDouble("XEncoderI", 0.000);
+		double xEncoderKd = prefs.getDouble("XEncoderD", 0.000);
+		double xEncoderKf = prefs.getDouble("XEncoderF", 0.000);
+		double xEncoderTolerance = prefs.getDouble("XEncoderTolerance", 0.1);
+		double xEncoderOutputMax = prefs.getDouble("XEncoderOutputMax", 0.3);
+		
 		resetEncPos();
 		MovingInTheXEncoderPIDin encoderPIDin = new MovingInTheXEncoderPIDin();
 		MovingInTheXEncoderPIDout encoderPIDout = new MovingInTheXEncoderPIDout();
