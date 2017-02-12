@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnToDegreeAngle extends Command {
+public class TurnDeltaAngleDegree extends Command {
 
-	private double m_angleToTurnTo;
+	private double m_deltaAngle;
 
-	public TurnToDegreeAngle(double angleToTurnTo) {
+	public TurnDeltaAngleDegree(double deltaAngle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
-		m_angleToTurnTo = angleToTurnTo;
+		m_deltaAngle = deltaAngle;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.initializeGyroPID(m_angleToTurnTo);
+		Robot.driveTrain.initializeGyroPID(m_deltaAngle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
