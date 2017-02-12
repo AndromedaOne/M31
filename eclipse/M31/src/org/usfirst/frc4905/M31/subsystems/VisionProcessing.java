@@ -14,12 +14,12 @@ public class VisionProcessing extends Subsystem {
     // here. Call these from Commands.
 	private NetworkTable m_networkTable;
 	private NetworkTable m_robotCommands;
-	private double timestamp = 0;
-	public boolean m_foundTargetLift = false;
-	public double m_angleToTurnLift = 0;
-	public double m_distanceToDriveLaterally = 0;
-	public double m_distanceToDriveForwardLift = 0;
-	public double m_liftTimestamp = 0;
+	private double m_timestamp = 0;
+	private boolean m_foundTargetLift = false;
+	private double m_angleToTurnLift = 0;
+	private double m_distanceToDriveLaterally = 0;
+	private double m_distanceToDriveForwardLift = 0;
+	private double m_liftTimestamp = 0;
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -30,7 +30,10 @@ public class VisionProcessing extends Subsystem {
     	m_networkTable = NetworkTable.getTable(table);
     	m_robotCommands = NetworkTable.getTable("RobotCommmands");
     }
-    
+    public void putTimestampOnNetworkTables(){
+    	m_robotCommands.putBoolean("TimestampRet", true);
+    	m_robotCommands.putNumber("Timestamp", m_timestamp);
+    }
     //start of public interface methods
     public boolean doesVisionSeeTarget(){
     	return(false);
@@ -51,65 +54,61 @@ public class VisionProcessing extends Subsystem {
     	return (false);
     }
     public double getDeltaAngle(){
-    	return(0);
+    	return m_angleToTurnLift;
     }
     public double getLateralDistance(){
-    	return(0);
+    	return m_distanceToDriveLaterally;
     }
     public double getForwardDistance(){
-    	return(0);
+    	return m_distanceToDriveForwardLift;
+    }
+    public boolean getFoundLift(){
+    	return m_foundTargetLift;
     }
     //end of public interface methods
     
-    public class dataForLift{
+    private class dataForLift{
     	public boolean foundLift;
     	public double angletoTurn;
     	public double distanceAwayForward;
     	public double distanceAwayLateral;
     	public double timestamp;
     }
-    public class dataForBoiler{
+
+    public void initDataForLift(){
+    	initNetworkTable("VisionProcessing") ;
+    	dataForLift data = new dataForLift();
+    	data.foundLift = m_networkTable.getBoolean("foundLiftTarget", false);
+    	data.angletoTurn = m_networkTable.getNumber("radiansToTurnLift", 0);
+    	data.distanceAwayForward = m_networkTable.getNumber("distanceToDriveForwardLift",0);
+    	data.distanceAwayLateral = m_networkTable.getNumber("distanceToDriveLaterallyLift",0);
+    	data.timestamp = m_networkTable.getNumber("timestampLift",0);
+    	m_timestamp = data.timestamp;
+    	m_foundTargetLift = data.foundLift;
+    	m_angleToTurnLift = data.angletoTurn;
+    	m_distanceToDriveForwardLift = data.distanceAwayForward;
+    	m_distanceToDriveLaterally = data.distanceAwayLateral;
+    	m_liftTimestamp = data.timestamp;
+    }
+    private class dataForBoiler{
     	public boolean foundBoiler;
     	public double angleToTurn;
     	public double distanceAway;
     	public double timestamp;
     }
-    public dataForLift getDataForLift(){
-    	dataForLift data = new dataForLift();
-    	data.foundLift = m_networkTable.getBoolean("foundLiftTarget", false);
-    	data.angletoTurn = m_networkTable.getNumber("radiansToTurnLift", 0);
-    	data.distanceAwayForward = m_networkTable.getNumber("distanceToDriveForwardLift",0);
-    	data.distanceAwayLateral = m_networkTable.getNumber("distanceToDdriveLaterallyLift",0);
-    	data.timestamp = m_networkTable.getNumber("timestampLift",0);
-    	timestamp = data.timestamp;
-    	return data;
-    }
-    public dataForBoiler getDataForBoiler(){
+    private dataForBoiler getDataForBoiler(){
     	dataForBoiler data = new dataForBoiler();
     	data.angleToTurn = m_networkTable.getNumber("radiansToTurnHighGoal",0);
     	data.distanceAway = m_networkTable.getNumber("distanceAwayHighGoal",0);
     	data.foundBoiler = m_networkTable.getBoolean("foundHighGoalTarget", false);
     	data.timestamp = m_networkTable.getNumber("timestampHighGoal",0);
-    	timestamp = data.timestamp;
+    	m_timestamp = data.timestamp;
     	return data;
     }
+
     public void turnOffPi(){
     	m_robotCommands.putBoolean("TurnOff", true);
     }
-    public void saveTimestamp(double timestamp){
-    	m_robotCommands.putBoolean("TimestampRet", true);
-    	m_robotCommands.putNumber("Timestamp", timestamp);
-    }
-    public double getLastTimestamp(){
-    	return timestamp;
-    }
-    public void saveDataForLift(boolean foundLift ,double angletoTurn,double distanceAwayForward,
-			double distanceAwayLateral, double timestamp){
-    	m_foundTargetLift = foundLift;
-    	m_angleToTurnLift = angletoTurn;
-    	m_distanceToDriveForwardLift = distanceAwayForward;
-    	m_distanceToDriveLaterally = distanceAwayLateral;
-    	m_liftTimestamp = timestamp;
-    }
+
 }
 
