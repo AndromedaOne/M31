@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -63,6 +64,9 @@ public class DriveTrain extends Subsystem {
 	
 	private final boolean kNoisyDebug = true;
 	StringBuilder m_sb = new StringBuilder();
+	// Preferences Code
+	Preferences prefs = Preferences.getInstance();
+
 	
 	
 	
@@ -72,8 +76,15 @@ public class DriveTrain extends Subsystem {
 		double kd = 1.5;
 		// 700/60/10*1 = 1.167  1023/1.167 -- Page 80 in CTR Documentation
 		double kf = 0.214;
+
 		int izone = 0;
 		double ramprate = 36;
+		kp = prefs.getDouble("SpeedP", kp);
+		ki = prefs.getDouble("SpeedI", ki);
+		kd = prefs.getDouble("SpeedD", kd);
+		kf = prefs.getDouble("SpeedF", kf);
+		ramprate = prefs.getDouble("SpeedRamprate", ramprate);
+		izone = prefs.getInt("SpeedIzone", izone);
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
 			m_motors[i].reverseSensor(false);
