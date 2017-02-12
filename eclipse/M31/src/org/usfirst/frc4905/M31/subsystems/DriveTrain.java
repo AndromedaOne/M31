@@ -164,12 +164,15 @@ public class DriveTrain extends Subsystem {
 		} else if (m_iterationsSinceRotationCommanded > 20) {
 			rotation = (m_desiredHeading - gyroReading) / 40.0;
 		}
-		SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
-    	SmartDashboard.putNumber("Back Right Speed", -Robot.driveTrain.getM2Speed());
-    	SmartDashboard.putNumber("Front Right Speed", -Robot.driveTrain.getM3Speed());
-    	SmartDashboard.putNumber("Back Left Speed", Robot.driveTrain.getM4Speed());
-    	SmartDashboard.putNumber("Y Commanded Speed",yIn);
-    	SmartDashboard.putNumber("X Commanded Speed", xIn);
+		if(prefs.getBoolean("Mecanum Logging", false)) {
+			SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
+			SmartDashboard.putNumber("Back Right Speed", -Robot.driveTrain.getM2Speed());
+			SmartDashboard.putNumber("Front Right Speed", -Robot.driveTrain.getM3Speed());
+			SmartDashboard.putNumber("Back Left Speed", Robot.driveTrain.getM4Speed());
+			SmartDashboard.putNumber("Y Commanded Speed",yIn);
+			SmartDashboard.putNumber("X Commanded Speed", xIn);
+			SmartDashboard.putNumber("Rotation", rotation);
+		}
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 
