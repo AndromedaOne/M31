@@ -70,8 +70,8 @@ public class Robot extends IterativeRobot {
         sideChooser = new SendableChooser();
         
         autoChooser.addDefault("Move Forward", new GroupMovePastBaselien());
-        autoChooser.addObject("Left Lift With Vision", new GroupBoilerVisionLeft());
-        autoChooser.addObject("Right Lift With Vision", new GroupBoilerVisionRight());
+        autoChooser.addObject("Left Lift With Vision", new GroupLiftVisionLeft());
+        autoChooser.addObject("Right Lift With Vision", new GroupLiftVisionRight());
         autoChooser.addObject("Middle Lift With Vision", new GroupMiddleLiftVision());
         autoChooser.addObject("Shoot From Start, Cross Baseline", new GroupShootFromStartCrossBaseLine());
         autoChooser.addObject("Close Hopper, Fire" , new GroupCloseHopperFireVision());
