@@ -35,8 +35,20 @@ public class VisionProcessing extends Subsystem {
     public boolean doesVisionSeeTarget(){
     	return(false);
     }
+    private boolean m_firstTime = true;
+    private long m_endTime = 0;
     public boolean isVisionReady(){
-    	return(false);
+    	if(m_firstTime){
+    		long startTime = System.currentTimeMillis();
+    		long delay = 2*1000; //2 seconds
+    		m_endTime = startTime + delay;
+    		m_firstTime = false;
+    	}
+    	if(System.currentTimeMillis() >= m_endTime){
+    		m_firstTime = true;
+    		return(true);
+    	}
+    	return (false);
     }
     public double getDeltaAngle(){
     	return(0);
