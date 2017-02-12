@@ -116,7 +116,7 @@ public class DriveTrain extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	int m_loops = 0;
-	public void teleopDrive(double xIn, double yIn, double rotation){
+	public void mecanumDrive(double xIn, double yIn, double rotation){
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
@@ -264,7 +264,7 @@ public class DriveTrain extends Subsystem {
 		public void pidWrite(double output) {
 			//output = raiseOutputAboveMin(output,0.03);
 			last_y_commanded_speed = output * m_RPMConversion;
-			teleopDrive(0, -output, 0);
+			mecanumDrive(0, -output, 0);
 			if (kNoisyDebug) {
 					System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheYEncoderPID.getAvgError());
@@ -353,7 +353,7 @@ public class DriveTrain extends Subsystem {
 		public void pidWrite(double output) {
 			//output = raiseOutputAboveMin(output,0.03);
 			last_x_commanded_speed = output * m_RPMConversion;
-			teleopDrive(output, 0, 0);
+			mecanumDrive(output, 0, 0);
 			if (kNoisyDebug) {
 				System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheXEncoderPID.getAvgError());
