@@ -17,6 +17,7 @@ public class Shooter extends Subsystem {
     // here. Call these from Commands.
 	public VictorSP feederMotor = RobotMap.feederMotor;
 	public CANTalon shooterMotor = RobotMap.shooterMotor;
+	public DigitalInput safetySwitch = RobotMap.shooterSafetySwitch;
 	private boolean m_amAtSpeed;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -67,7 +68,9 @@ public class Shooter extends Subsystem {
     	return m_amAtSpeed;
     }
     
-    
+    public boolean getSafetySwitch(){
+    	return safetySwitch.get();
+    }
     
     
     
