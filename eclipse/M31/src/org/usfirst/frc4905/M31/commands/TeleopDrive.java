@@ -74,7 +74,7 @@ public class TeleopDrive extends Command {
 			}
 		}
 		Robot.driveTrain.teleopDrive(xIn * mod, yIn * mod, rotation * mod);
-		System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
+		//System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
 		m_delay++;
     }
 
