@@ -16,7 +16,7 @@ public class GearHandler extends Subsystem {
 	private final DigitalInput rightSwitch = RobotMap.gearHandlerRightSwitch;
 	private final DigitalInput leftSwitch = RobotMap.gearHandlerLeftSwitch;
 	private final DigitalInput poleSensor = RobotMap.gearHandlerSensePoleSwitch;
-	
+	private boolean m_ClosedState = true;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	/*public void openHandler() {
@@ -88,6 +88,14 @@ public class GearHandler extends Subsystem {
 	
 	public void stopMovingRight(){
 		rightSP.set(0);
+	}
+	
+	public void setClosedState(){
+		m_ClosedState = !m_ClosedState;
+	}
+	
+	public boolean getClosedState(){
+		return m_ClosedState;
 	}
 	
     public void initDefaultCommand() {
