@@ -1,16 +1,15 @@
-package org.usfirst.frc4905.M31.groupCommands;
-
-import org.usfirst.frc4905.M31.commands.MoveX;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+package org.usfirst.frc4905.M31.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupLiftVisionLeft extends CommandGroup {
-
-    public GroupLiftVisionLeft() {
+public class GroupMiddleLiftNoMoveVision extends CommandGroup {
+	
+    
+	public GroupMiddleLiftNoMoveVision() {
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,9 +27,13 @@ public class GroupLiftVisionLeft extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	//Start with the robot's "front" Facing the left wall on the left side
-    	addSequential(new MoveX(5));
-    	addSequential(new TurnDeltaAngleDegree(30));
-    	//vision code
+		//Facing Towards the AirShip
+		addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+		//Move Foward With Vision
+		//Push Gear On
+		addSequential(new MoveX(-1));
+    	
+    	
     }
 }

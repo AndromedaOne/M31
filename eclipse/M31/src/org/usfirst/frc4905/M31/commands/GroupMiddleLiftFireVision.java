@@ -1,17 +1,13 @@
-package org.usfirst.frc4905.M31.groupCommands;
-
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+package org.usfirst.frc4905.M31.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupLiftLeftNoVison extends CommandGroup {
+public class GroupMiddleLiftFireVision extends CommandGroup {
 
-    public GroupLiftLeftNoVison() {
+    public GroupMiddleLiftFireVision() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,9 +25,14 @@ public class GroupLiftLeftNoVison extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-30));
-    	addSequential(new MoveUsingUltrasonic(7));
-    	//GEAR SPIT COMMAND
+    	addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+    	addSequential(new MoveX(4));
+    	//Push Gear On
+    	addSequential(new MoveX(-1));
+		addSequential(new TurnDeltaAngleDegree(120));
+		addSequential(new MoveY(3));
+		//Shoot 10 Balls into the Boiler
+		
     }
 }

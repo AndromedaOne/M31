@@ -1,18 +1,13 @@
-package org.usfirst.frc4905.M31.groupCommands;
-
-import org.usfirst.frc4905.M31.commands.MoveX;
-import org.usfirst.frc4905.M31.commands.MoveY;
+package org.usfirst.frc4905.M31.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMiddleLiftVision extends CommandGroup {
-	
-    
-	public GroupMiddleLiftVision() {
-    	
+public class GroupLeftBoiler extends CommandGroup {
+
+    public GroupLeftBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,16 +24,10 @@ public class GroupMiddleLiftVision extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-		
-		//GearHandler Facing Towards the AirShip
-		//Move Forward With Vision
-		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(4));
-
-
     	
-    	
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-30));
+    	addSequential(new MoveUsingUltrasonic(7));
+    	//GEAR SPIT COMMAND
     }
 }
