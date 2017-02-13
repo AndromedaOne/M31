@@ -103,8 +103,8 @@ public class RobotMap {
        shooterMotor = new CANTalon(6);
        LiveWindow.addActuator("Shooter", "Shooter Motor", shooterMotor);
        
-       /*shooterSafetySwitch = new DigitalInput(7);
-       LiveWindow.addSensor("Shooter", "Safety Switch", shooterSafetySwitch);*/
+       shooterSafetySwitch = new DigitalInput(0);
+       LiveWindow.addSensor("Shooter", "Safety Switch", shooterSafetySwitch);
     }
     
     public static NavxGyro getNavxGyro() {
