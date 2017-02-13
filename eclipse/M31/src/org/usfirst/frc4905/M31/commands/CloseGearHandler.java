@@ -24,7 +24,7 @@ public class CloseGearHandler extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new MoveLeftGearHandler(-0.2));
-    	addSequential(new MoveRightGearHandler(-0.2));
+    	addParallel(new MoveLeftGearHandler(-0.25));
+    	addSequential(new MoveRightGearHandler(-0.25));
     }
 }
