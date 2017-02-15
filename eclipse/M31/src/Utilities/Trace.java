@@ -89,7 +89,7 @@ public class Trace {
 		}
 	}
 	
-	public void addEntry(String fileName, Vector<Double> values) throws Exception {
+	public void addEntry(String fileName, Vector<Double> values) {
 		try {
 			if(!m_traces.containsKey(fileName)) {
 				String err = new String("Warning: trace file " + fileName);
@@ -119,15 +119,17 @@ public class Trace {
 	}
 	
 	public void closeTraceFiles() {
-		// new lambda functionality!!
-		m_traces.forEach((k,v) -> {
-			try {
-				v.getFile().close();
-			} catch (IOException e) {
-				System.err.println("ERROR: failed to close trace file" + k);
-				e.printStackTrace();
-			}
-		});
+		if(m_traces != null) {
+			// new lambda functionality!!
+			m_traces.forEach((k,v) -> {
+				try {
+					v.getFile().close();
+				} catch (IOException e) {
+					System.err.println("ERROR: failed to close trace file" + k);
+					e.printStackTrace();
+				}
+			});
+		}
 		m_traces = null;
 	}
 }
