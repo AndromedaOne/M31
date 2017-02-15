@@ -13,6 +13,9 @@ package org.usfirst.frc4905.M31.subsystems;
 
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
+
+import java.util.Vector;
+
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
 import Utilities.*;
@@ -68,6 +71,12 @@ public class DriveTrain extends Subsystem {
 	
 	
 	public DriveTrain() {
+		Trace traceInstance = Trace.getInstance();
+		Vector<String> header = new Vector<String>();
+		header.add("X value");
+		header.add("output");
+		traceInstance.addTrace("X encoder PID", header);
+		
 		double kp = 0.15;
 		double ki = 0.00015;
 		double kd = 1.5;
