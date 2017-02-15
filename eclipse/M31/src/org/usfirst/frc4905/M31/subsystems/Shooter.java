@@ -18,7 +18,7 @@ public class Shooter extends Subsystem {
 	public VictorSP feederMotor = RobotMap.feederMotor;
 	public CANTalon shooterMotor = RobotMap.shooterMotor;
 	public DigitalInput safetySwitch = RobotMap.shooterSafetySwitch;
-	private boolean m_amAtSpeed;
+	private boolean m_amAtSpeed = false;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -54,7 +54,7 @@ public class Shooter extends Subsystem {
     }
     
     public void setWhetherAmAtSpeed(){
-    	if(shooterMotor.getError() < 10 && shooterMotor.getError() > -10){
+    	if(shooterMotor.getError() < 5 && shooterMotor.getError() > -5){
     		m_amAtSpeed = true;
     	}
     	else{
@@ -72,7 +72,21 @@ public class Shooter extends Subsystem {
     	return safetySwitch.get();
     }
     
-    
-    
-}
+    public void moveFeederUntilSwitchPressed(){
 
+
+
+    	if(safetySwitch.get()){
+
+    		feederMotor.set(-0.3);
+
+    	}
+    	else{
+    		feederMotor.set(0);
+
+    	}
+    }
+
+
+
+}

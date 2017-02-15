@@ -31,7 +31,7 @@ public class ShootFromTheBoiler extends Command {
     	System.out.println("Encoder Speed" + Robot.Shooter.getShooterMotor().getEncVelocity());
     	Robot.Shooter.setWhetherAmAtSpeed();
     	if(Robot.Shooter.getWhetherAmAtSpeed()){
-    		if(Robot.Shooter.getSafetySwitch()){
+    		if(Robot.Shooter.getSafetySwitch() == true){
         		m_safetyCount++;
         	}
         	else{
@@ -41,8 +41,10 @@ public class ShootFromTheBoiler extends Command {
     			Robot.Shooter.spinFeederCW();
     		}
     		else{
-    			Robot.Shooter.stopFeeder();
+    			Robot.Shooter.spinFeederCCW();
     		}
+    	}else{
+    		Robot.Shooter.stopFeeder();
     	}
     	
     }
@@ -54,9 +56,10 @@ public class ShootFromTheBoiler extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     	Robot.Shooter.stopShooter();
     	Robot.Shooter.setWhetherAmAtSpeed(false);
-    	Robot.Shooter.stopFeeder();
+    	
     }
 
     // Called when another command which requires one or more of the same
