@@ -12,6 +12,21 @@
 package org.usfirst.frc4905.M31;
 
 import org.usfirst.frc4905.M31.commands.*;
+import org.usfirst.frc4905.M31.groupCommands.GroupBoilerSideLiftShoot;
+import org.usfirst.frc4905.M31.groupCommands.GroupCloseHopperFireNoVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupCloseHopperFireVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupLeftBoiler;
+import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionLeft;
+import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftFire;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftFireVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftNoMove;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftNoMoveVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
+import org.usfirst.frc4905.M31.groupCommands.GroupRightBoiler;
+import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLine;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -90,6 +105,22 @@ public class OI {
         SmartDashboard.putData("TurnToRadianAngle", new TurnDeltaAngleRadian(0.698132));
         SmartDashboard.putData("TurnToCompassHeading", new TurnToCompassHeading(40));
 		SmartDashboard.putData("GoToTargetDistance", new MoveUsingUltrasonic(24));
+		
+		SmartDashboard.putData("Group Boiler Slide Lift Shoot", new GroupBoilerSideLiftShoot());
+		SmartDashboard.putData("Group Close Hopper Fire No Vision", new GroupCloseHopperFireNoVision());
+		SmartDashboard.putData("Group Close Hopper Fire Vision", new GroupCloseHopperFireVision());
+		SmartDashboard.putData("Group Left Boiler", new GroupLeftBoiler());
+		SmartDashboard.putData("Group Lift Vision Left", new GroupLiftVisionLeft());
+		SmartDashboard.putData("Group Lift Vision Right", new GroupLiftVisionRight());
+		SmartDashboard.putData("Group Middle Lift", new GroupMiddleLift());
+		SmartDashboard.putData("Group Middle Lift Fire", new GroupMiddleLiftFire());
+		SmartDashboard.putData("Group Middle Lift Fire Vision", new GroupMiddleLiftFireVision());
+		SmartDashboard.putData("Group Middle Lift No Move", new GroupMiddleLiftNoMove());
+		SmartDashboard.putData("Group Middle Lift No Move Vision", new GroupMiddleLiftNoMoveVision());
+		SmartDashboard.putData("Group Middle Lift Vision", new GroupMiddleLiftVision());
+		SmartDashboard.putData("Group Move Past Baseline", new GroupMovePastBaseline());
+		SmartDashboard.putData("Group Right Boiler", new GroupRightBoiler());
+		SmartDashboard.putData("Group Shoot From Start Cross Baseline", new GroupShootFromStartCrossBaseLine());
 		
 		subController = new Joystick(1);		
 		toggleButton = new JoystickButton(subController, 3);
