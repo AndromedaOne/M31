@@ -27,6 +27,6 @@ public class GroupMovePastBaseline extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//All values are NOT permanent
-    	addSequential(new MoveY(10));
+    	addSequential(new MoveY(30));
     }
 }

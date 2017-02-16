@@ -33,12 +33,14 @@ public class GroupMiddleLift extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 		
-		//Facing Gear Handler Towards the AirShip
+		//Facing Towards the AirShip
+		addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
 		addSequential(new MoveUsingUltrasonic(4));
 		//Push Gear On
 		addSequential(new MoveX(-1.5));
 		addSequential(new MoveY(-3));
-		addSequential(new MoveX(-4));
+		addSequential(new MoveX(4));
 
 
     	
