@@ -1,13 +1,19 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import java.util.Timer;
+
+import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
+import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupLeftBoiler extends CommandGroup {
+public class GroupRightBoiler extends CommandGroup {
 
-    public GroupLeftBoiler() {
+    public GroupRightBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,9 +31,13 @@ public class GroupLeftBoiler extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	//CODE DESIGNED FOR THE RIGHT LIFT  OF THE FIELD
     	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-30));
+    	addSequential(new TurnDeltaAngleDegree(-160));
     	addSequential(new MoveUsingUltrasonic(7));
-    	//GEAR SPIT COMMAND
+    	//GEAR SPITTER COMMAND
+    	
+    	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
+    	
     }
 }
