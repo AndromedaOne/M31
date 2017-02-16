@@ -1,5 +1,6 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
+import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveX;
 import org.usfirst.frc4905.M31.commands.MoveY;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
@@ -29,9 +30,8 @@ public class GroupMiddleLiftFire extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-    	addSequential(new MoveX(4));
+    	//Start With Gear Handler Facing the AirShip
+    	addSequential(new MoveUsingUltrasonic(4));
     	//Push Gear On
     	addSequential(new MoveX(-1));
 		addSequential(new TurnDeltaAngleDegree(120));
