@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GroupLeftBoiler extends CommandGroup {
+public class GroupLiftLeftNoVison extends CommandGroup {
 
-    public GroupLeftBoiler() {
+    public GroupLiftLeftNoVison() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
