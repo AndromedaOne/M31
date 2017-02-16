@@ -1,13 +1,19 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
+import org.usfirst.frc4905.M31.commands.MoveX;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupBoilerSideLiftShoot extends CommandGroup {
-
-    public GroupBoilerSideLiftShoot() {
+public class GroupMiddleLiftNoMove extends CommandGroup {
+	
+    
+	public GroupMiddleLiftNoMove() {
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,12 +31,13 @@ public class GroupBoilerSideLiftShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-160));
-    	//SEAN'S VISION CODE FOR PUTTING THE GEAR ON
-    	addSequential(new MoveY(-2));
-    	addSequential(new TurnDeltaAngleDegree(-20));
-    	//Potentially add a move forward here after facing boiler
-    	//Sean's vision code
+		//Facing Towards the AirShip
+		addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+		addSequential(new MoveUsingUltrasonic(4));
+		//Push Gear On
+		addSequential(new MoveX(-1));
+    	
+    	
     }
 }

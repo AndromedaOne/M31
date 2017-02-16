@@ -1,16 +1,16 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMiddleLift extends CommandGroup {
-	
-	private	boolean m_boiler = false;
-    
-	public GroupMiddleLift() {
-    	
+public class GroupShootFromStartCrossBaseLine extends CommandGroup {
+
+    public GroupShootFromStartCrossBaseLine() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,18 +27,13 @@ public class GroupMiddleLift extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-		
-		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-		addSequential(new MoveUsingUltrasonic(4));
-		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(4));
-
-
     	
+    	addSequential(new MoveY(1));
+    	//Turn Towards the Boiler
+    	addSequential(new TurnDeltaAngleDegree(90));
+    	//Begin Shooting into the Boiler
+    	addSequential(new TurnDeltaAngleDegree(-90));
+    	addSequential(new MoveY(5));
     	
     }
 }

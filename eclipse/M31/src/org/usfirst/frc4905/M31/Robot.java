@@ -19,6 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.commands.*;
+import org.usfirst.frc4905.M31.groupCommands.GroupCloseHopperFireVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionLeft;
+import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
+import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
+import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLine;
 import org.usfirst.frc4905.M31.subsystems.*;
 
 import com.ctre.CANTalon;
@@ -73,7 +79,7 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         sideChooser = new SendableChooser();
         
-        autoChooser.addDefault("Move Forward", new GroupMovePastBaselien());
+        autoChooser.addDefault("Move Forward", new GroupMovePastBaseline());
         autoChooser.addObject("Left Lift With Vision", new GroupLiftVisionLeft());
         autoChooser.addObject("Right Lift With Vision", new GroupLiftVisionRight());
         autoChooser.addObject("Middle Lift With Vision", new GroupMiddleLiftVision());

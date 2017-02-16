@@ -1,13 +1,18 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.commands.MoveX;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMovePastBaselien extends CommandGroup {
-
-    public GroupMovePastBaselien() {
+public class GroupMiddleLiftNoMoveVision extends CommandGroup {
+	
+    
+	public GroupMiddleLiftNoMoveVision() {
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -21,10 +26,17 @@ public class GroupMovePastBaselien extends CommandGroup {
 
         // A command group will require all of the subsystems that each member
         // would require.
-        // e.g. if Command1 reqires chassis, and Command2 requires arm,
+        // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//All values are NOT permanent
-    	addSequential(new MoveY(30));
+    	
+		//Facing Towards the AirShip
+		addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+		//Move Foward With Vision
+		//Push Gear On
+		addSequential(new MoveX(-1));
+    	
+    	
     }
 }

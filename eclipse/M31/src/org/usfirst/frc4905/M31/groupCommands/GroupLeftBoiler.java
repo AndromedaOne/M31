@@ -1,13 +1,17 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
+import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupLiftVisionLeft extends CommandGroup {
+public class GroupLeftBoiler extends CommandGroup {
 
-    public GroupLiftVisionLeft() {
+    public GroupLeftBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,9 +29,9 @@ public class GroupLiftVisionLeft extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	//Start with the robot's "front" Facing the left wall on the left side
-    	addSequential(new MoveX(5));
-    	addSequential(new TurnDeltaAngleDegree(30));
-    	//vision code
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-30));
+    	addSequential(new MoveUsingUltrasonic(7));
+    	//GEAR SPIT COMMAND
     }
 }
