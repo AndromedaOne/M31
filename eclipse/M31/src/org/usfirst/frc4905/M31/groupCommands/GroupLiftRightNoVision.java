@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GroupRightBoiler extends CommandGroup {
+public class GroupLiftRightNoVision extends CommandGroup {
 
-    public GroupRightBoiler() {
+    public GroupLiftRightNoVision() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -33,8 +33,8 @@ public class GroupRightBoiler extends CommandGroup {
     	
     	//CODE DESIGNED FOR THE RIGHT LIFT  OF THE FIELD
     	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-160));
-    	addSequential(new MoveUsingUltrasonic(7));
+    	addSequential(new TurnDeltaAngleDegree(-50));
+    	addSequential(new MoveUsingUltrasonic(5));
     	//GEAR SPITTER COMMAND
     	
     	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
