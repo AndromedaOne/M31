@@ -118,7 +118,7 @@ public class NavxGyro {
 		return m_navX.getWorldLinearAccelY();
 	}
 	
-	public float getWorlddLinearAccelZ()  {
+	public float getWorldLinearAccelZ()  {
 		return m_navX.getWorldLinearAccelZ();
 	}
 }

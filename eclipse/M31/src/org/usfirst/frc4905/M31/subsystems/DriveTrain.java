@@ -176,7 +176,10 @@ public class DriveTrain extends Subsystem {
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 		if(++m_loops >= 10) {
 			m_loops = 0;
-			System.out.println();
+			
+			SmartDashboard.putNumber("Accel X", RobotMap.getNavxGyro().getWorldLinearAccelX());
+			SmartDashboard.putNumber("Accel Y", RobotMap.getNavxGyro().getWorldLinearAccelY());
+			SmartDashboard.putNumber("Accel Z", RobotMap.getNavxGyro().getWorldLinearAccelZ());
 		}
 	}
 	
