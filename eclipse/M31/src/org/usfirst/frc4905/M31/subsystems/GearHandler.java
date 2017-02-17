@@ -1,6 +1,7 @@
 package org.usfirst.frc4905.M31.subsystems;
 
 import org.usfirst.frc4905.M31.RobotMap;
+import org.usfirst.frc4905.M31.commands.TeleopToggleGearHandler;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -11,12 +12,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearHandler extends Subsystem {
 	//Declarations
-	private final VictorSP rightSP = RobotMap.gearHandlerRight;
-	private final VictorSP leftSP = RobotMap.gearHandlerLeft;
+	private final static VictorSP rightSP = RobotMap.gearHandlerRight;
+	private final static VictorSP leftSP = RobotMap.gearHandlerLeft;
 	private final DigitalInput rightSwitch = RobotMap.gearHandlerRightSwitch;
 	private final DigitalInput leftSwitch = RobotMap.gearHandlerLeftSwitch;
 	private final DigitalInput poleSensor = RobotMap.gearHandlerSensePoleSwitch;
-	private boolean m_ClosedState = true;
+	private static boolean m_ClosedState = true;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	/*public void openHandler() {
@@ -61,6 +62,11 @@ public class GearHandler extends Subsystem {
 		leftSP.setSpeed(-speed);
 	}
 	
+	public void moveGearHandlerTogether(double speed){
+		moveRightGearHandler(speed + 0.1);
+		moveLeftGearHandler(speed);
+	}
+	
 	public boolean shouldStopMovingLeft(){
 		
 		//if it is false, it is being pressed
@@ -94,14 +100,18 @@ public class GearHandler extends Subsystem {
 		m_ClosedState = !m_ClosedState;
 	}
 	
-	public boolean getClosedState(){
+	public static boolean getClosedState(){
 		return m_ClosedState;
 	}
 	
+	public static void toggle(){
+		
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	
+    	//setDefaultCommand(new TeleopToggleGearHandler());
+    	//need this to be default so we can always be reading joystick buttons within the command.
     }
     
     
