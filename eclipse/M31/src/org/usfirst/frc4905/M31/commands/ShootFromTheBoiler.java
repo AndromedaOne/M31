@@ -25,10 +25,10 @@ public class ShootFromTheBoiler extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    		Robot.Shooter.setShooterTargetSpeed(m_speed);
+    	Robot.Shooter.setShooterTargetSpeed(m_speed);
     	
     	System.out.print("Shooter Speed" + Robot.Shooter.getShooterMotor().getSpeed());
-    	System.out.println("Encoder Speed" + Robot.Shooter.getShooterMotor().getEncVelocity());
+    	System.out.println("Error" + Robot.Shooter.getShooterMotor().getError());
     	Robot.Shooter.setWhetherAmAtSpeed();
     	if(Robot.Shooter.getWhetherAmAtSpeed()){
     		if(Robot.Shooter.getSafetySwitch() == true){
@@ -37,7 +37,7 @@ public class ShootFromTheBoiler extends Command {
         	else{
         		m_safetyCount = 0;
         	}
-    		if(m_safetyCount < 25){
+    		if(m_safetyCount < 30){
     			Robot.Shooter.spinFeederCW();
     		}
     		else{

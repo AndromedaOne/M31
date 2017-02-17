@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
     
     public void spinFeederCW(){
     	//clockwise is the way we want to go to feed. it is a negative speed
-    	feederMotor.set(-0.65);
+    	feederMotor.set(-0.75);
     }
     
     public void spinFeederCCW(){
@@ -54,7 +54,7 @@ public class Shooter extends Subsystem {
     }
     
     public void setWhetherAmAtSpeed(){
-    	if(shooterMotor.getError() < 5 && shooterMotor.getError() > -5){
+    	if(shooterMotor.getError() < 7 && shooterMotor.getError() > -7){
     		m_amAtSpeed = true;
     	}
     	else{

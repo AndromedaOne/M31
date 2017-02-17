@@ -103,7 +103,7 @@ public class RobotMap {
        shooterMotor = new CANTalon(6);
        LiveWindow.addActuator("Shooter", "Shooter Motor", shooterMotor);
        
-       shooterSafetySwitch = new DigitalInput(0);
+       shooterSafetySwitch = new DigitalInput(9);
        LiveWindow.addSensor("Shooter", "Safety Switch", shooterSafetySwitch);
     }
     
