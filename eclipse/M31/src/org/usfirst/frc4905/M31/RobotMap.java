@@ -99,7 +99,7 @@ public class RobotMap {
 	
 		
 		gearHandlerLeftSwitch = new DigitalInput(3);
-		LiveWindow.addSensor("gearHandler", "Gear Handler Left Switch", gearHandlerLeftSwitch);
+		LiveWindow.addSensor("gearHandler", "Gear Handler Left Switch", gearHandlerLeftSwitch); 
 		gearHandlerRightSwitch = new DigitalInput(2);
 		LiveWindow.addSensor("gearHandler", "Gear Handler Right Switch", gearHandlerRightSwitch);
 		gearHandlerSensePoleSwitch = new DigitalInput(8);

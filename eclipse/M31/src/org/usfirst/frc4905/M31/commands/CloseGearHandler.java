@@ -1,30 +1,43 @@
 package org.usfirst.frc4905.M31.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc4905.M31.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CloseGearHandler extends CommandGroup {
+public class CloseGearHandler extends Command {
 
     public CloseGearHandler() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.gearHandler);
+    }
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    }
 
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    	addParallel(new MoveLeftGearHandler(-0.25));
-    	addSequential(new MoveRightGearHandler(-0.25));
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	Robot.gearHandler.moveGearHandlerTogether(-0.3);
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    	Robot.gearHandler.stopMovingLeft();
+    	Robot.gearHandler.stopMovingRight();
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	end();
     }
 }
