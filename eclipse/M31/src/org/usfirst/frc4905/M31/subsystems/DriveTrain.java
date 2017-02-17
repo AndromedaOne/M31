@@ -129,7 +129,7 @@ public class DriveTrain extends Subsystem {
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
 		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
-		if(kNoisyDebug) {
+		if (kNoisyDebug) {
 			m_sb.append("\tout:");
 			m_sb.append(motorOutput);
 			m_sb.append("\tspd:");
@@ -138,7 +138,7 @@ public class DriveTrain extends Subsystem {
 			m_sb.append(frontRight.getClosedLoopError() * 600 / 4096);
 			m_sb.append("\ttrg:");
 			m_sb.append(-yIn*m_RPMConversion);
-			if(++m_loops >= 10) {
+			if (++m_loops >= 10) {
 				m_loops = 0;
 				System.out.println(m_sb.toString());
 			}
@@ -216,9 +216,9 @@ public class DriveTrain extends Subsystem {
 
 	private double raiseOutputAboveMin(double output, 
 			double minimumOutput) {
-		if((Math.abs(output) < minimumOutput) && (output != 0)) {
+		if ((Math.abs(output) < minimumOutput) && (output != 0)) {
 			double minVal = minimumOutput; 
-			if(output < 0) {
+			if (output < 0) {
 				output = -minVal;
 			} else {
 				output = minVal;				
@@ -442,16 +442,16 @@ public class DriveTrain extends Subsystem {
 		double angleMod = initialAngle % 360;
 		System.out.println("AngleMod = " + angleMod + 
 				" Initial Angle = " + initialAngle);
-		if(angleMod < 0) {
+		if (angleMod < 0) {
 			//Correcting Negative Modulus
 			angleMod = angleMod + 360; 
 		}
 		double deltaAngle = angle - angleMod;
-		if(Math.abs(deltaAngle) > 180) { 
+		if (Math.abs(deltaAngle) > 180) { 
 			// Turn to the minimal angle
 			boolean neg = (deltaAngle < 0);
 			deltaAngle = Math.abs(deltaAngle) - 360;
-			if(neg) {
+			if (neg) {
 				deltaAngle = -deltaAngle;
 			}
 		}
@@ -469,7 +469,7 @@ public class DriveTrain extends Subsystem {
 
 	}
 	public boolean isDoneAuto(double target, double currentPos){
-		if(currentPos <  target){
+		if (currentPos <  target){
 			return false;
 		}else{
 			return true;
