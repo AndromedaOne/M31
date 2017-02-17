@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
         Robot.Shooter.getShooterMotor().reverseSensor(false);
         Robot.Shooter.getShooterMotor().configEncoderCodesPerRev(48);
         Robot.Shooter.getShooterMotor().setProfile(0);
-        Robot.Shooter.getShooterMotor().setP(5);
+        Robot.Shooter.getShooterMotor().setP(5.2);
         Robot.Shooter.getShooterMotor().setI(0);
         Robot.Shooter.getShooterMotor().setD(0);
         Robot.Shooter.getShooterMotor().setF(3);
