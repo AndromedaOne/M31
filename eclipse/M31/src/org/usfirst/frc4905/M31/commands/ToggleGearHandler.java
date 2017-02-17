@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ToggleGearHandler extends Command {
-	private int m_delay = 0;
+	
 	private int m_threshold = 0;
+	private double m_outSpeed = 0.4;
+	private double m_inSpeed = -0.2;
     public ToggleGearHandler() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -17,70 +19,50 @@ public class ToggleGearHandler extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//if we're starting from a state where the limits are pressed...
-    	if(Robot.gearHandler.shouldStopMovingLeft()&&Robot.gearHandler.shouldStopMovingRight()){
-    		m_threshold = 10;
-    	}
+    	//start from a state where both gates are closed.
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//if we're closed, do this
     	if(Robot.gearHandler.getClosedState()){
+    		//if we aren't hitting the switch...
     		if(!Robot.gearHandler.shouldStopMovingRight()){
-    			Robot.gearHandler.moveRightGearHandler(0.25);
-    			System.out.println("Going Out!");
+    			Robot.gearHandler.moveRightGearHandler(m_outSpeed);
+    		}else{
+    			Robot.gearHandler.stopMovingRight();
     		}
-    		else if(m_delay > m_threshold){
-    			Robot.gearHandler.moveRightGearHandler(0);
+    		//if we aren't hitting the switch...
+    		if(Robot.gearHandler.shouldStopMovingLeft()){
+    			Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    		}else{
+    			Robot.gearHandler.stopMovingLeft();
     		}
-    		if(!Robot.gearHandler.shouldStopMovingLeft()){
-    			Robot.gearHandler.moveLeftGearHandler(0.25);
-    			
+    		if(Robot.gearHandler.shouldStopMovingLeft()&& Robot.gearHandler.shouldStopMovingRight()){
+    			Robot.gearHandler.setClosedState();
     		}
-    		else if(m_delay > m_threshold){
-    			Robot.gearHandler.moveLeftGearHandler(0);
-    		}
+    	}else{
+    		Robot.gearHandler.moveLeftGearHandler(m_inSpeed);
+    		Robot.gearHandler.moveRightGearHandler(m_inSpeed);
+    		Robot.gearHandler.setClosedState();
     	}
-    	else{
-    		if(!Robot.gearHandler.shouldStopMovingRight()){
-    			Robot.gearHandler.moveRightGearHandler(-0.25);
-    			System.out.println("Going In!");
-    		}
-    		else if(m_delay > m_threshold){
-    		
-    			Robot.gearHandler.moveRightGearHandler(0);
-    		}
-    		if(!Robot.gearHandler.shouldStopMovingLeft()){
-    			Robot.gearHandler.moveLeftGearHandler(-0.25);
-    		}
-    		else if(m_delay > m_threshold){
-    			Robot.gearHandler.moveLeftGearHandler(0);
-    		}
-    		
-    	}
-    	m_delay++;
+    
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       if(m_delay < m_threshold){
-    	   return false;
-       }else{
-    	   if(Robot.gearHandler.shouldStopMovingLeft() && Robot.gearHandler.shouldStopMovingRight()){
-           	Robot.gearHandler.setClosedState();
-           	System.out.println("Called isFinished!!!");
-           	return true;
-           }else{
-           	System.out.println("Not Calling isFinished");
-           	return false;
-           } 
-       }
+      return false;
     	
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.gearHandler.stopMovingLeft();
-    	Robot.gearHandler.stopMovingRight();
+    	//if we're open, remain stopped
+    	if(!Robot.gearHandler.getClosedState()){
+    		Robot.gearHandler.stopMovingLeft();
+        	Robot.gearHandler.stopMovingRight();
+    	}
+    	//if we're closed though, keep applying power.
     }
 
     // Called when another command which requires one or more of the same
