@@ -109,8 +109,18 @@ public class NavxGyro {
 		
 		return m_navX.isCalibrating();
 	}
-
-
+	
+	public float getWorldLinearAccelX()  {
+		return m_navX.getWorldLinearAccelX();
+	}
+	
+	public float getWorldLinearAccelY()	 {
+		return m_navX.getWorldLinearAccelY();
+	}
+	
+	public float getWorlddLinearAccelZ()  {
+		return m_navX.getWorldLinearAccelZ();
+	}
 }
 
 

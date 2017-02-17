@@ -174,6 +174,10 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Rotation", rotation);
 		}
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
+		if(++m_loops >= 10) {
+			m_loops = 0;
+			System.out.println();
+		}
 	}
 	
 	
