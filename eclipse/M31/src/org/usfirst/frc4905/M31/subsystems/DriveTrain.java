@@ -180,7 +180,7 @@ public class DriveTrain extends Subsystem {
 			if (m_iterationsSinceRotationCommanded == 20) {
 				m_desiredHeading = gyroReading;
 			} else if (m_iterationsSinceRotationCommanded > 20) {
-				rotation = (m_desiredHeading - gyroReading) / 40.0;
+				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
 			System.out.println("Gyro is enabled!");
 		} else {
