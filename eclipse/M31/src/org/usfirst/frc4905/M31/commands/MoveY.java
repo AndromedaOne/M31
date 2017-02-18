@@ -3,28 +3,37 @@ package org.usfirst.frc4905.M31.commands;
 import org.usfirst.frc4905.M31.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class MoveToEncoderDistance extends Command {
+public class MoveY extends Command {
 	
-	private double m_distanceToMove;
+	private double m_distance = 0;
 
-    public MoveToEncoderDistance(double distanceToMove) {
+    public MoveY() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	m_distanceToMove = distanceToMove;
+    }
+    
+    public MoveY(double distance) {
+    	
+    	requires (Robot.driveTrain);
+    	m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeYEncoderPID(m_distanceToMove);
+    	
+    	Robot.driveTrain.moveToYEncoderRevolutions(m_distance);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +43,6 @@ public class MoveToEncoderDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stop();
     	Robot.driveTrain.stopMovingToYEncoderRevolutions();
     }
 
