@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShootFromTheBoiler extends Command {
 	private int m_speed;
 	private int m_safetyCount;
+	private int m_ccwSafetyCount;
     public ShootFromTheBoiler(int speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.Shooter);
     	m_speed = speed;
     	m_safetyCount = 0;
+    	m_ccwSafetyCount = 0;
     }
 
     // Called just before this Command runs the first time
@@ -33,15 +35,21 @@ public class ShootFromTheBoiler extends Command {
     	if(Robot.Shooter.getWhetherAmAtSpeed()){
     		if(Robot.Shooter.getSafetySwitch() == true){
         		m_safetyCount++;
+        		m_ccwSafetyCount++;
         	}
         	else{
         		m_safetyCount = 0;
+        		m_ccwSafetyCount = 0;
         	}
     		if(m_safetyCount < 30){
     			Robot.Shooter.spinFeederCW();
+    			m_ccwSafetyCount = 0;
     		}
-    		else{
+    		else if(m_ccwSafetyCount < 30){
     			Robot.Shooter.spinFeederCCW();
+    			
+    		}else{
+    			Robot.Shooter.stopFeeder();
     		}
     	}else{
     		Robot.Shooter.stopFeeder();
