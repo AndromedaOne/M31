@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnToDegreeAngle extends Command {
-
-	private double m_angleToTurnTo;
+public class MoveToEncoderDistance extends Command {
 	
-    public TurnToDegreeAngle(double angleToTurnTo) {
+	private double m_distanceToMove;
+
+    public MoveToEncoderDistance(double distanceToMove) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	m_angleToTurnTo = angleToTurnTo;
+    	m_distanceToMove = distanceToMove;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.initializeGyroPID(m_angleToTurnTo);
+    	Robot.driveTrain.initializeYEncoderPID(m_distanceToMove);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,13 +29,13 @@ public class TurnToDegreeAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.doneTurningWithGyro();
+        return Robot.driveTrain.isDoneMovingToYEncoderRevolutions();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveTrain.stop();
-    	Robot.driveTrain.stopGyroPID();
+    	Robot.driveTrain.stopMovingToYEncoderRevolutions();
     }
 
     // Called when another command which requires one or more of the same
