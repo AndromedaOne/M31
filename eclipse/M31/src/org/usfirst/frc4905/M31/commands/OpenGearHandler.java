@@ -7,12 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class climbRope extends Command {
-
-    public climbRope() {
+public class OpenGearHandler extends Command {
+	private double m_outSpeed = 0.3;
+	private double m_inSpeed = -0.2;
+    public OpenGearHandler() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.robotClimber);
+    	requires(Robot.gearHandler);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +22,18 @@ public class climbRope extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.robotClimber.climbRope();
+    	if(Robot.gearHandler.shouldStopMovingLeft()){
+    		Robot.gearHandler.stopMovingLeft();
+    	}
+    	else{
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    	}
+    	if(Robot.gearHandler.shouldStopMovingRight()){
+    		Robot.gearHandler.stopMovingRight();
+    	}
+    	else{
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed + 0.1);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +43,8 @@ public class climbRope extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.robotClimber.stopClimbing();
+    	Robot.gearHandler.stopMovingLeft();
+    	Robot.gearHandler.stopMovingRight();
     }
 
     // Called when another command which requires one or more of the same
