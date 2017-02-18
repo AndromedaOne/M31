@@ -182,11 +182,11 @@ public class DriveTrain extends Subsystem {
 			} else if (m_iterationsSinceRotationCommanded > 20) {
 				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
-			System.out.println("Gyro is enabled!");
+			//System.out.println("Gyro is enabled!");
 		} else {
 			RobotMap.getNavxGyro().setInitialAngleReading();
 			//rotation = 0.0;
-			System.out.println("Gyro is disabled!");
+			//System.out.println("Gyro is disabled!");
 		}
 		if(prefs.getBoolean("Mecanum Logging", false)) {
 			SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
