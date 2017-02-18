@@ -177,8 +177,11 @@ public class DriveTrain extends Subsystem {
 		if(++m_loops >= 10) {
 			m_loops = 0;
 			
-			SmartDashboard.putNumber("Accel X", RobotMap.getNavxGyro().getWorldLinearAccelX());
-			SmartDashboard.putNumber("Accel Y", RobotMap.getNavxGyro().getWorldLinearAccelY());
+			SmartDashboard.putNumber("Raw Accel X", RobotMap.getNavxGyro().getRawGyroX());
+			SmartDashboard.putNumber("Raw Accel Y", RobotMap.getNavxGyro().getRawGyroY());
+			SmartDashboard.putNumber("Raw Accel Z", RobotMap.getNavxGyro().getRawGyroZ());
+			SmartDashboard.putNumber("Accel X", RobotMap.getNavxGyro().getWorldLinearAccelY());
+			SmartDashboard.putNumber("Accel Y", RobotMap.getNavxGyro().getWorldLinearAccelX());
 			SmartDashboard.putNumber("Accel Z", RobotMap.getNavxGyro().getWorldLinearAccelZ());
 		}
 	}
