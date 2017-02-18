@@ -74,7 +74,7 @@ public class TeleopDrive extends Command {
 				System.out.println("Slowmode ended");
 			}
 		}
-		System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
+		//System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
 		m_delay++;
 		if(Robot.oi.getDriveController().getRawButton(7)){
 			xIn = 0;
