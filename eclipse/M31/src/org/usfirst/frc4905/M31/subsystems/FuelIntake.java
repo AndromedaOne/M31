@@ -32,6 +32,10 @@ public class FuelIntake extends Subsystem {
     	
     }
     
+    public void reverseIntake(){
+    	intakeMotor.setSpeed(1);
+    }
+    
     public void toggle(){
     	
     	if(intakeIsRunning == false) {
