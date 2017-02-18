@@ -1,15 +1,13 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.MoveY;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMovePastBaseline extends CommandGroup {
+public class GroupDoNothing extends CommandGroup {
 
-    public GroupMovePastBaseline() {
+    public GroupDoNothing() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -26,7 +24,5 @@ public class GroupMovePastBaseline extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//All values are NOT permanent
-    	addSequential(new MoveY(40));
     }
 }
