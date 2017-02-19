@@ -76,9 +76,14 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> header = new Vector<String>();
-		header.add("X value");
-		header.add("output");
-		traceInstance.addTrace("X encoder PID", header);
+		header.add("Front Left Speed");
+		header.add("Back Left Speed");
+		header.add("Front Right Speed");
+		header.add("Back Right Speed");
+		header.add("Y commanded Speed");
+		header.add("Y commanded Speed");
+		header.add("Rotation");
+		traceInstance.addTrace("mecanumDrive", header);
 		
 		double kp = 0.15;
 		double ki = 0.00015;
