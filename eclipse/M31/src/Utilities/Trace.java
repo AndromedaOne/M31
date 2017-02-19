@@ -1,8 +1,12 @@
 package Utilities;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -26,8 +30,9 @@ import java.util.Vector;
 // each entry is time stamped with the number of milliseconds since the Trace instance
 // was created.
 // once all tracing in complete you need to call closeTraceFiles()
-public class Trace {
-	
+public class Trace 
+{
+	private static String pathOfFile = new String("~/traceLogs");
 	private static Trace m_instance = null;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
@@ -69,7 +74,15 @@ public class Trace {
 		}
 		BufferedWriter outputFile = null;
 		try {
-			FileWriter fstream = new FileWriter(fileName, false);
+			File directory = new File(pathOfFile);
+			if(!directory.exists()) {
+				directory.mkdir();
+			}
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+			Date date = new Date();
+			String dateStr = new String(dateFormat.format(date));
+			String fullFileName = new String(pathOfFile  + "/" + fileName + dateStr + ".csv");
+			FileWriter fstream = new FileWriter(fullFileName, false);
 			outputFile = new BufferedWriter(fstream);
 		}
 		catch(IOException e) {
