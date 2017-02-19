@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -63,6 +64,9 @@ public class DriveTrain extends Subsystem {
 	
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
+	// Preferences Code
+	Preferences prefs = Preferences.getInstance();
+
 	
 	
 	
@@ -72,8 +76,15 @@ public class DriveTrain extends Subsystem {
 		double kd = 1.5;
 		// 700/60/10*1 = 1.167  1023/1.167 -- Page 80 in CTR Documentation
 		double kf = 0.214;
+
 		int izone = 0;
 		double ramprate = 36;
+		kp = prefs.getDouble("SpeedP", kp);
+		ki = prefs.getDouble("SpeedI", ki);
+		kd = prefs.getDouble("SpeedD", kd);
+		kf = prefs.getDouble("SpeedF", kf);
+		ramprate = prefs.getDouble("SpeedRamprate", ramprate);
+		izone = prefs.getInt("SpeedIzone", izone);
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
 			m_motors[i].reverseSensor(false);
@@ -84,8 +95,13 @@ public class DriveTrain extends Subsystem {
 			m_motors[i].enableBrakeMode(true);
 			m_motors[i].setVoltageRampRate(48);
 			m_motors[i].setPID(kp, ki, kd, kf, izone, ramprate, 0);
+			//m_motors[i].setCloseLoopRampRate(0.1);
+			System.out.println("Current Ramp Rate is:" + m_motors[i].getCloseLoopRampRate());
+			System.out.print(" Target Ramp Rate is: " + ramprate + " \n");
+			
 			m_motors[i].changeControlMode(TalonControlMode.Speed);
 			m_motors[i].set(0);
+
 		}
 		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
@@ -111,7 +127,7 @@ public class DriveTrain extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	int m_loops = 0;
-	public void teleopDrive(double xIn, double yIn, double rotation){
+	public void mecanumDrive(double xIn, double yIn, double rotation){
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
@@ -148,10 +164,19 @@ public class DriveTrain extends Subsystem {
 		} else if (m_iterationsSinceRotationCommanded > 20) {
 			rotation = (m_desiredHeading - gyroReading) / 40.0;
 		}
-		
+		if(prefs.getBoolean("Mecanum Logging", false)) {
+			SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
+			SmartDashboard.putNumber("Back Right Speed", -Robot.driveTrain.getM2Speed());
+			SmartDashboard.putNumber("Front Right Speed", -Robot.driveTrain.getM3Speed());
+			SmartDashboard.putNumber("Back Left Speed", Robot.driveTrain.getM4Speed());
+			SmartDashboard.putNumber("Y Commanded Speed",yIn);
+			SmartDashboard.putNumber("X Commanded Speed", xIn);
+			SmartDashboard.putNumber("Rotation", rotation);
+		}
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
-
+	
+	
 		
 	public void stop(){
 		frontLeft.set(0);
@@ -207,13 +232,7 @@ public class DriveTrain extends Subsystem {
 
 	// Encoder PID controller
 	private PIDController m_moveToTheYEncoderPID;
-	// Encoder PID controller variables
-	private static final double yEncoderKp = 0.25;
-	private static final double yEncoderKi = 0.000;
-	private static final double yEncoderKd = 0.000;
-	private static final double yEncoderKf = 0.000;
-	private static final double yEncoderTolerance = 0.1;
-	private static final double yEncoderOutputMax = 0.5;
+
 
 	public PIDController getYPIDcontroller() {
 		return m_moveToTheYEncoderPID;
@@ -247,13 +266,14 @@ public class DriveTrain extends Subsystem {
 		}
 
 	}
-
+	public double last_y_commanded_speed = 0;
 	private class MovingInTheYEncoderPIDout implements PIDOutput {
 
 		@Override
 		public void pidWrite(double output) {
 			//output = raiseOutputAboveMin(output,0.03);
-			teleopDrive(0, -output, 0);
+			last_y_commanded_speed = output * m_RPMConversion;
+			mecanumDrive(0, -output, 0);
 			if (kNoisyDebug) {
 					System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheYEncoderPID.getAvgError());
@@ -264,6 +284,16 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeYEncoderPID(double distanceToMove) {
+		
+		// Encoder PID controller variables
+		double yEncoderKp = prefs.getDouble("YEncoderP", 0.25);
+		double yEncoderKi = prefs.getDouble("YEncoderI", 0.000);
+		double yEncoderKd = prefs.getDouble("YEncoderD", 0.000);
+		double yEncoderKf = prefs.getDouble("YEncoderF", 0.000);
+		double yEncoderTolerance = prefs.getDouble("YEncoderTolerance", 0.1);
+		double yEncoderOutputMax = prefs.getDouble("YEncoderOutputMax", 0.3);
+		
+		
 		resetEncPos();
 		MovingInTheYEncoderPIDin encoderPIDin = new MovingInTheYEncoderPIDin();
 		MovingInTheYEncoderPIDout encoderPIDout = new MovingInTheYEncoderPIDout();
@@ -275,6 +305,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void moveToYEncoderRevolutions(double revolutionsToMove) {
+		resetEncPos();
 		m_moveToTheYEncoderPID.setSetpoint(revolutionsToMove);
 		m_moveToTheYEncoderPID.enable();
 	}
@@ -293,13 +324,7 @@ public class DriveTrain extends Subsystem {
 	
 	//X stuff
 	private PIDController m_moveToTheXEncoderPID;
-	// Encoder PID controller variables
-	private static final double xEncoderKp = 0.25;
-	private static final double xEncoderKi = 0.000;
-	private static final double xEncoderKd = 0.000;
-	private static final double xEncoderKf = 0.000;
-	private static final double xEncoderTolerance = 0.1;
-	private static final double xEncoderOutputMax = 0.5;
+
 
 	public PIDController getXPIDcontroller() {
 		return m_moveToTheXEncoderPID;
@@ -333,12 +358,15 @@ public class DriveTrain extends Subsystem {
 
 	}
 
+	public double last_x_commanded_speed;
+	
 	private class MovingInTheXEncoderPIDout implements PIDOutput {
 
 		@Override
 		public void pidWrite(double output) {
 			//output = raiseOutputAboveMin(output,0.03);
-			teleopDrive(output, 0, 0);
+			last_x_commanded_speed = output * m_RPMConversion;
+			mecanumDrive(output, 0, 0);
 			if (kNoisyDebug) {
 				System.out.println("Encoder Output = " + output 
 					+ " Average Error = " + m_moveToTheXEncoderPID.getAvgError());
@@ -349,6 +377,15 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeXEncoderPID(double distanceToMove) {
+		
+		// Encoder PID controller variables
+		double xEncoderKp = prefs.getDouble("XEncoderP", 0.25);
+		double xEncoderKi = prefs.getDouble("XEncoderI", 0.000);
+		double xEncoderKd = prefs.getDouble("XEncoderD", 0.000);
+		double xEncoderKf = prefs.getDouble("XEncoderF", 0.000);
+		double xEncoderTolerance = prefs.getDouble("XEncoderTolerance", 0.1);
+		double xEncoderOutputMax = prefs.getDouble("XEncoderOutputMax", 0.3);
+		
 		resetEncPos();
 		MovingInTheXEncoderPIDin encoderPIDin = new MovingInTheXEncoderPIDin();
 		MovingInTheXEncoderPIDout encoderPIDout = new MovingInTheXEncoderPIDout();
@@ -360,6 +397,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void moveToXEncoderRevolutions(double revolutionsToMove) {
+		resetEncPos();
 		m_moveToTheXEncoderPID.setSetpoint(revolutionsToMove);
 		m_moveToTheXEncoderPID.enable();
 	}
@@ -372,7 +410,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void stopMovingToXEncoderRevolutions() {
-		m_moveToTheYEncoderPID.disable();
+		m_moveToTheXEncoderPID.disable();
+		
 	}
 
 	
@@ -480,6 +519,20 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
 
 	}
-
+	public double getM1Speed(){
+		return frontLeft.getSpeed();
+				
+	}
+	public double getM2Speed(){
+		return backRight.getSpeed();
+	}
+	public double getM3Speed(){
+		return frontRight.getSpeed();
+	}
+	public double getM4Speed(){
+		return backLeft.getSpeed();
+	}
+	
+	
 }
 
