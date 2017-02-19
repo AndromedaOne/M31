@@ -21,7 +21,7 @@ import org.usfirst.frc4905.M31.Robot;
  *
  */
 public class TeleopDrive extends Command {
-	private final double kDeadzone = 0.1;
+	private final double kDeadzone = 0.15;
 	private int m_delay = 25;
 	private boolean slowModeEnabled = false;
 	double mod = 1;  	
@@ -65,14 +65,14 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.5;
+				mod = 0.25;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{
 				mod = 1;
 				slowModeEnabled = false;
 				System.out.println("Slowmode ended");
-			}
+			} 
 		}
 		//System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
 		m_delay++;
@@ -82,6 +82,7 @@ public class TeleopDrive extends Command {
 		if(Robot.oi.getDriveController().getRawButton(6)){
 			yIn = 0;
 		}
+		System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
     }
 

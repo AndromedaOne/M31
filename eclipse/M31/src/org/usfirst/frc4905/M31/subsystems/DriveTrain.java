@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
+@SuppressWarnings("unused")
 public class DriveTrain extends Subsystem {	
 
 
@@ -73,7 +74,7 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		double kp = 0.15;
-		double ki = 0.00015;
+		double ki = 0.000;
 		double kd = 1.5;
 		// 700/60/10*1 = 1.167  1023/1.167 -- Page 80 in CTR Documentation
 		double kf = 0.214;
@@ -99,7 +100,7 @@ public class DriveTrain extends Subsystem {
 			//m_motors[i].setCloseLoopRampRate(0.1);
 			System.out.println("Current Ramp Rate is:" + m_motors[i].getCloseLoopRampRate());
 			System.out.print(" Target Ramp Rate is: " + ramprate + " \n");
-			
+
 			m_motors[i].changeControlMode(TalonControlMode.Speed);
 			m_motors[i].set(0);
 
@@ -116,7 +117,6 @@ public class DriveTrain extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	@SuppressWarnings("static-access")
 	public void toggleGyro() {
 		if (gyroEnabled) {
 			RobotMap.getNavxGyro().setInitialAngleReading();
@@ -182,7 +182,9 @@ public class DriveTrain extends Subsystem {
 			} else if (m_iterationsSinceRotationCommanded > 20) {
 				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
-			//System.out.println("Gyro is enabled!");
+			if (kNoisyDebug) {
+				System.out.println("Gyro is enabled!");
+			}
 		} else {
 			RobotMap.getNavxGyro().setInitialAngleReading();
 			//rotation = 0.0;
@@ -199,9 +201,9 @@ public class DriveTrain extends Subsystem {
 		}
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
-	
-	
-		
+
+
+
 	public void stop(){
 		frontLeft.set(0);
 		frontRight.set(0);
@@ -308,7 +310,7 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeYEncoderPID(double distanceToMove) {
-		
+
 		// Encoder PID controller variables
 		double yEncoderKp = prefs.getDouble("YEncoderP", 0.25);
 		double yEncoderKi = prefs.getDouble("YEncoderI", 0.000);
@@ -316,8 +318,8 @@ public class DriveTrain extends Subsystem {
 		double yEncoderKf = prefs.getDouble("YEncoderF", 0.000);
 		double yEncoderTolerance = prefs.getDouble("YEncoderTolerance", 0.1);
 		double yEncoderOutputMax = prefs.getDouble("YEncoderOutputMax", 0.3);
-		
-		
+
+
 		resetEncPos();
 		MovingInTheYEncoderPIDin encoderPIDin = new MovingInTheYEncoderPIDin();
 		MovingInTheYEncoderPIDout encoderPIDout = new MovingInTheYEncoderPIDout();
@@ -383,13 +385,14 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double last_x_commanded_speed;
-	
+
 	private class MovingInTheXEncoderPIDout implements PIDOutput {
 
 		@Override
 		public void pidWrite(double output) {
-			//output = raiseOutputAboveMin(output,0.03);
+			output = raiseOutputAboveMin(output,0.08);
 			last_x_commanded_speed = output * m_RPMConversion;
+			
 			mecanumDrive(output, 0, 0);
 			if (kNoisyDebug) {
 				System.out.println("Encoder Output = " + output 
@@ -401,7 +404,7 @@ public class DriveTrain extends Subsystem {
 
 
 	public void initializeXEncoderPID(double distanceToMove) {
-		
+
 		// Encoder PID controller variables
 		double xEncoderKp = prefs.getDouble("XEncoderP", 0.25);
 		double xEncoderKi = prefs.getDouble("XEncoderI", 0.000);
@@ -409,7 +412,7 @@ public class DriveTrain extends Subsystem {
 		double xEncoderKf = prefs.getDouble("XEncoderF", 0.000);
 		double xEncoderTolerance = prefs.getDouble("XEncoderTolerance", 0.1);
 		double xEncoderOutputMax = prefs.getDouble("XEncoderOutputMax", 0.3);
-		
+
 		resetEncPos();
 		MovingInTheXEncoderPIDin encoderPIDin = new MovingInTheXEncoderPIDin();
 		MovingInTheXEncoderPIDout encoderPIDout = new MovingInTheXEncoderPIDout();
@@ -435,7 +438,7 @@ public class DriveTrain extends Subsystem {
 
 	public void stopMovingToXEncoderRevolutions() {
 		m_moveToTheXEncoderPID.disable();
-		
+
 	}
 
 
@@ -545,7 +548,7 @@ public class DriveTrain extends Subsystem {
 	}
 	public double getM1Speed(){
 		return frontLeft.getSpeed();
-				
+
 	}
 	public double getM2Speed(){
 		return backRight.getSpeed();
@@ -556,7 +559,7 @@ public class DriveTrain extends Subsystem {
 	public double getM4Speed(){
 		return backLeft.getSpeed();
 	}
-	
-	
+
+
 }
 
