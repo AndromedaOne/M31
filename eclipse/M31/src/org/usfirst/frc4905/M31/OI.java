@@ -78,7 +78,7 @@ public class OI {
 		saveImageButton = new JoystickButton(driveController, 3);
 		saveImageButton.whenPressed(new PutTimeStampOnNetworkTables());
 		placeGearAutomatically = new JoystickButton(driveController, 4);
-		placeGearAutomatically.whenPressed(new placeGearAutomatically());
+		placeGearAutomatically.whenPressed(new placeGearAutomatically(0));
 
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());

@@ -21,6 +21,10 @@ public class MoveY extends Command {
     public MoveY(double distance) {
     	
     	requires (Robot.driveTrain);
+    	setDistanceToMoveY(distance);
+    }
+    
+    public void setDistanceToMoveY(double distance) {
     	m_distance = distance;
     }
 
