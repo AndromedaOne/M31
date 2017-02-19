@@ -115,9 +115,6 @@ public class OI {
         SmartDashboard.putData("TurnToCompassHeading", new TurnToCompassHeading(40));
 		SmartDashboard.putData("GoToTargetDistance", new MoveUsingUltrasonic(24));
 		
-		//Gyro Toggle button
-		
-		
 		SmartDashboard.putData("Group Boiler Slide Lift Shoot", new GroupBoilerSideLiftShoot());
 		SmartDashboard.putData("Group Close Hopper Fire No Vision", new GroupCloseHopperFireNoVision());
 		SmartDashboard.putData("Group Close Hopper Fire Vision", new GroupCloseHopperFireVision());
