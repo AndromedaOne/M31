@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetVisionData extends Command {
-	
-	private boolean m_isFinished = false; 
-    public SetVisionData() {
+public class CloseGearHandlerInAuto extends Command {
+	private int m_delay = 0;
+    public CloseGearHandlerInAuto() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.gearHandler);
     }
 
     // Called just before this Command runs the first time
@@ -21,26 +21,18 @@ public class SetVisionData extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!Robot.visionProcessing.isVisionReady()){
-    		m_isFinished = false;
-    		return;
-    	}
-    		
-    		
-	    System.out.println("Starting");
-		Robot.visionProcessing.initDataForLift();
-		System.out.println("Found target: " + Robot.visionProcessing.getFoundLift());
-		if (Robot.visionProcessing.getFoundLift() == true){
-			System.out.println("Angle to turn: " + Robot.visionProcessing.getDeltaAngle());
-			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
-			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
-		}
-		m_isFinished = true;
+    	Robot.gearHandler.moveGearHandlerTogether(-0.3);
+    	m_delay++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return m_isFinished;
+        if(m_delay < 50){
+        	return false;
+        }else{
+        	return true;
+        }
+    	
     }
 
     // Called once after isFinished returns true

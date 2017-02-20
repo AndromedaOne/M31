@@ -7,14 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetMoveXDistanceWithVision extends Command {
-	private MoveX m_moveX;
-	
-    public SetMoveXDistanceWithVision(MoveX moveX) {
+public class OpenGearHandlerInAuto extends Command {
+	private double m_outSpeed = 0.4;
+	private double m_inSpeed = -0.2;
+    public OpenGearHandlerInAuto() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	m_moveX = moveX;
+    	requires(Robot.gearHandler);
     }
+
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -22,16 +23,30 @@ public class SetMoveXDistanceWithVision extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double distance = 0;
-    	if (Robot.visionProcessing.getFoundLift()){
-    		distance = Robot.visionProcessing.getForwardDistance()*1; //add scale factor
+    	if(Robot.gearHandler.shouldStopMovingLeft()){
+    		Robot.gearHandler.stopMovingLeft();
     	}
-    	m_moveX.setDistanceToMoveX(distance);
+    	else{
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    	}
+    	if(Robot.gearHandler.shouldStopMovingRight()){
+    		Robot.gearHandler.stopMovingRight();
+    	}
+    	else{
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
+    	}
     }
+
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        if(Robot.gearHandler.shouldStopMovingLeft()&&Robot.gearHandler.shouldStopMovingRight()){
+        	return true;
+        }else{
+        	return false;
+        }
+    	
     }
 
     // Called once after isFinished returns true

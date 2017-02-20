@@ -21,10 +21,6 @@ public class MoveX extends Command {
     public MoveX(double distance) {
     	
     	requires (Robot.driveTrain);
-    	setDistanceToMoveX(distance);
-    }
-    
-    public void setDistanceToMoveX(double distance){
     	m_distance = distance;
     }
 
