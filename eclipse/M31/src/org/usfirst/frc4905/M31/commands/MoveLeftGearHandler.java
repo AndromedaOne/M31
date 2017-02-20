@@ -3,48 +3,37 @@ package org.usfirst.frc4905.M31.commands;
 import org.usfirst.frc4905.M31.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class MoveX extends Command {
-
-	private double m_distance = 0;
-	
-    public MoveX() {
+public class MoveLeftGearHandler extends Command {
+	private double m_speed = 0;
+    public MoveLeftGearHandler(double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
-    }
-    
-    public MoveX(double distance) {
+    	requires(Robot.gearHandler);
+    	m_speed = speed;
     	
-    	requires (Robot.driveTrain);
-    	m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	Robot.driveTrain.moveToXEncoderRevolutions(m_distance);
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Robot.gearHandler.moveLeftGearHandler(m_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
-        return Robot.driveTrain.isDoneMovingToXEncoderRevolutions();
+        return Robot.gearHandler.shouldStopMovingLeft();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stopMovingToXEncoderRevolutions();
+    	Robot.gearHandler.stopMovingLeft();
     }
 
     // Called when another command which requires one or more of the same

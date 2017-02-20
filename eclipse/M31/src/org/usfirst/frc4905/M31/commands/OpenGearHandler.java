@@ -3,48 +3,48 @@ package org.usfirst.frc4905.M31.commands;
 import org.usfirst.frc4905.M31.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class MoveX extends Command {
-
-	private double m_distance = 0;
-	
-    public MoveX() {
+public class OpenGearHandler extends Command {
+	private double m_outSpeed = 0.4;
+	private double m_inSpeed = -0.2;
+    public OpenGearHandler() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
-    }
-    
-    public MoveX(double distance) {
-    	
-    	requires (Robot.driveTrain);
-    	m_distance = distance;
+    	requires(Robot.gearHandler);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	Robot.driveTrain.moveToXEncoderRevolutions(m_distance);
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	if(Robot.gearHandler.shouldStopMovingLeft()){
+    		Robot.gearHandler.stopMovingLeft();
+    	}
+    	else{
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    	}
+    	if(Robot.gearHandler.shouldStopMovingRight()){
+    		Robot.gearHandler.stopMovingRight();
+    	}
+    	else{
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
-        return Robot.driveTrain.isDoneMovingToXEncoderRevolutions();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stopMovingToXEncoderRevolutions();
+    	Robot.gearHandler.stopMovingLeft();
+    	Robot.gearHandler.stopMovingRight();
     }
 
     // Called when another command which requires one or more of the same

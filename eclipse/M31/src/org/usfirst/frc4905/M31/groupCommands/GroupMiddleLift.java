@@ -1,4 +1,7 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.*;
+import org.usfirst.frc4905.M31.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -28,15 +31,15 @@ public class GroupMiddleLift extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 		
-		//Facing Towards the AirShip
-		addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
-		addSequential(new MoveUsingUltrasonic(4));
+		//Facing Gear Handler Towards the AirShip
+		addSequential(new MoveY(7));
 		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(4));
-
+		addSequential(new TurnDeltaAngleDegree(-90));
+		
+		addSequential(new MoveUsingUltrasonic(6));
+		addSequential(new OpenGearHandler());
+		addSequential(new MoveUsingUltrasonic(15));
+		
 
     	
     	
