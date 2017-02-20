@@ -30,14 +30,14 @@ public class GroupLiftRightNoVision extends CommandGroup {
         // arm.
     	
     	//CODE DESIGNED FOR THE RIGHT LIFT  OF THE FIELD
-    	addSequential(new MoveY(9.2));
-    	addSequential(new TurnDeltaAngleDegree(-55));
-    	addSequential(new MoveY(6.5));
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-50));
+    	addSequential(new MoveY(10));
     	addSequential(new TurnDeltaAngleDegree(-90));
-    	addSequential(new MoveUsingUltrasonic(10));
-    	addSequential(new OpenGearHandlerInAuto());
-    	addSequential(new MoveUsingUltrasonic(18));
-    	addSequential(new CloseGearHandlerInAuto());
+    	addSequential(new MoveUsingUltrasonic(5));
+    	addSequential(new OpenGearHandler());
+    	addSequential(new MoveUsingUltrasonic(15));
+    	addSequential(new CloseGearHandler());
     	
     	//GEAR SPITTER COMMAND
     	

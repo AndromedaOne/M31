@@ -1,8 +1,6 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.AutoShootBoiler;
 import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.ShootFromTheBoiler;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -30,17 +28,12 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(5));
+    	addSequential(new MoveY(1));
     	//Turn Towards the Boiler
-    	addSequential(new TurnDeltaAngleDegree(135));
-    	addSequential(new MoveY(2));
-    	addSequential(new ShootFromTheBoiler(750));
+    	addSequential(new TurnDeltaAngleDegree(90));
     	//Begin Shooting into the Boiler
+    	addSequential(new TurnDeltaAngleDegree(-90));
     	addSequential(new MoveY(5));
-    	addSequential(new AutoShootBoiler(7, 750));
-    	addSequential(new MoveY(-5));
-    	addSequential(new TurnDeltaAngleDegree(45));
-    	addSequential(new MoveY(-25));
     	
     }
 }

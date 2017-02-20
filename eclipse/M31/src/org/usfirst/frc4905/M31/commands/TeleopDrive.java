@@ -82,8 +82,7 @@ public class TeleopDrive extends Command {
 		if(Robot.oi.getDriveController().getRawButton(6)){
 			yIn = 0;
 		}
-		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
-		//System.out.println(Robot.Ul)
+		System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
     }
 
