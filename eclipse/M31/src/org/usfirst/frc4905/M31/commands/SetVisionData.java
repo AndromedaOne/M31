@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VisionTest extends Command {
+public class SetVisionData extends Command {
 	
-	private boolean m_isFinished; 
-    public VisionTest() {
+	private boolean m_isFinished = false; 
+    public SetVisionData() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

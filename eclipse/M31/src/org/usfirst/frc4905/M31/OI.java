@@ -87,7 +87,7 @@ public class OI {
 		saveImageButton = new JoystickButton(driveController, 3);
 		saveImageButton.whenPressed(new PutTimeStampOnNetworkTables());
 		placeGearAutomatically = new JoystickButton(driveController, 4);
-		placeGearAutomatically.whenPressed(new placeGearAutomatically(0));
+		placeGearAutomatically.whenPressed(new PlaceGearAutomatically(0));
 		turnToLeftLift = new JoystickButton(driveController, 3);
 		turnToLeftLift.whenPressed(new TurnToCompassHeading(330));
 		turnToMiddleLift = new JoystickButton(driveController, 4);
