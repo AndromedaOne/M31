@@ -109,7 +109,9 @@ public class DriveTrain extends Subsystem {
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+		
 
 		initializeYEncoderPID(500);
 		initializeXEncoderPID(500);
@@ -165,7 +167,7 @@ public class DriveTrain extends Subsystem {
 
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (gyroEnabled) {
+		/*if (gyroEnabled) {
 			rotation = 0;
 			if ((-0.01 < rotation) && (rotation < 0.01)) {
 				// rotation is practically zero, so just set it to zero and
@@ -180,15 +182,15 @@ public class DriveTrain extends Subsystem {
 			if (m_iterationsSinceRotationCommanded == 20) {
 				m_desiredHeading = gyroReading;
 			} else if (m_iterationsSinceRotationCommanded > 20) {
-				rotation = (m_desiredHeading - gyroReading) / 50.0;
+				//rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
 			if (kNoisyDebug) {
 				System.out.println("Gyro is enabled!");
 			}
 		} else {
-			RobotMap.getNavxGyro().setInitialAngleReading();
+			//RobotMap.getNavxGyro().setInitialAngleReading();
 			//rotation = 0.0;
-			//System.out.println("Gyro is disabled!");
+			System.out.println("Gyro is disabled!");
 		}
 		if(prefs.getBoolean("Mecanum Logging", false)) {
 			SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
@@ -198,7 +200,7 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Y Commanded Speed",yIn);
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
-		}
+		}*/
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 
@@ -526,7 +528,7 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Output", output);
 			SmartDashboard.putNumber("Distance",
 					RobotMap.getUltrasonicSubsystem().getUltrasonicDistance());
-			robotDrive.mecanumDrive_Cartesian(output, 0, 0, 0);
+			robotDrive.mecanumDrive_Cartesian(-output, 0, 0, 0);
 
 		}
 	}
@@ -535,7 +537,8 @@ public class DriveTrain extends Subsystem {
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
 		RobotMap.getUltrasonicSubsystem().moveWithUltrasonicPID(distanceToDriveTo);
-
+		
+		
 	}
 
 	public boolean doneMovingWithUltrasoncPID() {
@@ -546,6 +549,8 @@ public class DriveTrain extends Subsystem {
 		RobotMap.getUltrasonicSubsystem().stopUltrasonicPID();
 
 	}
+	
+	
 	public double getM1Speed(){
 		return frontLeft.getSpeed();
 
