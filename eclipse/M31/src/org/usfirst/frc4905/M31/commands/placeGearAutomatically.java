@@ -32,5 +32,10 @@ public class placeGearAutomatically extends CommandGroup {
     		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveLaterally));
     		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveForwardLift));
     	addSequential(new VisionTest());
+    	if(Robot.visionProcessing.doesVisionSeeTarget()){
+    		addSequential(new TurnDeltaAngleRadian(Robot.visionProcessing.getDeltaAngle()));
+    		addSequential(new MoveY(Robot.visionProcessing.getLateralDistance()));
+    		addSequential(new MoveX(Robot.visionProcessing.getForwardDistance()));
+    	}
     }
 }
