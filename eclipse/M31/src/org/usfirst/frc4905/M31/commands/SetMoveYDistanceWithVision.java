@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VisionTest extends Command {
-	
-	private boolean m_isFinished; 
-    public VisionTest() {
+public class SetMoveYDistanceWithVision extends Command {
+	MoveY m_moveY; 
+    public SetMoveYDistanceWithVision(MoveY moveY) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	m_moveY = moveY;
     }
 
     // Called just before this Command runs the first time
@@ -21,25 +21,16 @@ public class VisionTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!Robot.visionProcessing.isVisionReady()){
-    		return;
+    	double distance = 0;
+    	if (Robot.visionProcessing.getFoundLift()){
+    		distance = Robot.visionProcessing.getLateralDistance()*1; //add scale factor
     	}
-    		
-    		
-	    System.out.println("Starting");
-		Robot.visionProcessing.initDataForLift();
-		System.out.println("Found target: " + Robot.visionProcessing.getFoundLift());
-		if (Robot.visionProcessing.getFoundLift() == true){
-			System.out.println("Angle to turn: " + Robot.visionProcessing.getDeltaAngle());
-			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
-			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
-		}
-		m_isFinished = true;
+    	m_moveY.setDistanceToMoveY(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return m_isFinished;
+        return true;
     }
 
     // Called once after isFinished returns true
