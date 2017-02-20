@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class placeGearAutomatically extends CommandGroup {
+public class PlaceGearAutomatically extends CommandGroup {
 
-    public placeGearAutomatically(double compassHeading) {
+    public PlaceGearAutomatically(double compassHeading) {
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -34,12 +34,11 @@ public class placeGearAutomatically extends CommandGroup {
     		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveForwardLift));
     	
     	addSequential(new TurnToCompassHeading(compassHeading));
-    	//Delay in order for vision to catch up
-    	addSequential(new VisionTest());//rename
+    	addSequential(new SetVisionData());
     	MoveY moveY = new MoveY();
-    	addSequential(new SetMoveYDistanceWithVision(moveY)); //Multiplied by scale factor?????
+    	addSequential(new SetMoveYDistanceWithVision(moveY)); //Multiplied by scale factor inside command
     	MoveX moveX = new MoveX();
-    	addSequential(new SetMoveXDistanceWithVision(moveX)); //Multiplied by scale factor?????
+    	addSequential(new SetMoveXDistanceWithVision(moveX)); //Multiplied by scale factor inside command
     	addSequential(moveY);
     	addSequential(moveX);
     	
