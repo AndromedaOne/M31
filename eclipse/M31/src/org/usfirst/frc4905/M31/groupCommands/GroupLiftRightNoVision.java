@@ -2,9 +2,7 @@ package org.usfirst.frc4905.M31.groupCommands;
 
 import java.util.Timer;
 
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+import org.usfirst.frc4905.M31.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -34,7 +32,13 @@ public class GroupLiftRightNoVision extends CommandGroup {
     	//CODE DESIGNED FOR THE RIGHT LIFT  OF THE FIELD
     	addSequential(new MoveY(10));
     	addSequential(new TurnDeltaAngleDegree(-50));
+    	addSequential(new MoveY(10));
+    	addSequential(new TurnDeltaAngleDegree(-90));
     	addSequential(new MoveUsingUltrasonic(5));
+    	addSequential(new OpenGearHandler());
+    	addSequential(new MoveUsingUltrasonic(15));
+    	addSequential(new CloseGearHandler());
+    	
     	//GEAR SPITTER COMMAND
     	
     	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
