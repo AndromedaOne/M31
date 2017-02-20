@@ -32,7 +32,7 @@ import java.util.Vector;
 // once all tracing in complete you need to call closeTraceFiles()
 public class Trace 
 {
-	private static String pathOfFile = new String("~/traceLogs");
+	private static String pathOfFile = new String("/home/lvuser");
 	private static Trace m_instance = null;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
@@ -76,7 +76,10 @@ public class Trace
 		try {
 			File directory = new File(pathOfFile);
 			if(!directory.exists()) {
-				directory.mkdir();
+				if(!directory.mkdir()) {
+					System.err.println("ERROR: failed to create directory " + pathOfFile +
+							" for tracing data.");
+				}
 			}
 			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
 			Date date = new Date();
