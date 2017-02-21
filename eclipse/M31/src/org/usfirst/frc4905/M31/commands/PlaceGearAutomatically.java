@@ -40,7 +40,7 @@ public class PlaceGearAutomatically extends CommandGroup {
     	MoveX moveX = new MoveX();
     	addSequential(new SetMoveXDistanceWithVision(moveX)); //Multiplied by scale factor inside command
     	addSequential(moveY);
-    	addSequential(moveX);
+    	//addSequential(moveX);
     	
     }
 }

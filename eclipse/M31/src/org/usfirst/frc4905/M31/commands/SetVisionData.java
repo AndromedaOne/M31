@@ -22,6 +22,7 @@ public class SetVisionData extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(!Robot.visionProcessing.isVisionReady()){
+    		m_isFinished = false;
     		return;
     	}
     		
