@@ -2,8 +2,11 @@ package Utilities;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -67,27 +70,8 @@ public class Trace
 	private Trace() {
 		m_traces = new TreeMap<String, TraceEntry>();
 		m_startTime = System.currentTimeMillis();
-		try {
-			File directory = new File(m_pathOfFile);
-			if(!directory.exists()) {
-				if(!directory.mkdir()) {
-					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
-							" for tracing data.");
-				}
-			}
-			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
-			Date date = new Date();
-			String dateStr = new String(dateFormat.format(date));
-			String fullFileName = new String(m_pathOfFile  + "/" + m_defaultTraceFileName + 
-					dateStr + ".log");
-			FileWriter fstream = new FileWriter(fullFileName, false);
-			m_defaultTraceFile = new BufferedWriter(fstream);
-		}
-		catch(IOException e) {
-			System.err.println("ERROR: unable to open trace file " + m_defaultTraceFileName + 
-					" ;" + e.getMessage());
-			e.printStackTrace();
-		}
+		redirectOutput();
+		
 	}
 	
 	public void addTrace(String fileName, Vector<String> header) {
@@ -192,6 +176,20 @@ public class Trace
 				System.out.println("ERROR: failed to flush " + m_defaultTraceFileName);
 				e.printStackTrace();
 			}
+		}
+	}
+	private void redirectOutput(){
+		try {
+			FileOutputStream fOut= new FileOutputStream(m_defaultTraceFileName);
+			MultipleOutputStream mOut= new MultipleOutputStream(System.out, fOut);
+			MultipleOutputStream mErr= new MultipleOutputStream(System.err, fOut);
+			PrintStream stdOut= new PrintStream(mOut);
+			PrintStream stdErr= new PrintStream(mErr);
+			System.setOut(stdOut);
+			System.setErr(stdErr);
+		}
+		catch (FileNotFoundException E) {
+			System.err.println("ERROR: Redirect Failed");
 		}
 	}
 }
