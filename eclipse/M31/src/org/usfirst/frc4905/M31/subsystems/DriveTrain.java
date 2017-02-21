@@ -319,6 +319,9 @@ public class DriveTrain extends Subsystem {
 	public void setI(double i){
 		m_moveToTheYEncoderPID.setPID(prefs.getDouble("YEncoderP", 0.25), i, prefs.getDouble("YEncoderD", 0.000));
 	}
+	public void setTolerance(double tol){
+		m_moveToTheYEncoderPID.setAbsoluteTolerance(tol);
+	}
 	public boolean isDoneMovingToYEncoderRevolutions() {
 		if (kNoisyDebug) {
 			System.out.println("encoder distance = " + getEncoderDistance());

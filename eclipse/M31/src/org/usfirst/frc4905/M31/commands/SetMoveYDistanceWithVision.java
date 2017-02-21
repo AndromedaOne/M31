@@ -28,6 +28,7 @@ public class SetMoveYDistanceWithVision extends Command {
     	m_moveY.setDistanceToMoveY(distance);
     	double yEncoderKp = Robot.driveTrain.getYEncoderKp();
     	Robot.driveTrain.setI(yEncoderKp/10);
+    	Robot.driveTrain.setTolerance(0.05);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,6 +38,7 @@ public class SetMoveYDistanceWithVision extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
     // Called when another command which requires one or more of the same
