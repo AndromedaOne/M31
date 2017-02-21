@@ -33,7 +33,7 @@ public class PlaceGearAutomatically extends CommandGroup {
     		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveLaterally));
     		//addSequential(new MoveToEncoderDistance(Robot.visionProcessing.m_distanceToDriveForwardLift));
     	
-    	addSequential(new TurnToCompassHeading(compassHeading));
+    	//addSequential(new TurnToCompassHeading(compassHeading));
     	addSequential(new SetVisionData());
     	MoveY moveY = new MoveY();
     	addSequential(new SetMoveYDistanceWithVision(moveY)); //Multiplied by scale factor inside command
