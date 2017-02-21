@@ -528,7 +528,33 @@ public class DriveTrain extends Subsystem {
 
 	}
 	
-	
+	private class UltrasonicPIDOutputFront implements PIDOutput {
+
+		@Override
+		public void pidWrite(double output) {
+			SmartDashboard.putNumber("Output", output);
+			SmartDashboard.putNumber("Distance",
+					RobotMap.getUltrasonicFront().getUltrasonicDistance());
+			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
+
+		}
+	}
+
+	public void intializeUltrasonicPIDFront(double distanceToDriveTo) {
+		UltrasonicPIDOutputFront ultraPIDOutput= new UltrasonicPIDOutputFront();
+		RobotMap.getUltrasonicFront().intializeUltrasonicPID(ultraPIDOutput);
+		RobotMap.getUltrasonicFront().moveWithUltrasonicPID(distanceToDriveTo);
+
+	}
+
+	public boolean doneMovingWithUltrasoncPIDFront() {
+		return RobotMap.getUltrasonicFront().doneUltrasonicPID();
+	}
+
+	public void stopUltrasonicPIDFront() {
+		RobotMap.getUltrasonicFront().stopUltrasonicPID();
+
+	}
 	public double getM1Speed(){
 		return frontLeft.getSpeed();
 
