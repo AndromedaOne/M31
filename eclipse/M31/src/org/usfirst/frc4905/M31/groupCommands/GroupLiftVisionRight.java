@@ -1,11 +1,6 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.CloseGearHandlerInAuto;
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveX;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
-import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -34,14 +29,9 @@ public class GroupLiftVisionRight extends CommandGroup {
         // arm.
     	
     	//Start with the robot's "front" Facing the left wall on the rightS side
-    	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(-60));
-    	addSequential(new MoveY(8));
-    	addSequential(new PlaceGearAutomatically(210));
-    	addSequential(new MoveUsingUltrasonic(10));
-    	addSequential(new OpenGearHandlerInAuto());
-    	addSequential(new MoveUsingUltrasonic(18));
-    	addSequential(new CloseGearHandlerInAuto());
+    	addSequential(new MoveX(11.5));
+    	addSequential(new TurnDeltaAngleDegree(-30));
+    	
     	//vision code
 
     	
