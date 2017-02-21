@@ -13,6 +13,9 @@ package org.usfirst.frc4905.M31.subsystems;
 
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
+
+import java.util.Vector;
+
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
 import Utilities.*;
@@ -67,6 +70,7 @@ public class DriveTrain extends Subsystem {
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
 	boolean gyroEnabled = true;
+	private String m_traceFileName = "mecanumDrive";
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
 
@@ -74,6 +78,17 @@ public class DriveTrain extends Subsystem {
 
 
 	public DriveTrain() {
+		Trace traceInstance = Trace.getInstance();
+		Vector<String> header = new Vector<String>();
+		header.add("Front Left Speed");
+		header.add("Back Left Speed");
+		header.add("Front Right Speed");
+		header.add("Back Right Speed");
+		header.add("Y commanded Speed");
+		header.add("Y commanded Speed");
+		header.add("Rotation");
+		traceInstance.addTrace(m_traceFileName, header);
+		
 		double kp = 0.15;
 		double ki = 0.000;
 		double kd = 1.5;
@@ -154,7 +169,7 @@ public class DriveTrain extends Subsystem {
 
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		/*if (gyroEnabled) {
+		if (gyroEnabled) {
 			if ((-0.01 < rotation) && (rotation < 0.01)) {
 				// rotation is practically zero, so just set it to zero and
 				// increment iterations
@@ -168,7 +183,7 @@ public class DriveTrain extends Subsystem {
 			if (m_iterationsSinceRotationCommanded == 20) {
 				m_desiredHeading = gyroReading;
 			} else if (m_iterationsSinceRotationCommanded > 20) {
-				//rotation = (m_desiredHeading - gyroReading) / 50.0;
+				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
 		}
 		if(prefs.getBoolean("Mecanum Logging", false)) {
@@ -179,7 +194,18 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Y Commanded Speed",yIn);
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
-		}*/
+		}
+		Trace traceInst = Trace.getInstance();
+		Vector<Double> entry = new Vector<Double>();
+		entry.add(Robot.driveTrain.getM1Speed());
+		entry.add(Robot.driveTrain.getM2Speed());
+		entry.add(Robot.driveTrain.getM3Speed());
+		entry.add(Robot.driveTrain.getM4Speed());
+		entry.add(yIn);
+		entry.add(xIn);
+		entry.add(rotation);
+		traceInst.addEntry(m_traceFileName, entry);
+		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 

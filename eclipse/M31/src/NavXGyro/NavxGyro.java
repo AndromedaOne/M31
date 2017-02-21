@@ -1,9 +1,12 @@
 package NavXGyro;
 
+import java.util.Vector;
+
 import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
 import com.kauailabs.navx.frc.*;
 
+import Utilities.Trace;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -26,6 +29,8 @@ public class NavxGyro {
 	private static final double gyroEncoderOutputMax = 1.0/2; 
 	private double m_initialAngleReading = 0;
 
+	private static String m_traceFileName = "GyroValues";
+	
 	private AHRS m_navX;
 	public NavxGyro() {
 		try {
@@ -34,6 +39,13 @@ public class NavxGyro {
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			m_navX = new AHRS(SPI.Port.kMXP);
 			System.out.println("Created NavX instance");
+			Trace traceInst = Trace.getInstance();
+			Vector<String> header = new Vector<String>();
+			header.add("Raw Angle");
+			header.add("X Accel");
+			header.addElement("Y Accel");
+			header.addElement("Z Accel");
+			traceInst.addTrace(m_traceFileName, header);
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
 					true);
@@ -58,6 +70,13 @@ public class NavxGyro {
 			SmartDashboard.putNumber("Raw Anlge", m_navX.getAngle());
 			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
 		}
+		Trace traceInst = Trace.getInstance();
+		Vector<Double> entry = new Vector<Double>();
+		entry.add(m_navX.getAngle());
+		entry.addElement((double) m_navX.getWorldLinearAccelX());
+		entry.addElement((double) m_navX.getWorldLinearAccelY());
+		entry.addElement((double) m_navX.getWorldLinearAccelZ());
+		traceInst.addEntry(m_traceFileName, entry);
 	
 		return correctedAngle;
 	}
