@@ -32,8 +32,8 @@ import java.util.Vector;
 // once all tracing in complete you need to call closeTraceFiles()
 public class Trace 
 {
-	private static String pathOfFile = new String("/home/lvuser");
-	private static Trace m_instance = null;
+	private static String pathOfFile = new String("/home/lvuser/traceLogs");
+	private static Trace m_instance;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
 	
@@ -100,9 +100,11 @@ public class Trace
 		}
 		try {
 			outputFile.write(line);
+			outputFile.newLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Opened trace file " + pathOfFile + "/" + fileName);
 	}
 	
 	public void addEntry(String fileName, Vector<Double> values) {
@@ -125,6 +127,7 @@ public class Trace
 				line += "," + entry.toString();
 			}
 			traceEntry.getFile().write(line);
+			traceEntry.getFile().newLine();
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -134,18 +137,18 @@ public class Trace
 		}
 	}
 	
-	public void closeTraceFiles() {
+	public void flushTraceFiles() {
 		if(m_traces != null) {
 			// new lambda functionality!!
 			m_traces.forEach((k,v) -> {
 				try {
-					v.getFile().close();
+					v.getFile().flush();
+					System.out.println("Flushing file " + k);
 				} catch (IOException e) {
 					System.err.println("ERROR: failed to close trace file" + k);
 					e.printStackTrace();
 				}
 			});
 		}
-		m_traces = null;
 	}
 }
