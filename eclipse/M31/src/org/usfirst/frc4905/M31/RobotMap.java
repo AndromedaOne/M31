@@ -93,7 +93,7 @@ public class RobotMap {
 		LiveWindow.addSensor("UltraSonic", "Ultrasonic1", 
 				m_ultrasonicSubsystem.getUltrasonic());
 		
-		m_ultrasonicFront = new UltrasonicSubsystem(4,5);
+		m_ultrasonicFront = new UltrasonicSubsystem(4, 5, 0.02, 0, 0, 0, 0.2, 0.5);
 		LiveWindow.addSensor("UltraSonic", "Front Ultrasonic", m_ultrasonicFront.getUltrasonic());
 		
 		m_ultrasonicSubsystem.setAutoMode();

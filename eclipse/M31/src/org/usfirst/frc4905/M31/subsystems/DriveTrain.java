@@ -538,7 +538,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void intializeUltrasonicPIDFront(double distanceToDriveTo) {
-		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
+		UltrasonicPIDOutputFront ultraPIDOutput= new UltrasonicPIDOutputFront();
 		RobotMap.getUltrasonicFront().intializeUltrasonicPID(ultraPIDOutput);
 		RobotMap.getUltrasonicFront().moveWithUltrasonicPID(distanceToDriveTo);
 

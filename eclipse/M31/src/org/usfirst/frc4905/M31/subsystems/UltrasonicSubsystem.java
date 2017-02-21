@@ -52,6 +52,18 @@ public class UltrasonicSubsystem extends Subsystem {
 		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
 	}
+	
+	public UltrasonicSubsystem(int ping, int echo, double p, double i, double d,  double f, double maxSpeed, double tolerance) {
+		m_ultrasonic = new Ultrasonic(ping, echo);
+		m_ultrasonic.setEnabled(true);
+		m_P = p;
+		m_I = i;
+		m_D = d;
+		m_maxSpeed = maxSpeed;
+		m_tolerance = tolerance;
+		//m_ultrasonic.setAutomaticMode(true);
+		System.out.println("Ultrasonic Constructed");
+	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
