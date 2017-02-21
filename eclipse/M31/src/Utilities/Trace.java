@@ -32,7 +32,9 @@ import java.util.Vector;
 // once all tracing in complete you need to call closeTraceFiles()
 public class Trace 
 {
-	private static String pathOfFile = new String("/home/lvuser/traceLogs");
+	private static String m_pathOfFile = "/home/lvuser/traceLogs";
+	private static String m_defaultTraceFileName = "trace";
+	private static BufferedWriter m_defaultTraceFile;
 	private static Trace m_instance;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
@@ -65,6 +67,27 @@ public class Trace
 	private Trace() {
 		m_traces = new TreeMap<String, TraceEntry>();
 		m_startTime = System.currentTimeMillis();
+		try {
+			File directory = new File(m_pathOfFile);
+			if(!directory.exists()) {
+				if(!directory.mkdir()) {
+					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
+							" for tracing data.");
+				}
+			}
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+			Date date = new Date();
+			String dateStr = new String(dateFormat.format(date));
+			String fullFileName = new String(m_pathOfFile  + "/" + m_defaultTraceFileName + 
+					dateStr + ".log");
+			FileWriter fstream = new FileWriter(fullFileName, false);
+			m_defaultTraceFile = new BufferedWriter(fstream);
+		}
+		catch(IOException e) {
+			System.err.println("ERROR: unable to open trace file " + m_defaultTraceFileName + 
+					" ;" + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	public void addTrace(String fileName, Vector<String> header) {
@@ -74,17 +97,17 @@ public class Trace
 		}
 		BufferedWriter outputFile = null;
 		try {
-			File directory = new File(pathOfFile);
+			File directory = new File(m_pathOfFile);
 			if(!directory.exists()) {
 				if(!directory.mkdir()) {
-					System.err.println("ERROR: failed to create directory " + pathOfFile +
+					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
 							" for tracing data.");
 				}
 			}
 			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
 			Date date = new Date();
 			String dateStr = new String(dateFormat.format(date));
-			String fullFileName = new String(pathOfFile  + "/" + fileName + dateStr + ".csv");
+			String fullFileName = new String(m_pathOfFile  + "/" + fileName + dateStr + ".csv");
 			FileWriter fstream = new FileWriter(fullFileName, false);
 			outputFile = new BufferedWriter(fstream);
 		}
@@ -104,7 +127,7 @@ public class Trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Opened trace file " + pathOfFile + "/" + fileName);
+		System.out.println("Opened trace file " + m_pathOfFile + "/" + fileName);
 	}
 	
 	public void addEntry(String fileName, Vector<Double> values) {
@@ -137,6 +160,17 @@ public class Trace
 		}
 	}
 	
+	public void printToTrace(String line) {
+		long correctedTime = System.currentTimeMillis() - m_startTime;
+		try {
+			m_defaultTraceFile.write(String.valueOf(correctedTime) + line);
+			m_defaultTraceFile.newLine();
+		} catch (IOException e) {
+			System.out.println("ERROR: Failed to write to " + m_defaultTraceFileName);
+			e.printStackTrace();
+		}
+	}
+	
 	public void flushTraceFiles() {
 		if(m_traces != null) {
 			// new lambda functionality!!
@@ -145,10 +179,19 @@ public class Trace
 					v.getFile().flush();
 					System.out.println("Flushing file " + k);
 				} catch (IOException e) {
-					System.err.println("ERROR: failed to close trace file" + k);
+					System.err.println("ERROR: failed to flush trace file" + k);
 					e.printStackTrace();
 				}
 			});
+		}
+		if(m_defaultTraceFile != null) {
+			try {
+				m_defaultTraceFile.flush();
+				System.out.println("Flushed trace file: " + m_defaultTraceFileName);
+			} catch (IOException e) {
+				System.out.println("ERROR: failed to flush " + m_defaultTraceFileName);
+				e.printStackTrace();
+			}
 		}
 	}
 }
