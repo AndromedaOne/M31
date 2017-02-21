@@ -83,6 +83,7 @@ public class TeleopDrive extends Command {
 			yIn = 0;
 		}
 		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
+		//System.out.println(Robot.Ul)
 		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
 		
     }

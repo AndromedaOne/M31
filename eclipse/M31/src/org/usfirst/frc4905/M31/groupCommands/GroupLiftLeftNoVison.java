@@ -1,9 +1,6 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
-
+import org.usfirst.frc4905.M31.commands.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -29,9 +26,14 @@ public class GroupLiftLeftNoVison extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(10));
-    	addSequential(new TurnDeltaAngleDegree(-30));
-    	addSequential(new MoveUsingUltrasonic(7));
+    	addSequential(new MoveY(9.2));
+    	addSequential(new TurnDeltaAngleDegree(62));
+    	addSequential(new MoveY(6.5));
+    	addSequential(new TurnDeltaAngleDegree(-90));
+    	addSequential(new MoveUsingUltrasonic(10));
+    	addSequential(new OpenGearHandlerInAuto());
+    	addSequential(new MoveUsingUltrasonic(18));
+    	addSequential(new CloseGearHandlerInAuto());
     	//GEAR SPIT COMMAND
     }
 }
