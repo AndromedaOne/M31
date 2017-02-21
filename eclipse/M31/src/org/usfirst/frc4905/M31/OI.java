@@ -82,11 +82,10 @@ public class OI {
         subController = new Joystick(1);
 
         //Drive Controllers
-		getEncButton = new JoystickButton(driveController, 1);
-		getEncButton.whenPressed(new GetEncPos());
+		
 		saveImageButton = new JoystickButton(driveController, 3);
 		saveImageButton.whenPressed(new PutTimeStampOnNetworkTables());
-		placeGearAutomatically = new JoystickButton(driveController, 4);
+		placeGearAutomatically = new JoystickButton(driveController, 1);
 		placeGearAutomatically.whenPressed(new PlaceGearAutomatically(0));
 		turnToLeftLift = new JoystickButton(driveController, 3);
 		turnToLeftLift.whenPressed(new TurnToCompassHeading(330));
