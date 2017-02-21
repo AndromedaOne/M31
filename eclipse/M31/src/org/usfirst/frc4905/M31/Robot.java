@@ -106,7 +106,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	Trace.getInstance().flushTraceFiles();
     }
 
     public void disabledPeriodic() {
@@ -119,8 +119,6 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTrainBackRight.setProfile(0);
     	RobotMap.driveTrainFrontRight.setProfile(0);
     	RobotMap.driveTrainBackLeft.setProfile(0);
-    	
-    	Trace.getInstance().closeTraceFiles();
     }
 
     public void autonomousInit() {

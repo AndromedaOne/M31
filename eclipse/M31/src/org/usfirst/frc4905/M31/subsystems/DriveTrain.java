@@ -187,6 +187,15 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
 		}
+		Trace traceInst = Trace.getInstance();
+		Vector<Double> entry = new Vector<Double>();
+		entry.add(Robot.driveTrain.getM1Speed());
+		entry.add(Robot.driveTrain.getM2Speed());
+		entry.add(Robot.driveTrain.getM3Speed());
+		entry.add(Robot.driveTrain.getM4Speed());
+		entry.add(yIn);
+		entry.add(xIn);
+		entry.add(rotation);
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 	
