@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-@SuppressWarnings("unused")
 public class DriveTrain extends Subsystem {	
 
 

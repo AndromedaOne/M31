@@ -15,6 +15,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,6 +37,8 @@ import org.usfirst.frc4905.M31.subsystems.*;
 
 import com.ctre.CANTalon.*;
 
+import Utilities.SideOfField;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,9 +48,9 @@ import com.ctre.CANTalon.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	SendableChooser autoChooser;
-	SendableChooser sideChooser;
-	private int m_side = 1;
+	SendableChooser<CommandGroup> autoChooser;
+	SendableChooser<SideOfField> sideChooser;
+	private SideOfField m_side = SideOfField.Red;
 	
     Command autonomousCommand;
 
@@ -107,8 +110,8 @@ public class Robot extends IterativeRobot {
 
         autonomousCommand = new AutonomousCommand();
         
-        autoChooser = new SendableChooser();
-        sideChooser = new SendableChooser();
+        autoChooser = new SendableChooser<CommandGroup>();
+        sideChooser = new SendableChooser<SideOfField>();
         
         autoChooser.addObject("Move Forward", new GroupMovePastBaseline());
         autoChooser.addObject("Left Lift With NO Vision", new GroupLiftLeftNoVison());
@@ -119,8 +122,8 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
-        sideChooser.addObject("Red", m_side = 1);
-        sideChooser.addObject("Blue", m_side = -1);
+        sideChooser.addObject("Red", m_side = SideOfField.Red);
+        sideChooser.addObject("Blue", m_side = SideOfField.Blue);
         
         SmartDashboard.putData("Auto Mode Chooser", autoChooser);
 
@@ -208,7 +211,7 @@ public class Robot extends IterativeRobot {
     }
     
     
-    public int getSide(){
+    public SideOfField getSide(){
     	return m_side;
     }
 }
