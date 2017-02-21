@@ -3,57 +3,58 @@ package org.usfirst.frc4905.M31.commands;
 import org.usfirst.frc4905.M31.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class MoveY extends Command {
-	
-	private double m_distance = 0;
-
-    public MoveY() {
+public class OpenGearHandlerInAuto extends Command {
+	private double m_outSpeed = 0.4;
+	private double m_inSpeed = -0.2;
+    public OpenGearHandlerInAuto() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.gearHandler);
     }
-    
-    public MoveY(double distance) {
-    	
-    	requires (Robot.driveTrain);
-    	setDistanceToMoveY(distance);
-    }
-    
-    public void setDistanceToMoveY(double distance) {
-    	m_distance = distance;
-    }
+
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	Robot.driveTrain.moveToYEncoderRevolutions(m_distance);
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Error:" +Robot.driveTrain.getYPIDcontroller().getError());
-    	
+    	if(Robot.gearHandler.shouldStopMovingLeft()){
+    		Robot.gearHandler.stopMovingLeft();
+    	}
+    	else{
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    	}
+    	if(Robot.gearHandler.shouldStopMovingRight()){
+    		Robot.gearHandler.stopMovingRight();
+    	}
+    	else{
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
+    	}
     }
+
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.driveTrain.isDoneMovingToYEncoderRevolutions();
+        if(Robot.gearHandler.shouldStopMovingLeft()&&Robot.gearHandler.shouldStopMovingRight()){
+        	return true;
+        }else{
+        	return false;
+        }
+    	
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stopMovingToYEncoderRevolutions();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
