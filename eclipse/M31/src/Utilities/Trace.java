@@ -36,8 +36,7 @@ import java.util.Vector;
 public class Trace 
 {
 	private static String m_pathOfFile = "/home/lvuser/traceLogs";
-	private static String m_defaultTraceFileName = "trace";
-	private static BufferedWriter m_defaultTraceFile;
+	private static String m_consoleOutput = "ConsoleOutput";
 	private static Trace m_instance;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
@@ -144,17 +143,6 @@ public class Trace
 		}
 	}
 	
-	public void printToTrace(String line) {
-		long correctedTime = System.currentTimeMillis() - m_startTime;
-		try {
-			m_defaultTraceFile.write(String.valueOf(correctedTime) + line);
-			m_defaultTraceFile.newLine();
-		} catch (IOException e) {
-			System.out.println("ERROR: Failed to write to " + m_defaultTraceFileName);
-			e.printStackTrace();
-		}
-	}
-	
 	public void flushTraceFiles() {
 		if(m_traces != null) {
 			// new lambda functionality!!
@@ -168,19 +156,14 @@ public class Trace
 				}
 			});
 		}
-		if(m_defaultTraceFile != null) {
-			try {
-				m_defaultTraceFile.flush();
-				System.out.println("Flushed trace file: " + m_defaultTraceFileName);
-			} catch (IOException e) {
-				System.out.println("ERROR: failed to flush " + m_defaultTraceFileName);
-				e.printStackTrace();
-			}
-		}
 	}
 	private void redirectOutput(){
 		try {
-			FileOutputStream fOut= new FileOutputStream(m_defaultTraceFileName);
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+			Date date = new Date();
+			String dateStr = new String(dateFormat.format(date));
+			FileOutputStream fOut= new FileOutputStream(m_pathOfFile + "/" + 
+					m_consoleOutput + dateStr + ".log");
 			MultipleOutputStream mOut= new MultipleOutputStream(System.out, fOut);
 			MultipleOutputStream mErr= new MultipleOutputStream(System.err, fOut);
 			PrintStream stdOut= new PrintStream(mOut);
