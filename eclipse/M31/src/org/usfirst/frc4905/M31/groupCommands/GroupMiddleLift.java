@@ -1,9 +1,7 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
-import org.usfirst.frc4905.M31.commands.MoveX;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+import org.usfirst.frc4905.M31.*;
+import org.usfirst.frc4905.M31.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -34,12 +32,14 @@ public class GroupMiddleLift extends CommandGroup {
         // arm.
 		
 		//Facing Gear Handler Towards the AirShip
-		addSequential(new MoveUsingUltrasonic(4));
+		addSequential(new MoveY(7));
 		//Push Gear On
-		addSequential(new MoveX(-1.5));
-		addSequential(new MoveY(-3));
-		addSequential(new MoveX(-4));
-
+		addSequential(new TurnDeltaAngleDegree(-90));
+		
+		addSequential(new MoveUsingUltrasonic(6));
+		addSequential(new OpenGearHandler());
+		addSequential(new MoveUsingUltrasonic(15));
+		
 
     	
     	

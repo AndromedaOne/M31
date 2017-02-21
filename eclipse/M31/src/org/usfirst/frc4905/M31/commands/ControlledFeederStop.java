@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class climbRope extends Command {
-
-    public climbRope() {
+public class ControlledFeederStop extends Command {
+	private int m_safetyCount;
+    public ControlledFeederStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.robotClimber);
     }
 
     // Called just before this Command runs the first time
@@ -21,22 +20,33 @@ public class climbRope extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.robotClimber.climbRope();
+    	if(Robot.Shooter.getSafetySwitch() == true){
+    		m_safetyCount++;
+    	}
+    	else{
+    		m_safetyCount = 0;
+    	}
+		if(m_safetyCount < 25){
+			Robot.Shooter.moveFeederUntilSwitchPressed();
+		}
+		else{
+			Robot.Shooter.spinFeederCCW();
+		}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return !Robot.Shooter.getSafetySwitch();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.robotClimber.stopClimbing();
+    	Robot.Shooter.stopFeeder();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
