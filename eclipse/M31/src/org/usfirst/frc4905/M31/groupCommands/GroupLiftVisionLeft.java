@@ -1,14 +1,16 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.*;
+import org.usfirst.frc4905.M31.commands.MoveX;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupLiftLeftVisionCorrect extends CommandGroup {
+public class GroupLiftVisionLeft extends CommandGroup {
 
-    public GroupLiftLeftVisionCorrect() {
+    public GroupLiftVisionLeft() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -26,16 +28,9 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(60));
-    	addSequential(new MoveY(6.5));
-    	addSequential(new MoveUsingUltrasonicFront(16));
-    	addSequential(new PlaceGearAutomatically(330));
-    	addSequential(new MoveUsingUltrasonic(10));
-    	 //commented out because we want to sit and have Ben take gear out
-    	 /*
-    	addSequential(new OpenGearHandlerInAuto());
-    	addSequential(new MoveUsingUltrasonic(18));*/
-    	//GEAR SPIT COMMAND
+    	//Start with the robot's "front" Facing the left wall on the left side
+    	addSequential(new MoveX(5));
+    	addSequential(new TurnDeltaAngleDegree(30));
+    	//vision code
     }
 }

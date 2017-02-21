@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class UltrasonicSubsystem extends Subsystem {
 
 	private PIDController m_ultrasonicPID;
-	double m_P=.1;
+	double m_P=.07;
 	double m_I=.00000;
 	double m_D=.0;
 	double m_maxSpeed=0.2;

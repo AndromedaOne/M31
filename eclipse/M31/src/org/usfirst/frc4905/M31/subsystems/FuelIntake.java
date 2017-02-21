@@ -22,7 +22,7 @@ public class FuelIntake extends Subsystem {
     
     public void startIntake() {
     	
-    	intakeMotor.setSpeed(1.0);
+    	intakeMotor.setSpeed(-1.0);
     	
     }   
     
@@ -33,7 +33,7 @@ public class FuelIntake extends Subsystem {
     }
     
     public void reverseIntake(){
-    	intakeMotor.setSpeed(-1);
+    	intakeMotor.setSpeed(1);
     }
     
     public void toggle(){
