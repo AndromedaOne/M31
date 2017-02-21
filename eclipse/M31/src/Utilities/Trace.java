@@ -40,6 +40,8 @@ public class Trace
 	private static Trace m_instance;
 	private Map<String, TraceEntry> m_traces;
 	private long m_startTime = 0;
+	private MultipleOutputStream m_out;
+	private MultipleOutputStream m_err;
 	
 	private class TraceEntry {
 		private BufferedWriter m_file;
@@ -156,6 +158,14 @@ public class Trace
 				}
 			});
 		}
+		try {
+			m_out.flush();
+			m_err.flush();
+		} catch (IOException e) {
+			System.err.println("ERROR: Failed to Flush");
+			e.printStackTrace();
+		}
+		
 	}
 	private void redirectOutput(){
 		try {
@@ -164,10 +174,10 @@ public class Trace
 			String dateStr = new String(dateFormat.format(date));
 			FileOutputStream fOut= new FileOutputStream(m_pathOfFile + "/" + 
 					m_consoleOutput + dateStr + ".log");
-			MultipleOutputStream mOut= new MultipleOutputStream(System.out, fOut);
-			MultipleOutputStream mErr= new MultipleOutputStream(System.err, fOut);
-			PrintStream stdOut= new PrintStream(mOut);
-			PrintStream stdErr= new PrintStream(mErr);
+			m_out= new MultipleOutputStream(System.out, fOut);
+			m_err= new MultipleOutputStream(System.err, fOut);
+			PrintStream stdOut= new PrintStream(m_out);
+			PrintStream stdErr= new PrintStream(m_err);
 			System.setOut(stdOut);
 			System.setErr(stdErr);
 		}
