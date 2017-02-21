@@ -42,9 +42,9 @@ public class NavxGyro {
 			Trace traceInst = Trace.getInstance();
 			Vector<String> header = new Vector<String>();
 			header.add("Raw Angle");
-			header.add("Z Accel");
 			header.add("X Accel");
 			header.addElement("Y Accel");
+			header.addElement("Z Accel");
 			traceInst.addTrace(m_traceFileName, header);
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
@@ -73,9 +73,9 @@ public class NavxGyro {
 		Trace traceInst = Trace.getInstance();
 		Vector<Double> entry = new Vector<Double>();
 		entry.add(m_navX.getAngle());
-		entry.addElement((double) m_navX.getWorldLinearAccelZ());
 		entry.addElement((double) m_navX.getWorldLinearAccelX());
 		entry.addElement((double) m_navX.getWorldLinearAccelY());
+		entry.addElement((double) m_navX.getWorldLinearAccelZ());
 		traceInst.addEntry(m_traceFileName, entry);
 	
 		return correctedAngle;
