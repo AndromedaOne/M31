@@ -70,6 +70,7 @@ public class DriveTrain extends Subsystem {
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
 	boolean gyroEnabled = true;
+	private String m_traceFileName = "mecanumDrive";
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
 
@@ -86,7 +87,7 @@ public class DriveTrain extends Subsystem {
 		header.add("Y commanded Speed");
 		header.add("Y commanded Speed");
 		header.add("Rotation");
-		traceInstance.addTrace("mecanumDrive", header);
+		traceInstance.addTrace(m_traceFileName, header);
 		
 		double kp = 0.15;
 		double ki = 0.000;
@@ -203,6 +204,8 @@ public class DriveTrain extends Subsystem {
 		entry.add(yIn);
 		entry.add(xIn);
 		entry.add(rotation);
+		traceInst.addEntry(m_traceFileName, entry);
+		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 
