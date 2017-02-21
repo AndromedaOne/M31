@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class climbRope extends Command {
+public class ReverseIntake extends Command {
 
-    public climbRope() {
+    public ReverseIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.robotClimber);
+    	requires(Robot.fuelIntake);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class climbRope extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.robotClimber.climbRope();
+    	Robot.fuelIntake.reverseIntake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +31,7 @@ public class climbRope extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.robotClimber.stopClimbing();
+    	Robot.fuelIntake.stopIntake();
     }
 
     // Called when another command which requires one or more of the same
