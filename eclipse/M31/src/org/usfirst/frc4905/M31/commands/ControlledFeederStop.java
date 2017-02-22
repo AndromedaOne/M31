@@ -20,7 +20,7 @@ public class ControlledFeederStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.Shooter.getSafetySwitch() == true){
+    	/*uncomment hereif(Robot.Shooter.getSafetySwitch() == true){
     		m_safetyCount++;
     	}
     	else{
@@ -32,12 +32,14 @@ public class ControlledFeederStop extends Command {
 		else{
 			Robot.Shooter.spinFeederCCW();
 		}
-    	
+    	uncomment here*/
+    	Robot.Shooter.stopFeeder();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.Shooter.getSafetySwitch();
+       // return !Robot.Shooter.getSafetySwitch();
+    	return true;
     }
 
     // Called once after isFinished returns true
