@@ -29,7 +29,7 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
     	addSequential(new MoveY(10.6));
     	addSequential(new TurnDeltaAngleDegree(60));
     	addSequential(new MoveY(6.5));
-    	addSequential(new MoveUsingUltrasonicFront(16));
+    	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(330));
     	addSequential(new MoveUsingUltrasonic(10));
     	 //commented out because we want to sit and have Ben take gear out
