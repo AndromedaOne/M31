@@ -119,8 +119,7 @@ public class OI {
 		SmartDashboard.putData("Group Boiler Slide Lift Shoot", new GroupBoilerSideLiftShoot());
 		SmartDashboard.putData("Group Close Hopper Fire No Vision", new GroupCloseHopperFireNoVision());
 		SmartDashboard.putData("Group Close Hopper Fire Vision", new GroupCloseHopperFireVision());
-		SmartDashboard.putData("Group Left Lift No Vision", new GroupLiftLeftNoVison());
-		SmartDashboard.putData("Group Lift Vision Left", new GroupLiftVisionLeft());
+		SmartDashboard.putData("Group Left Lift With Vision", new GroupLiftLeftVisionCorrect());
 		SmartDashboard.putData("Group Lift Vision Right", new GroupLiftVisionRight());
 		SmartDashboard.putData("Group Middle Lift", new GroupMiddleLift());
 		SmartDashboard.putData("Group Middle Lift Fire", new GroupMiddleLiftFire());

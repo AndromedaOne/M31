@@ -24,9 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.groupCommands.GroupCloseHopperFireVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupDoNothing;
-import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftNoVison;
+import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftVisionCorrect;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftRightNoVision;
-import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionLeft;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftNoMoveVision;
@@ -114,7 +113,7 @@ public class Robot extends IterativeRobot {
         sideChooser = new SendableChooser<SideOfField>();
         
         autoChooser.addObject("Move Forward", new GroupMovePastBaseline());
-        autoChooser.addObject("Left Lift With NO Vision", new GroupLiftLeftNoVison());
+        autoChooser.addObject("Left Lift With NO Vision", new GroupLiftLeftVisionCorrect());
         autoChooser.addObject("Right Lift With NO Vision", new GroupLiftRightNoVision());
         autoChooser.addObject("Middle Lift With NO Vision", new GroupMiddleLift());
         autoChooser.addObject("Shoot From Start, Cross Baseline", new GroupShootFromStartCrossBaseLine());

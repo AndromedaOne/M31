@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class SetVisionData extends Command {
-	
-	private boolean m_isFinished = false; 
+		private boolean m_isFinished = false; 
     public SetVisionData() {
+
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -24,6 +25,8 @@ public class SetVisionData extends Command {
     	if(!Robot.visionProcessing.isVisionReady()){
     		m_isFinished = false;
     		return;
+    		
+    		
     	}
     		
     		
@@ -34,7 +37,7 @@ public class SetVisionData extends Command {
 			System.out.println("Angle to turn: " + Robot.visionProcessing.getDeltaAngle());
 			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
 			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
-		}
+		} 
 		m_isFinished = true;
     }
 

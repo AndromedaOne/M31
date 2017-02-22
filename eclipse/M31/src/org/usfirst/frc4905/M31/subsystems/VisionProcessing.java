@@ -43,7 +43,7 @@ public class VisionProcessing extends Subsystem {
     public boolean isVisionReady(){
     	if(m_firstTime){
     		long startTime = System.currentTimeMillis();
-    		long delay = 4*1000; //2 seconds
+    		long delay = 2*1000; //2 seconds
     		m_endTime = startTime + delay;
     		m_firstTime = false;
     	}

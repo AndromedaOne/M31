@@ -153,7 +153,7 @@ public class DriveTrain extends Subsystem {
 
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		/*if (gyroEnabled) {
+		if (gyroEnabled) {
 			if ((-0.01 < rotation) && (rotation < 0.01)) {
 				// rotation is practically zero, so just set it to zero and
 				// increment iterations
@@ -167,7 +167,7 @@ public class DriveTrain extends Subsystem {
 			if (m_iterationsSinceRotationCommanded == 20) {
 				m_desiredHeading = gyroReading;
 			} else if (m_iterationsSinceRotationCommanded > 20) {
-				//rotation = (m_desiredHeading - gyroReading) / 50.0;
+				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
 		}
 		if(prefs.getBoolean("Mecanum Logging", false)) {
@@ -178,7 +178,7 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Y Commanded Speed",yIn);
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
-		}*/
+		}
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 
