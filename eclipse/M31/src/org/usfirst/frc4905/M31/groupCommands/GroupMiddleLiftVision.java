@@ -39,7 +39,7 @@ public class GroupMiddleLiftVision extends CommandGroup {
 		//Start on position B
 		//Front faces towards airship
 		addSequential(new MoveY(8.1));
-		addSequential(new MoveUsingUltrasonicFront(16));
+		addSequential(new MoveUsingUltrasonicFront(20));
 		addSequential(new PlaceGearAutomatically(270));
 		addSequential(new MoveUsingUltrasonic(10));
 		

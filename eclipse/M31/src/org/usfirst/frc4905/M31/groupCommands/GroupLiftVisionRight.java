@@ -38,7 +38,7 @@ public class GroupLiftVisionRight extends CommandGroup {
     	addSequential(new MoveY(10.6));
     	addSequential(new TurnDeltaAngleDegree(-60));
     	addSequential(new MoveY(6.8));
-    	addSequential(new MoveUsingUltrasonicFront(16));
+    	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(210));
     	addSequential(new MoveUsingUltrasonic(10));
     

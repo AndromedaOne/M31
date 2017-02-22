@@ -118,6 +118,9 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Middle Lift With NO Vision", new GroupMiddleLift());
         autoChooser.addObject("Shoot From Start, Cross Baseline", new GroupShootFromStartCrossBaseLine());
         autoChooser.addObject("Close Hopper, Fire" , new GroupCloseHopperFireVision());
+        autoChooser.addObject("Left Lift WITH VISION", new GroupLiftLeftVisionCorrect());
+        autoChooser.addObject("Middle lift WITH VISION", new GroupMiddleLiftVision());
+        autoChooser.addObject("Right Lift WITH VISION", new GroupLiftVisionRight());
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
