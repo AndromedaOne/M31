@@ -32,8 +32,8 @@ public class ShootFromTheBoiler extends Command {
     	System.out.print("Shooter Speed" + Robot.Shooter.getShooterMotor().getSpeed());
     	System.out.println("Error" + Robot.Shooter.getShooterMotor().getError());
     	Robot.Shooter.setWhetherAmAtSpeed();
-    	//if(Robot.Shooter.getWhetherAmAtSpeed()){
-    	/*uncomment hereif(Robot.Shooter.getSafetySwitch() == true){
+    	
+    	if(Robot.Shooter.getSafetySwitch() == true){
     		m_safetyCount++;
     		m_ccwSafetyCount++;
     	}
@@ -48,18 +48,10 @@ public class ShootFromTheBoiler extends Command {
     	else{
     		Robot.Shooter.stopFeeder();
 
-    	}uncomment here*/
+    	}
     	Robot.Shooter.spinFeederCW();
     }
-    /*else
-    	{
-    		Robot.Shooter.stopFeeder();
-
-
-    	}*/
-
-
-
+  
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
