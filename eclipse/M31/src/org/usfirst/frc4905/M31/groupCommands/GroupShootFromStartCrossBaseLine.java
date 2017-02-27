@@ -1,10 +1,7 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.AutoShootBoiler;
+import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonicFront;
-import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.ShootFromTheBoiler;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
