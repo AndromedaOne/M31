@@ -1,6 +1,9 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
+import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.commands.*;
+
+import Utilities.SideOfField;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -25,16 +28,19 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+    	int sideoffieldFactor;
+    	if(Robot.getSide() == SideOfField.Blue){
+    		sideoffieldFactor = -1;
+    	}
+    	else{
+    		sideoffieldFactor = 1;
+    	}
     	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(60));
+    	addSequential(new TurnDeltaAngleDegree(60 * sideoffieldFactor));
     	addSequential(new MoveY(6.5));
     	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(330));
     	addSequential(new MoveUsingUltrasonic(10));
-    	addSequential(new OpenGearHandlerInAuto());
-		addSequential(new MoveUsingUltrasonic(20));
-		addSequential(new CloseGearHandlerInAuto());
     	 //commented out because we want to sit and have Ben take gear out
     	 /*
     	addSequential(new OpenGearHandlerInAuto());

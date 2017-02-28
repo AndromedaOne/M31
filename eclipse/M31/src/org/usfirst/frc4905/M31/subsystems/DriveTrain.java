@@ -539,7 +539,7 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Output", output);
 			SmartDashboard.putNumber("Distance",
 					RobotMap.getUltrasonicSubsystem().getUltrasonicDistance());
-			robotDrive.mecanumDrive_Cartesian(output, 0, 0, 0);
+			robotDrive.mecanumDrive_Cartesian(-output, 0, 0, 0);
 
 		}
 	}

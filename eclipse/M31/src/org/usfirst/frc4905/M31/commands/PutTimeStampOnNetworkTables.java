@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SaveVisionState extends Command {
+public class PutTimeStampOnNetworkTables extends Command {
 
-    public SaveVisionState() {
+    public PutTimeStampOnNetworkTables() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

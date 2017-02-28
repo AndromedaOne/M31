@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
-import org.usfirst.frc4905.M31.RobotMap;
 
 /**
  *
@@ -49,8 +48,6 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(RobotMap.getUltrasonicFront().getUltrasonicDistance());
-    	
     	Joystick driveGamepad = Robot.oi.getDriveController();
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
