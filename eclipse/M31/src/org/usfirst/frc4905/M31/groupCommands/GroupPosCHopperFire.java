@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GroupPosBHopperFire extends CommandGroup {
+public class GroupPosCHopperFire extends CommandGroup {
 
-    public GroupPosBHopperFire() {
+    public GroupPosCHopperFire() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,22 +31,19 @@ public class GroupPosBHopperFire extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(11));
+    	addSequential(new MoveY(14));
     	addSequential(new TurnToCompassHeading(90));
-    	addSequential(new MoveY(21));
-    	addSequential(new TurnToCompassHeading(0));
     	addSequential(new MoveY(5));
     	addSequential(new TurnToCompassHeading(180));
-    	addSequential(new MoveX(-5));
-    	Timer.delay(3);
-    	addSequential(new MoveX(5));
-    	addSequential(new MoveY(5));
-    	addSequential(new TurnToCompassHeading(45));
-    	addSequential(new MoveY(5));
+    	addSequential(new MoveX(-2));
+    	Timer.delay(2);
+    	addSequential(new MoveX(4));
+    	addSequential(new MoveY(12));
+    	addSequential(new TurnToCompassHeading(150));
+    	addSequential(new MoveY(3));
     	addSequential(new ShootFromTheBoiler(75));
     	
     	
     	
     }
 }
-	
