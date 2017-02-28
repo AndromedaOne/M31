@@ -9,6 +9,7 @@ import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
+import Utilities.SideOfField;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -35,6 +36,7 @@ public class GroupLiftVisionRight extends CommandGroup {
         // arm.
     	
     	//Start with the robot's "front" Facing the left wall on the rightS side
+
     	addSequential(new MoveY(10.6));
     	addSequential(new TurnDeltaAngleDegree(-60));
     	addSequential(new MoveY(6.8));
