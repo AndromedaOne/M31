@@ -52,7 +52,7 @@ import Utilities.Trace;
 public class Robot extends IterativeRobot {
 	SendableChooser<CommandGroup> autoChooser;
 	SendableChooser<SideOfField> sideChooser;
-	private static SideOfField m_side = SideOfField.Red;
+	private SideOfField m_side = SideOfField.Red;
 	
     Command autonomousCommand;
     public static OI oi;
@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
-        sideChooser.addObject("Red", m_side = SideOfField.Red);
+        sideChooser.addDefault("Red", m_side = SideOfField.Red);
         sideChooser.addObject("Blue", m_side = SideOfField.Blue);
         
         SmartDashboard.putData("Auto Mode Chooser", autoChooser);
@@ -174,12 +174,10 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	setInitialAngle();
-
-    	// schedule the autonomous command (example)
+        // schedule the autonomous command (example)
     	autonomousCommand = (Command) autoChooser.getSelected();
     	if (autonomousCommand != null) autonomousCommand.start();
     }
-    
 
     private void setInitialAngle() {
     	if(!m_initialAngleReadingSet) {
@@ -199,7 +197,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
