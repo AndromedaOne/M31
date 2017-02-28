@@ -118,15 +118,12 @@ public class OI {
 		SmartDashboard.putData("GoToTargetDistance", new MoveUsingUltrasonic(24));
 		
 		SmartDashboard.putData("Group Boiler Slide Lift Shoot", new GroupBoilerSideLiftShoot());
-		SmartDashboard.putData("Group Close Hopper Fire No Vision", new GroupCloseHopperFireNoVision());
-		SmartDashboard.putData("Group Close Hopper Fire Vision", new GroupCloseHopperFireVision());
+		SmartDashboard.putData("Group Position C Hopper & Fire", new GroupPosCHopperFire());
 		SmartDashboard.putData("Group Left Lift With Vision", new GroupLiftLeftVisionCorrect());
 		SmartDashboard.putData("Group Lift Vision Right", new GroupLiftVisionRight());
 		SmartDashboard.putData("Group Middle Lift", new GroupMiddleLift());
 		SmartDashboard.putData("Group Middle Lift Fire", new GroupMiddleLiftFire());
 		SmartDashboard.putData("Group Middle Lift Fire Vision", new GroupMiddleLiftFireVision());
-		SmartDashboard.putData("Group Middle Lift No Move", new GroupMiddleLiftNoMove());
-		SmartDashboard.putData("Group Middle Lift No Move Vision", new GroupMiddleLiftNoMoveVision());
 		SmartDashboard.putData("Group Middle Lift Vision", new GroupMiddleLiftVision());
 		SmartDashboard.putData("Group Move Past Baseline", new GroupMovePastBaseline());
 		SmartDashboard.putData("Group Right Lift No Vision", new GroupLiftRightNoVision());

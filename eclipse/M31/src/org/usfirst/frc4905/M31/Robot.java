@@ -23,13 +23,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.commands.*;
-import org.usfirst.frc4905.M31.groupCommands.GroupCloseHopperFireVision;
+import org.usfirst.frc4905.M31.groupCommands.GroupPosCHopperFire;
 import org.usfirst.frc4905.M31.groupCommands.GroupDoNothing;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftVisionCorrect;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftRightNoVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
-import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftNoMoveVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
 import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLine;
@@ -121,14 +120,14 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Lift With NO Vision", new GroupLiftRightNoVision());
         autoChooser.addObject("Middle Lift With NO Vision", new GroupMiddleLift());
         autoChooser.addObject("Shoot From Start, Cross Baseline", new GroupShootFromStartCrossBaseLine());
-        autoChooser.addObject("Close Hopper, Fire" , new GroupCloseHopperFireVision());
+        autoChooser.addObject("Close Hopper, Fire" , new GroupPosCHopperFire());
         autoChooser.addObject("Left Lift WITH VISION", new GroupLiftLeftVisionCorrect());
         autoChooser.addObject("Middle lift WITH VISION", new GroupMiddleLiftVision());
         autoChooser.addObject("Right Lift WITH VISION", new GroupLiftVisionRight());
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
-        sideChooser.addObject("Red", m_side = SideOfField.Red);
+        sideChooser.addDefault("Red", m_side = SideOfField.Red);
         sideChooser.addObject("Blue", m_side = SideOfField.Blue);
         
         SmartDashboard.putData("Auto Mode Chooser", autoChooser);

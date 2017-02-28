@@ -1,5 +1,6 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
+import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.commands.CloseGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonicFront;
@@ -36,9 +37,14 @@ public class GroupLiftVisionRight extends CommandGroup {
         // arm.
     	
     	//Start with the robot's "front" Facing the left wall on the rightS side
-
+    	int sideOfFieldFactor;
+    	if(Robot.getSide() == SideOfField.Blue){
+    		sideOfFieldFactor = -1;
+    	}else{
+    		sideOfFieldFactor = 1;
+    	}
     	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(-60));
+    	addSequential(new TurnDeltaAngleDegree(-60 * sideOfFieldFactor));
     	addSequential(new MoveY(6.8));
     	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(210));
