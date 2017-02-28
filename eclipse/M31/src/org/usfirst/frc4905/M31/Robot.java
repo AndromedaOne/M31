@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
-        sideChooser.addObject("Red", m_side = SideOfField.Red);
+        sideChooser.addDefault("Red", m_side = SideOfField.Red);
         sideChooser.addObject("Blue", m_side = SideOfField.Blue);
         
         SmartDashboard.putData("Auto Mode Chooser", autoChooser);
@@ -220,7 +220,7 @@ public class Robot extends IterativeRobot {
     }
     
     
-    public SideOfField getSide(){
+    public static SideOfField getSide(){
     	return m_side;
     }
 }
