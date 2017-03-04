@@ -21,12 +21,19 @@ public class VisionProcessing extends Subsystem {
 	private double m_distanceToDriveForwardLift = 0;
 	private double m_liftTimestamp = 0;
 	
+	public VisionProcessing() {
+		initNetworkTable("VisionProcessing");
+		m_robotCommands.putBoolean("TimestampRet", false);
+		
+	}
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
+        
+    	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
     }
-    public void initNetworkTable(String table){
+    private void initNetworkTable(String table){
     	m_networkTable = NetworkTable.getTable(table);
     	m_robotCommands = NetworkTable.getTable("RobotCommmands");
     }
