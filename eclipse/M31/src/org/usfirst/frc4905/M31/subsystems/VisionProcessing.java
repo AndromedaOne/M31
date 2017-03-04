@@ -2,6 +2,8 @@ package org.usfirst.frc4905.M31.subsystems;
 
 
 
+import org.usfirst.frc4905.M31.RobotEnableStatus;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -106,9 +108,16 @@ public class VisionProcessing extends Subsystem {
     	return data;
     }
 
-    public void turnOffPi(){
-    	m_robotCommands.putBoolean("TurnOff", true);
+    public void putEnableStatus(RobotEnableStatus enableStatus){
+    	boolean boolEnableStatus;
+    	if (enableStatus == RobotEnableStatus.DISABLED) {
+    		boolEnableStatus = false;
+    	} else {
+    		boolEnableStatus = true;
+    	}
+    	m_robotCommands.putBoolean("TurnOff", boolEnableStatus);
     }
+
 
 }
 
