@@ -42,9 +42,7 @@ public class GroupMiddleLiftVision extends CommandGroup {
 		addSequential(new MoveUsingUltrasonicFront(20));
 		addSequential(new PlaceGearAutomatically(270));
 		addSequential(new MoveUsingUltrasonic(10));
-		addSequential(new OpenGearHandlerInAuto());
-		addSequential(new MoveUsingUltrasonic(20));
-		addSequential(new CloseGearHandlerInAuto());
+		
 		 //commented out because we want to sit and have Ben take gear out
 		/*
 		addSequential(new MoveUsingUltrasonic(18));
