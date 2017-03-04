@@ -18,6 +18,8 @@ public class Shooter extends Subsystem {
 	public VictorSP feederMotor = RobotMap.feederMotor;
 	public CANTalon shooterMotor = RobotMap.shooterMotor;
 	public DigitalInput safetySwitch = RobotMap.shooterSafetySwitch;
+	public AnalogPotentiometer pot = RobotMap.shooterPot;
+	public Servo aimServo = RobotMap.aimServo;
 	private boolean m_amAtSpeed = false;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -87,6 +89,23 @@ public class Shooter extends Subsystem {
     	}
     }
 
+    
+    
+    public double getPotReading(){
+    	return pot.get();
+    }
 
+    public void moveShooterServo(double speed){
+    	aimServo.setSpeed(speed);
+    }
+    
+    public boolean IsPotCloseEnough(double target){
+    	if(Math.abs(pot.get() - target) < 5){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
 
 }
