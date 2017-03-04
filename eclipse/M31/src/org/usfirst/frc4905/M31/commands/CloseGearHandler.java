@@ -23,7 +23,7 @@ public class CloseGearHandler extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.gearHandler.getPoleSensorState()){
+    	if(!Robot.gearHandler.getPoleSensorState()){
     		//if we hit the switch open gear handler
     		
     		m_delay = 0;
