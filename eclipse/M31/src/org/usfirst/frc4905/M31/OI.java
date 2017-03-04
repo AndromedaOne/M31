@@ -92,6 +92,7 @@ public class OI {
 		
 		turnToLeftLift = new JoystickButton(driveController, 3);
 		turnToLeftLift.whenPressed(new TurnToCompassHeading(330));
+		turnToMiddleLift = new JoystickButton(driveController, 4);
 		turnToMiddleLift.whenPressed(new TurnToCompassHeading(270));
 		turnToRightLift = new JoystickButton(driveController, 2);
 		turnToRightLift.whenPressed(new TurnToCompassHeading(210));			
