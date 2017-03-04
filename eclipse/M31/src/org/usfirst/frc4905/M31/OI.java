@@ -83,20 +83,19 @@ public class OI {
 
         //Drive Controllers
 		
-		saveImageButton = new JoystickButton(driveController, 3);
-		saveImageButton.whenPressed(new PutTimeStampOnNetworkTables());
-		placeGearAutomatically = new JoystickButton(driveController, 1);
+
+		placeGearAutomatically = new JoystickButton(driveController, ButtonsEnumerated.ABUTTON.getValue());
 		placeGearAutomatically.whenPressed(new PlaceGearAutomatically(0));
-		turnToLeftLift = new JoystickButton(driveController, 3);
+		turnToLeftLift = new JoystickButton(driveController, ButtonsEnumerated.XBUTTON.getValue());
 		turnToLeftLift.whenPressed(new TurnToCompassHeading(330));
-		turnToMiddleLift = new JoystickButton(driveController, 4);
+		turnToMiddleLift = new JoystickButton(driveController, ButtonsEnumerated.YBUTTON.getValue());
 		turnToMiddleLift.whenPressed(new TurnToCompassHeading(270));
-		turnToRightLift = new JoystickButton(driveController, 2);
+		turnToRightLift = new JoystickButton(driveController, ButtonsEnumerated.BBUTTON.getValue());
 		turnToRightLift.whenPressed(new TurnToCompassHeading(210));
 
         //closeHandler = new JoystickButton(subController, 1);
 		//closeHandler.whenPressed(new CloseGearHandler());
-		toggleHandler = new JoystickButton(subController, 2);
+		toggleHandler = new JoystickButton(subController, ButtonsEnumerated.BBUTTON.getValue());
        	toggleHandler.whileHeld(new OpenGearHandler());
         toggleHandler.whenReleased(new CloseGearHandler());
 
@@ -132,12 +131,12 @@ public class OI {
 		SmartDashboard.putData("Group Shoot From Start Cross Baseline", new GroupShootFromStartCrossBaseLine());
 		SmartDashboard.putData("MoveForward with ultrasonic to 6 inches", new TestMoveUltraFront());
 		subController = new Joystick(1);		
-		toggleButton = new JoystickButton(subController, 3);
-		reverseIntakeButton = new JoystickButton(subController, 5);
+		toggleButton = new JoystickButton(subController, ButtonsEnumerated.XBUTTON.getValue());
+		reverseIntakeButton = new JoystickButton(subController, ButtonsEnumerated.LEFTBUMPERBUTTON.getValue());
 		reverseIntakeButton.whileHeld(new ReverseIntake());
-		climbButton = new JoystickButton(subController, 4);
+		climbButton = new JoystickButton(subController, ButtonsEnumerated.YBUTTON.getValue());
 		climbButton.whileHeld(new climbRope());
-		shootFromBoilerButton = new JoystickButton(subController, 6);
+		shootFromBoilerButton = new JoystickButton(subController, ButtonsEnumerated.RIGHTBUMPERBUTTON.getValue());
 		shootFromBoilerButton.whileHeld(new ShootFromTheBoiler(790));
 		shootFromBoilerButton.whenReleased(new ControlledFeederStop());
 	}
@@ -157,61 +156,61 @@ public class OI {
 
 	public static boolean getAButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(1);
+		return gamepad.getRawButton(ButtonsEnumerated.ABUTTON.getValue());
 
 	}
 
 	public static boolean getBButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(2);
+		return gamepad.getRawButton(ButtonsEnumerated.BBUTTON.getValue());
 
 	}
 
 	public static boolean getXButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(3);
+		return gamepad.getRawButton(ButtonsEnumerated.XBUTTON.getValue());
 
 	}
 
 	public static boolean getYButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(4);
+		return gamepad.getRawButton(ButtonsEnumerated.YBUTTON.getValue());
 
 	}
 
 	public static boolean getLeftButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(5);
+		return gamepad.getRawButton(ButtonsEnumerated.LEFTBUMPERBUTTON.getValue());
 
 	}
 
 	public static boolean getRightButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(6);
+		return gamepad.getRawButton(ButtonsEnumerated.RIGHTBUMPERBUTTON.getValue());
 
 	}
 
 	public static boolean getBackButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(7);
+		return gamepad.getRawButton(ButtonsEnumerated.BACKBUTTON.getValue());
 
 	}
 
 	public static boolean getStartButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(8);
+		return gamepad.getRawButton(ButtonsEnumerated.STARTBUTTON.getValue());
 
 	}
 
 	public static boolean getLeftStickButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(9);
+		return gamepad.getRawButton(ButtonsEnumerated.LEFTSTICKBUTTON.getValue());
 
 	}
 
 	public static boolean getRightStickButton(Joystick gamepad) {
 
-		return gamepad.getRawButton(10);
+		return gamepad.getRawButton(ButtonsEnumerated.RIGHTSTICKBUTTON.getValue());
 
 	}
 
