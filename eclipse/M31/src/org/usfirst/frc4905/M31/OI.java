@@ -216,49 +216,49 @@ public class OI {
 
 	public static double getLeftStickHorizontal (Joystick gamepad) {
 
-		return gamepad.getRawAxis(0);
+		return gamepad.getRawAxis(EnumeratedRawAxis.LEFTSTICKHORIZONTAL.getValue());
 
 	}
 
 	public static double getLeftStickVertical (Joystick gamepad) {
 
-		return gamepad.getRawAxis(1);
+		return gamepad.getRawAxis(EnumeratedRawAxis.LEFTSTICKVERTICAL.getValue());
 
 	}
 
 	public static boolean getLeftTriggerButton(Joystick gamepad) {
 
-		return gamepad.getRawAxis(2)>0.5;
+		return gamepad.getRawAxis(EnumeratedRawAxis.LEFTTRIGGER.getValue())>0.5;
 
 	}
 
 	public static double getLeftTriggerValue(Joystick gamepad) {
 
-		return gamepad.getRawAxis(2);
+		return gamepad.getRawAxis(EnumeratedRawAxis.LEFTTRIGGER.getValue());
 
 	}
 
 	public static boolean getRightTriggerButton(Joystick gamepad) {
 
-		return gamepad.getRawAxis(3)>0.5;
+		return gamepad.getRawAxis(EnumeratedRawAxis.RIGHTTRIGGER.getValue())>0.5;
 
 	}
 
 	public static double getRightTriggerValue(Joystick gamepad) {
 
-		return gamepad.getRawAxis(3);
+		return gamepad.getRawAxis(EnumeratedRawAxis.RIGHTTRIGGER.getValue());
 
 	}
 
 	public static double getRightStickHorizontal (Joystick gamepad) {
 
-		return gamepad.getRawAxis(4);
+		return gamepad.getRawAxis(EnumeratedRawAxis.RIGHTSTICKHORIZONTAL.getValue());
 
 	}
 
 	public static double getRightStickVertical (Joystick gamepad) {
 
-		return gamepad.getRawAxis(5);
+		return gamepad.getRawAxis(EnumeratedRawAxis.RIGHTSTICKVERTICAL.getValue());
 
 	}
 }
