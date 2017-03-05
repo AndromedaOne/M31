@@ -148,6 +148,8 @@ public class Robot extends IterativeRobot {
         Robot.Shooter.getShooterMotor().setF(3);
         Robot.Shooter.getShooterMotor().configPeakOutputVoltage(11.2, -11.2);
         
+        
+       
         }
 
     /**
@@ -174,6 +176,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	setInitialAngle();
+    	 Robot.Shooter.moveShooterServo(0);
         // schedule the autonomous command (example)
     	autonomousCommand = (Command) autoChooser.getSelected();
     	if (autonomousCommand != null) autonomousCommand.start();
@@ -197,6 +200,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	 Robot.Shooter.moveShooterServo(0);
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -210,6 +214,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        //System.out.println(Robot.Shooter.getPotReading());
     }
 
     /**

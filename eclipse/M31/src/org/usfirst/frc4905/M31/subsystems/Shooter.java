@@ -19,11 +19,12 @@ public class Shooter extends Subsystem {
 	public CANTalon shooterMotor = RobotMap.shooterMotor;
 	public DigitalInput safetySwitch = RobotMap.shooterSafetySwitch;
 	public AnalogPotentiometer pot = RobotMap.shooterPot;
-	public Servo aimServo = RobotMap.aimServo;
+	public VictorSP aimServo = RobotMap.aimServo;
 	private boolean m_amAtSpeed = false;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	
     }
     
     
@@ -107,5 +108,6 @@ public class Shooter extends Subsystem {
     		return false;
     	}
     }
-
+    
+   
 }
