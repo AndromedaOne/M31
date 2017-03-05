@@ -100,6 +100,7 @@ public class OI {
         toggleHandler.whenReleased(new CloseGearHandler());
 
 		// SmartDashboard Buttons
+        SmartDashboard.putData("SetVisionData", new SetVisionData());
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 		SmartDashboard.putData("TeleopDrive", new TeleopDrive());
 		SmartDashboard.putData("getEncPos", new GetEncPos());
