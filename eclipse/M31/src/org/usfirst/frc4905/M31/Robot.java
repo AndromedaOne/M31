@@ -169,6 +169,7 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTrainFrontRight.setProfile(0);
     	RobotMap.driveTrainBackLeft.setProfile(0);
     	RobotMap.shooterMotor.setProfile(0);
+    	visionProcessing.resetTimestampOnNetworkTables();
     }
 
     public void autonomousInit() {
