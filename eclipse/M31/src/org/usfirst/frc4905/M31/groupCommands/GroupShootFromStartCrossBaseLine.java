@@ -35,9 +35,12 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
     	addSequential(new MoveUsingUltrasonicFront(7));
     	
     	addSequential(new AutoShootBoiler(7, 750));
+    	addParallel(new RunIntakeInAuto());
     	addSequential(new MoveY(-3.25));
     	addSequential(new TurnToCompassHeading(180));
+    	addSequential(new StopIntake());
     	addSequential(new MoveY(-10));
+    	
     	
     }
 }
