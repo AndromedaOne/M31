@@ -15,7 +15,6 @@ public class VisionProcessing extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private NetworkTable m_networkTable;
-	private NetworkTable m_robotCommands;
 	private double m_timestamp = 0;
 	private boolean m_foundTargetLift = false;
 	private double m_angleToTurnLift = 0;
@@ -25,7 +24,7 @@ public class VisionProcessing extends Subsystem {
 	
 	public VisionProcessing() {
 		initNetworkTable("VisionProcessing");
-		m_robotCommands.putBoolean("TimestampRet", false);
+		m_networkTable.putBoolean("TimestampRet", false);
 		
 	}
 	
@@ -36,16 +35,16 @@ public class VisionProcessing extends Subsystem {
     	
     }
     private void initNetworkTable(String table){
+    	NetworkTable.setIPAddress("10.49.5.77");
     	m_networkTable = NetworkTable.getTable(table);
-    	m_robotCommands = NetworkTable.getTable("RobotCommands");
     }
     public void putTimestampOnNetworkTables(){
-    	m_robotCommands.putBoolean("TimestampRet", true);
-    	m_robotCommands.putNumber("Timestamp", m_timestamp);
+    	m_networkTable.putBoolean("TimestampRet", true);
+    	m_networkTable.putNumber("Timestamp", m_timestamp);
     }
     public void resetTimestampOnNetworkTables(){
-    	m_robotCommands.putBoolean("TimestampRet", false);
-    	m_robotCommands.putNumber("Timestamp", 0.0);
+    	m_networkTable.putBoolean("TimestampRet", false);
+    	m_networkTable.putNumber("Timestamp", 0.0);
     }
     //start of public interface methods
     public boolean doesVisionSeeTarget(){
@@ -126,7 +125,7 @@ public class VisionProcessing extends Subsystem {
     	} else {
     		boolEnableStatus = true;
     	}
-    	m_robotCommands.putBoolean("TurnOff", boolEnableStatus);
+    	m_networkTable.putBoolean("RobotEnabled", boolEnableStatus);
     }
 
 
