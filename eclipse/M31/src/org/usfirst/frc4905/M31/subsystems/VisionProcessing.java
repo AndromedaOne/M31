@@ -21,18 +21,29 @@ public class VisionProcessing extends Subsystem {
 	private double m_distanceToDriveForwardLift = 0;
 	private double m_liftTimestamp = 0;
 	
+	public VisionProcessing() {
+		initNetworkTable("VisionProcessing");
+		m_robotCommands.putBoolean("TimestampRet", false);
+		
+	}
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
+        
+    	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
     }
-    public void initNetworkTable(String table){
+    private void initNetworkTable(String table){
     	m_networkTable = NetworkTable.getTable(table);
-    	m_robotCommands = NetworkTable.getTable("RobotCommmands");
+    	m_robotCommands = NetworkTable.getTable("RobotCommands");
     }
     public void putTimestampOnNetworkTables(){
     	m_robotCommands.putBoolean("TimestampRet", true);
     	m_robotCommands.putNumber("Timestamp", m_timestamp);
+    }
+    public void resetTimestampOnNetworkTables(){
+    	m_robotCommands.putBoolean("TimestampRet", false);
+    	m_robotCommands.putNumber("Timestamp", 0.0);
     }
     //start of public interface methods
     public boolean doesVisionSeeTarget(){
