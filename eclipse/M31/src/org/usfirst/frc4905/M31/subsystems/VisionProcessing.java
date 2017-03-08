@@ -35,7 +35,7 @@ public class VisionProcessing extends Subsystem {
     	
     }
     private void initNetworkTable(String table){
-    	NetworkTable.setIPAddress("10.49.5.77");
+    	//NetworkTable.setIPAddress("10.49.5.77");
     	m_networkTable = NetworkTable.getTable(table);
     }
     public void putTimestampOnNetworkTables(){
