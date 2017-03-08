@@ -1,19 +1,19 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveX;
-import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.ShootFromTheBoiler;
+import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupMiddleLiftNoMove extends CommandGroup {
-	
-    
-	public GroupMiddleLiftNoMove() {
-    	
+public class GroupPosCHopperFire extends CommandGroup {
+
+    public GroupPosCHopperFire() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,10 +31,18 @@ public class GroupMiddleLiftNoMove extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-		//GearHandler Facing Towards the AirShip
-		addSequential(new MoveUsingUltrasonic(4));
-		//Push Gear On
-		addSequential(new MoveX(-1));
+    	addSequential(new MoveY(14));
+    	addSequential(new TurnToCompassHeading(90));
+    	addSequential(new MoveY(5));
+    	addSequential(new TurnToCompassHeading(180));
+    	addSequential(new MoveX(-2));
+    	Timer.delay(2);
+    	addSequential(new MoveX(4));
+    	addSequential(new MoveY(12));
+    	addSequential(new TurnToCompassHeading(150));
+    	addSequential(new MoveY(3));
+    	addSequential(new ShootFromTheBoiler(75));
+    	
     	
     	
     }
