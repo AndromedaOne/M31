@@ -42,7 +42,7 @@ public class AutoShootBoiler extends TimedCommand {
     		m_safetyCount = 0;
     		m_ccwSafetyCount = 0;
     	}
-    	if(m_safetyCount < 70){
+    	if(m_safetyCount < 50){
     		Robot.Shooter.spinFeederCW();
     		m_ccwSafetyCount = 0;
     	}

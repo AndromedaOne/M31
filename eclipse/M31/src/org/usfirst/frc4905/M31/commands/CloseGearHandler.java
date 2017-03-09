@@ -41,8 +41,16 @@ public class CloseGearHandler extends Command {
         	}
     	}else{
     		m_delay++;
+    		
     		if(m_delay >= 50){
     			Robot.gearHandler.moveGearHandlerTogether(-0.3);
+    		}else{
+    			if(Robot.gearHandler.shouldStopMovingLeft()){
+            		Robot.gearHandler.stopMovingLeft();
+            	}
+    			if(Robot.gearHandler.shouldStopMovingRight()){
+            		Robot.gearHandler.stopMovingRight();
+            	}
     		}
     	}
     	

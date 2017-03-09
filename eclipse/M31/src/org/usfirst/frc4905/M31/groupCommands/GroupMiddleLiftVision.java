@@ -41,7 +41,7 @@ public class GroupMiddleLiftVision extends CommandGroup {
 		addSequential(new MoveY(8.1));
 		addSequential(new MoveUsingUltrasonicFront(20));
 		addSequential(new PlaceGearAutomatically(270));
-		addSequential(new MoveUsingUltrasonic(10));
+		addSequential(new MoveUsingUltrasonic(9.5));
 		addSequential(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());
