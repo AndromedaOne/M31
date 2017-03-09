@@ -19,7 +19,7 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
 
         // To run multiple commands at the same time,
         // use addParallel()
-        // e.g. addParallel(new Command1());
+        // e.g. addParallel(new Commandl'1(l00));
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
 
@@ -28,17 +28,18 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+    	//CONFIGURED FOR RED
     	addSequential(new MoveY(3.25));
     	//Turn Towards the Boiler
-    	addSequential(new TurnToCompassHeading(130));
+    	addSequential(new TurnToCompassHeading(230));
     	addSequential(new MoveUsingUltrasonicFront(7));
-    	
-    	addSequential(new AutoShootBoiler(7, 750));
     	addParallel(new RunIntakeInAuto());
+    	addSequential(new AutoShootBoiler(6, 720));
+    	
     	addSequential(new MoveY(-3.25));
     	addSequential(new TurnToCompassHeading(180));
     	addSequential(new StopIntake());
+    	addSequential(new ControlledFeederStop());
     	addSequential(new MoveY(-10));
     	
     	

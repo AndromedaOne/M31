@@ -23,13 +23,15 @@ public class OpenGearHandler extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.gearHandler.shouldStopMovingLeft()){
-    		Robot.gearHandler.stopMovingLeft();
+    		//Robot.gearHandler.stopMovingLeft();
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
     	}
     	else{
     		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
     	}
     	if(Robot.gearHandler.shouldStopMovingRight()){
-    		Robot.gearHandler.stopMovingRight();
+    		//Robot.gearHandler.stopMovingRight();
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
     	}
     	else{
     		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
