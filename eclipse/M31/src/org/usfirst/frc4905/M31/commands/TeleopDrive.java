@@ -49,7 +49,7 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(RobotMap.getUltrasonicFront().getUltrasonicDistance());
+    	
     	
     	Joystick driveGamepad = Robot.oi.getDriveController();
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
@@ -68,7 +68,7 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.25;
+				mod = 0.15;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{

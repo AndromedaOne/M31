@@ -137,7 +137,7 @@ public class OI {
 		climbButton = new JoystickButton(subController, 4);
 		climbButton.whileHeld(new climbRope());
 		shootFromBoilerButton = new JoystickButton(subController, 6);
-		shootFromBoilerButton.whileHeld(new ShootFromTheBoiler(740));
+		shootFromBoilerButton.whileHeld(new ShootFromTheBoiler(720));
 		shootFromBoilerButton.whenReleased(new ControlledFeederStop());
 		saveImageStateButton = new JoystickButton(subController, 1);
 		saveImageStateButton.whenPressed(new SaveVisionState());

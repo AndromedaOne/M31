@@ -10,27 +10,33 @@ import edu.wpi.first.wpilibj.command.Command;
 public class OpenGearHandlerInAuto extends Command {
 	private double m_outSpeed = 0.3;
 	private double m_inSpeed = -0.2;
+	private double m_delay = 0;
     public OpenGearHandlerInAuto() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.gearHandler);
+    	
     }
 
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	m_delay = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	m_delay++;
     	if(Robot.gearHandler.shouldStopMovingLeft()){
-    		Robot.gearHandler.stopMovingLeft();
+    		//Robot.gearHandler.stopMovingLeft();
+    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
     	}
     	else{
     		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
     	}
     	if(Robot.gearHandler.shouldStopMovingRight()){
-    		Robot.gearHandler.stopMovingRight();
+    		//Robot.gearHandler.stopMovingRight();
+    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
     	}
     	else{
     		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
@@ -41,10 +47,10 @@ public class OpenGearHandlerInAuto extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.gearHandler.shouldStopMovingLeft()&&Robot.gearHandler.shouldStopMovingRight()){
-        	return true;
-        }else{
+        if(m_delay < 50){
         	return false;
+        }else{
+        	return true;
         }
     	
     }

@@ -61,6 +61,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 		entry.add("PIDOutput");
 		entry.add("Avg Error");
 		entry.add("Ultra Distance");
+		traceInstance.addTrace(m_traceFrontUltrasonicFileName, entry);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -81,7 +82,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 
 	public double getUltrasonicDistance(){
 		double currentDistance = m_ultrasonic.getRangeInches();
-		if((currentDistance - m_distanceOld) > 100) {
+		if((currentDistance - m_distanceOld) > 200) {
 			return(m_distanceOld);
 		}
 		m_distanceOld = currentDistance;
@@ -124,9 +125,10 @@ public class UltrasonicSubsystemFront extends Subsystem {
 	public boolean doneUltrasonicPID() {
 		Trace traceInstance = Trace.getInstance();
 		Vector<Double> entry = new Vector<Double>();
-		entry.add(m_ultrasonicPID.get());
+		entry.add(m_ultrasonicPID.get() * 100);
 		entry.add(m_ultrasonicPID.getAvgError());
-		entry.add(m_ultrasonic.getRangeInches());
+		entry.add(getUltrasonicDistance());
+		traceInstance.addEntry(m_traceFrontUltrasonicFileName, entry);
 		return m_ultrasonicPID.onTarget();
 	}
 
