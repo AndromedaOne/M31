@@ -38,7 +38,7 @@ public class GroupMiddleLift extends CommandGroup {
 		
 		addSequential(new MoveUsingUltrasonic(7.5));
 		addSequential(new OpenGearHandlerInAuto());
-		addSequential(new MoveUsingUltrasonic(20));
+		addSequential(new MoveUsingUltrasonic(30));
 		addSequential(new CloseGearHandlerInAuto());
 		
 
