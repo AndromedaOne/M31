@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class OpenGearHandler extends Command {
-	private double m_outSpeed = 0.4;
+	private double m_outSpeed = 0.3;
 	private double m_inSpeed = -0.2;
     public OpenGearHandler() {
         // Use requires() here to declare subsystem dependencies

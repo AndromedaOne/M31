@@ -27,7 +27,7 @@ public class SetMoveYDistanceWithVision extends Command {
     	}
     	m_moveY.setDistanceToMoveY(distance);
     	double yEncoderKp = Robot.driveTrain.getYEncoderKp();
-    	Robot.driveTrain.setI(yEncoderKp/10);
+    	Robot.driveTrain.setI(yEncoderKp/18);
     	Robot.driveTrain.setTolerance(0.05);
     }
 
