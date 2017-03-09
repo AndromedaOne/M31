@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.groupCommands.GroupPosCHopperFire;
+import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineBlue;
 import org.usfirst.frc4905.M31.groupCommands.GroupDoNothing;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftVisionCorrect;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftRightNoVision;
@@ -32,7 +33,7 @@ import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
-import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLine;
+import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineRed;
 import org.usfirst.frc4905.M31.subsystems.*;
 
 import com.ctre.CANTalon.*;
@@ -122,7 +123,8 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Left Lift With NO Vision", new GroupLiftLeftVisionCorrect());
         autoChooser.addObject("Right Lift With NO Vision", new GroupLiftRightNoVision());
         autoChooser.addObject("Middle Lift With NO Vision", new GroupMiddleLift());
-        autoChooser.addObject("Shoot From Start, Cross Baseline", new GroupShootFromStartCrossBaseLine());
+        autoChooser.addObject("Shoot From Start RED, Cross Baseline", new GroupShootFromStartCrossBaseLineRed());
+        autoChooser.addObject("Shoot From Start BLUE, Cross Baseline", new GroupShootFromStartCrossBaseLineBlue());
         autoChooser.addObject("Close Hopper, Fire" , new GroupPosCHopperFire());
         autoChooser.addObject("Left Lift WITH VISION", new GroupLiftLeftVisionCorrect());
         autoChooser.addObject("Middle lift WITH VISION", new GroupMiddleLiftVision());
