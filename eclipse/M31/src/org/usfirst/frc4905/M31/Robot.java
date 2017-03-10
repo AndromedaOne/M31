@@ -13,6 +13,7 @@ package org.usfirst.frc4905.M31;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
@@ -184,6 +185,9 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
     	autonomousCommand = (Command) autoChooser.getSelected();
     	if (autonomousCommand != null) autonomousCommand.start();
+    	if(DriverStation.getInstance().isFMSAttached()) {
+    		Trace.getInstance().matchStarted();
+    	}
     }
     
 
