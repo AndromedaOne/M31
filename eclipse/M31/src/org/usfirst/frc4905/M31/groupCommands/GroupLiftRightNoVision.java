@@ -36,7 +36,7 @@ public class GroupLiftRightNoVision extends CommandGroup {
     	addSequential(new TurnDeltaAngleDegree(-90));
     	addSequential(new MoveUsingUltrasonic(10));
     	addSequential(new OpenGearHandlerInAuto());
-    	addSequential(new MoveUsingUltrasonic(18));
+    	addParallel(new MoveUsingUltrasonic(30));
     	addSequential(new CloseGearHandlerInAuto());
     	
     	//GEAR SPITTER COMMAND
