@@ -61,6 +61,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		entry.add("PIDOutput");
 		entry.add("Avg Error");
 		entry.add("Ultra Distance");
+		entry.add("Ultra distance raw");
 		traceInstance.addTrace(m_traceUltrasonicFileName, entry);
 	}
 	
@@ -151,6 +152,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		entry.add(m_ultrasonicPID.get() * 100);
 		entry.add(m_ultrasonicPID.getAvgError());
 		entry.add(getUltrasonicDistance());
+		entry.add(m_ultrasonic.getRangeInches());
 		traceInstance.addEntry(m_traceUltrasonicFileName, entry);
 		return m_ultrasonicPID.onTarget();
 	}
