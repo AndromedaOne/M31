@@ -61,6 +61,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 		entry.add("PIDOutput");
 		entry.add("Avg Error");
 		entry.add("Ultra Distance");
+		entry.add("Ultra Distance Raw");
 		traceInstance.addTrace(m_traceFrontUltrasonicFileName, entry);
 	}
 	// Put methods for controlling this subsystem
@@ -128,6 +129,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 		entry.add(m_ultrasonicPID.get() * 100);
 		entry.add(m_ultrasonicPID.getAvgError());
 		entry.add(getUltrasonicDistance());
+		entry.add(m_ultrasonic.getRangeInches());
 		traceInstance.addEntry(m_traceFrontUltrasonicFileName, entry);
 		return m_ultrasonicPID.onTarget();
 	}
