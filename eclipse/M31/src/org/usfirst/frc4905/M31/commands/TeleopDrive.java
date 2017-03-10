@@ -68,7 +68,7 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.15;
+				mod = 0.2;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{
@@ -83,11 +83,19 @@ public class TeleopDrive extends Command {
 			xIn = 0;
 		}
 		if(Robot.oi.getDriveController().getRawButton(6)){
-			yIn = 0;
+			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
+				yIn = 0.06;
+			}else{
+				yIn = -0.07;
+			}
+		
 		}
 		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		//System.out.println(Robot.Ul)
-		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		
+			Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		
+		
 		
     }
 
