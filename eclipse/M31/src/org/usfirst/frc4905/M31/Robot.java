@@ -185,6 +185,7 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
     	autonomousCommand = (Command) autoChooser.getSelected();
     	if (autonomousCommand != null) autonomousCommand.start();
+    	System.out.println("Connected to FMS = " + DriverStation.getInstance().isFMSAttached());
     	if(DriverStation.getInstance().isFMSAttached()) {
     		Trace.getInstance().matchStarted();
     	}
