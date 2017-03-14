@@ -1,13 +1,18 @@
-package org.usfirst.frc4905.M31.commands;
+package org.usfirst.frc4905.M31.groupCommands;
+
+import org.usfirst.frc4905.M31.commands.MoveX;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class LineUpForGearInTeleop extends CommandGroup {
-
-    public LineUpForGearInTeleop() {
+public class GroupMiddleLiftNoMoveVision extends CommandGroup {
+	
+    
+	public GroupMiddleLiftNoMoveVision() {
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,11 +30,12 @@ public class LineUpForGearInTeleop extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new SetVisionData());
-    	MoveY moveY = new MoveY();
-    	addSequential(new SetMoveYDistanceWithVision(moveY)); //Multiplied by scale factor inside command
-    	MoveX moveX = new MoveX();
-    	addSequential(new SetMoveXDistanceWithVision(moveX)); //Multiplied by scale factor inside command
-    	addSequential(moveY);
+		addSequential(new MoveX(1));
+		addSequential(new TurnDeltaAngleDegree(-90));
+		//Move Foward With Vision
+		//Push Gear On
+		addSequential(new MoveX(-1));
+    	
+    	
     }
 }

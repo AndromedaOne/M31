@@ -38,7 +38,6 @@ public class SetVisionData extends Command {
 			System.out.println("Distance to move forward: " + Robot.visionProcessing.getForwardDistance());
 			System.out.println("Distance to move laterally: " + Robot.visionProcessing.getLateralDistance());
 		} 
-		Robot.visionProcessing.putTimestampOnNetworkTables();
 		m_isFinished = true;
     }
 

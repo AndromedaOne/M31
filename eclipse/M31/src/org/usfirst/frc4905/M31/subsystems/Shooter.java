@@ -27,20 +27,17 @@ public class Shooter extends Subsystem {
     
     public void spinFeederCW(){
     	//clockwise is the way we want to go to feed. it is a negative speed
-    	feederMotor.set(-.75);
+    	feederMotor.set(-.65);
     }
     
     public void spinFeederCCW(){
-    	feederMotor.set(0.75);
+    	feederMotor.set(0.25);
     }
     
     public void stopFeeder(){
     	feederMotor.set(0);
     }
     
-    public void spinFeederAtSpeed(double speed){
-    	feederMotor.set(speed);
-    }
     public void setShooterTargetSpeed(int speed){
     	shooterMotor.changeControlMode(TalonControlMode.Speed);
     	shooterMotor.set(speed);
@@ -76,7 +73,9 @@ public class Shooter extends Subsystem {
     }
     
     public void moveFeederUntilSwitchPressed(){
-    	
+
+
+
     	if(safetySwitch.get()){
 
     		feederMotor.set(-0.3);

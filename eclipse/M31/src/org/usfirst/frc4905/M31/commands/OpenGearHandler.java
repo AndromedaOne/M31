@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class OpenGearHandler extends Command {
-	private double m_outSpeed = 0.5;
+	private double m_outSpeed = 0.4;
 	private double m_inSpeed = -0.2;
     public OpenGearHandler() {
         // Use requires() here to declare subsystem dependencies
@@ -23,15 +23,13 @@ public class OpenGearHandler extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.gearHandler.shouldStopMovingLeft()){
-    		//Robot.gearHandler.stopMovingLeft();
-    		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
+    		Robot.gearHandler.stopMovingLeft();
     	}
     	else{
     		Robot.gearHandler.moveLeftGearHandler(m_outSpeed);
     	}
     	if(Robot.gearHandler.shouldStopMovingRight()){
-    		//Robot.gearHandler.stopMovingRight();
-    		Robot.gearHandler.moveRightGearHandler(m_outSpeed);
+    		Robot.gearHandler.stopMovingRight();
     	}
     	else{
     		Robot.gearHandler.moveRightGearHandler(m_outSpeed);

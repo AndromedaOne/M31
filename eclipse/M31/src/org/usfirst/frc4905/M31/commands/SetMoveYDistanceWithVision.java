@@ -23,11 +23,11 @@ public class SetMoveYDistanceWithVision extends Command {
     protected void execute() {
     	double distance = 0;
     	if (Robot.visionProcessing.getFoundLift()){
-    		distance = -(Robot.visionProcessing.getLateralDistance()*0.111); //add scale factor
+    		distance = -(Robot.visionProcessing.getLateralDistance()*0.11111); //add scale factor
     	}
     	m_moveY.setDistanceToMoveY(distance);
     	double yEncoderKp = Robot.driveTrain.getYEncoderKp();
-    	Robot.driveTrain.setI(yEncoderKp/18);
+    	Robot.driveTrain.setI(yEncoderKp/10);
     	Robot.driveTrain.setTolerance(0.05);
     }
 
