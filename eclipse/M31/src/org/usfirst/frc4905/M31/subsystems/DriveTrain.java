@@ -531,7 +531,7 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
-	// UltrasonnicPID code
+	// UltrasonicPID code
 	private class UltrasonicPIDOutput implements PIDOutput {
 
 		@Override
@@ -548,7 +548,7 @@ public class DriveTrain extends Subsystem {
 				
 			}
 			robotDrive.mecanumDrive_Cartesian(-output, 0, 0, 0);
-
+			
 		}
 	}
 

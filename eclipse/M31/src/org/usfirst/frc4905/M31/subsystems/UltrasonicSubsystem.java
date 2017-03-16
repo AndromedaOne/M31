@@ -54,7 +54,6 @@ public class UltrasonicSubsystem extends Subsystem {
 	public UltrasonicSubsystem(int ping, int echo) {
 		m_ultrasonic = new Ultrasonic(ping, echo);
 		m_ultrasonic.setEnabled(true);
-		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> entry = new Vector<String>();
@@ -73,7 +72,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		m_D = d;
 		m_maxSpeed = maxSpeed;
 		m_tolerance = tolerance;
-		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
 		LiveWindow.addActuator("UltraPID", "ultrasonicPID", m_ultrasonicPID);
 		Trace traceInstance = Trace.getInstance();
@@ -109,10 +107,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		return currentDistance;
 	}
 	
-	public void setAutoMode(){
-		m_ultrasonic.setAutomaticMode(true);
-	}
-
 	public void intializeUltrasonicPID(PIDOutput ultrasonicPIDout) {
 		UltrasonicPIDin pdIn=new UltrasonicPIDin();
 		m_ultrasonicPID=new PIDController(m_P, m_I, m_D, m_f,
@@ -143,6 +137,7 @@ public class UltrasonicSubsystem extends Subsystem {
 	public void moveWithUltrasonicPID(double distanceToGoTo) {
 		m_ultrasonicPID.setSetpoint(distanceToGoTo);
 		m_ultrasonicPID.enable();
+		
 
 	}
 

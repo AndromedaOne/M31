@@ -54,7 +54,6 @@ public class UltrasonicSubsystemFront extends Subsystem {
 	public UltrasonicSubsystemFront() {
 		m_ultrasonic = new Ultrasonic(4, 5);
 		m_ultrasonic.setEnabled(true);
-		m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> entry = new Vector<String>();

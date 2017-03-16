@@ -97,7 +97,6 @@ public class RobotMap {
 		m_ultrasonicFront = new UltrasonicSubsystemFront();
 		LiveWindow.addSensor("UltraSonic", "Front Ultrasonic", m_ultrasonicFront.getUltrasonic());
 		
-		m_ultrasonicSubsystem.setAutoMode();
 
 		//Gear Handler
 		gearHandlerRight = new VictorSP(0);
