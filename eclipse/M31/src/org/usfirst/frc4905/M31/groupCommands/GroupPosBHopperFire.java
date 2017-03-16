@@ -1,17 +1,19 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.*;
-import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonicFront;
+import org.usfirst.frc4905.M31.commands.MoveX;
+import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.ShootFromTheBoiler;
 import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupShootFromStartCrossBaseLine extends CommandGroup {
+public class GroupPosBHopperFire extends CommandGroup {
 
-    public GroupShootFromStartCrossBaseLine() {
+    public GroupPosBHopperFire() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,18 +31,22 @@ public class GroupShootFromStartCrossBaseLine extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new MoveY(3.25));
-    	//Turn Towards the Boiler
-    	addSequential(new TurnToCompassHeading(130));
-    	addSequential(new MoveUsingUltrasonicFront(7));
-    	
-    	addSequential(new AutoShootBoiler(7, 750));
-    	addParallel(new RunIntakeInAuto());
-    	addSequential(new MoveY(-3.25));
+    	addSequential(new MoveY(11));
+    	addSequential(new TurnToCompassHeading(90));
+    	addSequential(new MoveY(21));
+    	addSequential(new TurnToCompassHeading(0));
+    	addSequential(new MoveY(5));
     	addSequential(new TurnToCompassHeading(180));
-    	addSequential(new StopIntake());
-    	addSequential(new MoveY(-10));
+    	addSequential(new MoveX(-5));
+    	Timer.delay(3);
+    	addSequential(new MoveX(5));
+    	addSequential(new MoveY(5));
+    	addSequential(new TurnToCompassHeading(45));
+    	addSequential(new MoveY(5));
+    	addSequential(new ShootFromTheBoiler(75));
+    	
     	
     	
     }
 }
+	

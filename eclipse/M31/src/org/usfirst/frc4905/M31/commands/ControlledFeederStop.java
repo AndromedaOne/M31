@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ControlledFeederStop extends Command {
-	private int m_safetyCount;
+	private int m_safetyCount = 0;
+	private boolean m_stuck = false;
     public ControlledFeederStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -16,11 +17,13 @@ public class ControlledFeederStop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	m_stuck = false;
+    	m_safetyCount = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.Shooter.getSafetySwitch() == true){
+    	/*if(Robot.Shooter.getSafetySwitch() == true){
     		m_safetyCount++;
     	}
     	else{
@@ -33,12 +36,23 @@ public class ControlledFeederStop extends Command {
 			Robot.Shooter.spinFeederCCW();
 		}
     	
-    	Robot.Shooter.stopFeeder();
+    	Robot.Shooter.stopFeeder();*/
+    	
+    	m_safetyCount++;
+    	if(m_safetyCount < 80){
+    		Robot.Shooter.spinFeederAtSpeed(-0.75);
+    	}
+    	else{
+    		Robot.Shooter.stopFeeder();
+    		m_stuck = true;
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.Shooter.getSafetySwitch();
+    	
+        return !Robot.Shooter.getSafetySwitch() || m_stuck;
     	
     }
 

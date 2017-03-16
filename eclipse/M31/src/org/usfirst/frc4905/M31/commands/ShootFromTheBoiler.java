@@ -35,7 +35,7 @@ public class ShootFromTheBoiler extends Command {
     	
     	if(Robot.Shooter.getSafetySwitch() == true){
     		m_safetyCount++;
-    		m_ccwSafetyCount++;
+    		
     	}
     	else{
     		m_safetyCount = 0;
@@ -46,10 +46,16 @@ public class ShootFromTheBoiler extends Command {
     		m_ccwSafetyCount = 0;
     	}
     	else{
-    		Robot.Shooter.stopFeeder();
+    		m_ccwSafetyCount++;
+    		if(m_ccwSafetyCount < 70){
+    			Robot.Shooter.spinFeederCCW();
+    		}else{
+    			Robot.Shooter.stopFeeder();
 
+    		}
+    	
     	}
-    	Robot.Shooter.spinFeederCW();
+    	
     }
   
     // Make this return true when this Command no longer needs to run execute()

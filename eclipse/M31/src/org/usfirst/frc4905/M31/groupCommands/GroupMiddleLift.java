@@ -32,13 +32,13 @@ public class GroupMiddleLift extends CommandGroup {
         // arm.
 		
 		//Facing Gear Handler Towards the AirShip
-		addSequential(new MoveY(7));
+		addSequential(new MoveY(7.7));
 		//Push Gear On
 		addSequential(new TurnDeltaAngleDegree(-90));
 		
-		addSequential(new MoveUsingUltrasonic(12));
-		addSequential(new OpenGearHandlerInAuto());
-		addSequential(new MoveUsingUltrasonic(20));
+		addSequential(new MoveUsingUltrasonic(7));
+		addParallel(new OpenGearHandlerInAuto());
+		addSequential(new MoveUsingUltrasonic(30));
 		addSequential(new CloseGearHandlerInAuto());
 		
 
