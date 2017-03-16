@@ -42,6 +42,7 @@ public class Trace
 	private long m_startTime = 0;
 	private MultipleOutputStream m_out;
 	private MultipleOutputStream m_err;
+	private static String m_matchStartFname = "matchStarted";
 	
 	private class TraceEntry {
 		private BufferedWriter m_file;
@@ -183,6 +184,32 @@ public class Trace
 		}
 		catch (FileNotFoundException E) {
 			System.err.println("ERROR: Redirect Failed");
+		}
+	}
+	public void matchStarted() {
+		BufferedWriter outputFile = null;
+		try {
+			File directory = new File(m_pathOfFile);
+			if(!directory.exists()) {
+				if(!directory.mkdir()) {
+					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
+							" for match start data.");
+				}
+			}
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+			Date date = new Date();
+			String dateStr = new String(dateFormat.format(date));
+			String fullFileName = new String(m_pathOfFile  + "/" + m_matchStartFname + dateStr + ".txt");
+			FileWriter fstream = new FileWriter(fullFileName, false);
+			outputFile = new BufferedWriter(fstream);
+			outputFile.write("Match Started @" + dateStr);
+			outputFile.flush();
+			outputFile.close();
+		}
+		catch(IOException e) {
+			System.err.println("ERROR: unable to open text file " + m_matchStartFname + " ;"
+					+ e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }
