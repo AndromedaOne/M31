@@ -16,6 +16,8 @@ import org.usfirst.frc4905.M31.commands.*;
 
 import java.util.Vector;
 
+import javax.swing.Spring;
+
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
 import Utilities.*;
@@ -71,26 +73,40 @@ public class DriveTrain extends Subsystem {
 
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
-	boolean gyroEnabled = true;
-	private String m_traceFileName = "mecanumDrive";
+	boolean gyroEnabled = false;
+	private String m_frontLeftTrace = "frontLeftMotor";
+	private String m_frontRightTrace = "frontRightMotor";
+	private String m_backLeftTrace = "backLeftMotor";
+	private String m_backRightTrace = "backRightMotor";
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
 
-
-
-
-	public DriveTrain() {
+	private void createTraceFile(String filename) {
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> header = new Vector<String>();
-		header.add("Front Left Speed");
-		header.add("Back Left Speed");
-		header.add("Front Right Speed");
-		header.add("Back Right Speed");
-		header.add("Y commanded Speed");
-		header.add("Y commanded Speed");
-		header.add("Rotation");
-		traceInstance.addTrace(m_traceFileName, header);
+		header.add("Speed");
+		header.add("Motor Output");
+		header.add("Closed Loop Error");
+		traceInstance.addTrace(filename, header);
+	}
 
+	private void writeTraceData(String filename, CANTalon talon) {
+		
+		Trace traceInst = Trace.getInstance();
+		Vector<Double> entry = new Vector<Double>();
+		entry.add(talon.getSpeed());
+		entry.add(talon.getOutputVoltage() / talon.getBusVoltage() * 100);
+		entry.add(talon.getClosedLoopError() * 600.0 / 4096);
+		traceInst.addEntry(filename, entry);
+	}
+
+	public DriveTrain() {
+
+		createTraceFile(m_frontLeftTrace);
+		createTraceFile(m_frontRightTrace);
+		createTraceFile(m_backLeftTrace);
+		createTraceFile(m_backRightTrace);
+		
 		/* FL = Front Left
 		 * FR = Front Right
 		 * BL = Back Left
@@ -98,12 +114,12 @@ public class DriveTrain extends Subsystem {
 		 */
 
 		//Front Left Motor PID
-		double kFLp = 0.15;
+		double kFLp = 2.09;
 		double kFLi = 0.000;
-		double kFLd = 1.5;
+		double kFLd = 0.00;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 		Page 86 in CTR Documentation for f */
-		double kFLf = 0.214;
+		double kFLf = 0.244;
 		int izoneFL = 0;
 		double ramprateFL = 36;
 		ramprateFL = prefs.getDouble("SpeedRamprate", ramprateFL);
@@ -123,12 +139,12 @@ public class DriveTrain extends Subsystem {
 			System.out.print(" Target Ramp Rate is: " + ramprate + " \n"); */
 
 		//Front Right Motor PID
-		double kFRp = 0.15;
+		double kFRp = 1.76;
 		double kFRi = 0.000;
-		double kFRd = 1.5;
+		double kFRd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 			Page 86 in CTR Documentation for f */
-		double kFRf = 0.214;
+		double kFRf = 0.192;
 		int izoneFR = 0;
 		double ramprateFR = 36;
 		kFRp = prefs.getDouble("SpeedP", kFRp);
@@ -149,12 +165,12 @@ public class DriveTrain extends Subsystem {
 		m_motorsFrontRight.set(0);
 
 		//Back Left Motor PID
-		double kBLp = 0.15;
+		double kBLp = 1.86;
 		double kBLi = 0.000;
-		double kBLd = 1.5;
+		double kBLd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 				Page 86 in CTR Documentation for f */
-		double kBLf = 0.214;
+		double kBLf = 0.203;
 		int izoneBL = 0;
 		double ramprateBL = 36;
 		kBLp = prefs.getDouble("SpeedP", kBLp);
@@ -175,12 +191,12 @@ public class DriveTrain extends Subsystem {
 		m_motorsBackLeft.set(0);
 
 		//Back Right Motor PID
-		double kBRp = 0.15;
+		double kBRp = 3.35;
 		double kBRi = 0.000;
-		double kBRd = 1.5;
+		double kBRd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 					Page 86 in CTR Documentation for f */
-		double kBRf = 0.214;
+		double kBRf = 0.233;
 		int izoneBR = 0;
 		double ramprateBR = 36;
 		kBRp = prefs.getDouble("SpeedP", kBRp);
@@ -189,19 +205,16 @@ public class DriveTrain extends Subsystem {
 		kBRf = prefs.getDouble("SpeedF", kBRf);
 		ramprateBR = prefs.getDouble("SpeedRamprate", ramprateBR);
 		izoneBR = prefs.getInt("SpeedIzone", izoneBR);
-		m_motorsFrontLeft.reverseSensor(false);
-		m_motorsFrontLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_motorsFrontLeft.setPosition(0);
-		m_motorsFrontLeft.configNominalOutputVoltage(0, 0);
-		m_motorsFrontLeft.configPeakOutputVoltage(12.0, -12.0);
-		m_motorsFrontLeft.enableBrakeMode(true);
-		m_motorsFrontLeft.setVoltageRampRate(48);
-		m_motorsFrontLeft.setPID(kBRp, kBRi, kBRd, kBRf, izoneBR, ramprateBR, 0);
-		m_motorsFrontLeft.changeControlMode(TalonControlMode.Speed);
-		m_motorsFrontLeft.set(0);
-
-
-
+		m_motorsBackRight.reverseSensor(false);
+		m_motorsBackRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		m_motorsBackRight.setPosition(0);
+		m_motorsBackRight.configNominalOutputVoltage(0, 0);
+		m_motorsBackRight.configPeakOutputVoltage(12.0, -12.0);
+		m_motorsBackRight.enableBrakeMode(true);
+		m_motorsBackRight.setVoltageRampRate(48);
+		m_motorsBackRight.setPID(kBRp, kBRi, kBRd, kBRf, izoneBR, ramprateBR, 0);
+		m_motorsBackRight.changeControlMode(TalonControlMode.Speed);
+		m_motorsBackRight.set(0);
 
 
 		robotDrive.setMaxOutput(m_RPMConversion);
@@ -277,17 +290,14 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Y Commanded Speed",yIn);
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
+			
+			
 		}
-		Trace traceInst = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(Robot.driveTrain.getM1Speed());
-		entry.add(Robot.driveTrain.getM2Speed());
-		entry.add(Robot.driveTrain.getM3Speed());
-		entry.add(Robot.driveTrain.getM4Speed());
-		entry.add(yIn);
-		entry.add(xIn);
-		entry.add(rotation);
-		traceInst.addEntry(m_traceFileName, entry);
+
+		writeTraceData(m_frontLeftTrace, frontLeft);
+		writeTraceData(m_frontRightTrace, frontRight);
+		writeTraceData(m_backLeftTrace, backLeft);
+		writeTraceData(m_backRightTrace, backRight);
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
