@@ -69,7 +69,7 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.5;
+				mod = 0.2;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{
