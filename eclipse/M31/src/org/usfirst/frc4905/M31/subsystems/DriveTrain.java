@@ -72,7 +72,7 @@ public class DriveTrain extends Subsystem {
 	private String m_traceFileName = "mecanumDrive";
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
-
+	EncoderPositions m_resetEncoderPositions = new EncoderPositions();
 
 
 
@@ -149,6 +149,8 @@ public class DriveTrain extends Subsystem {
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
 		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
+		double compassHeading = RobotMap.getNavxGyro().getCompassHeading();
+		Robot.visionProcessing.putParallelStatusOnNetworkTables(compassHeading);
 		if (kNoisyDebug) {
 			m_sb.append("\tout:");
 			m_sb.append(motorOutput);
@@ -224,13 +226,18 @@ public class DriveTrain extends Subsystem {
 		System.out.println("Front Right Pos:" + frontRight.getPosition());
 		System.out.println("Front Left Pos:" + frontLeft.getPosition());
 	}
-
+	
+	public class EncoderPositions{
+		double backLeft = 0;
+		double backRight = 0;
+		double frontRight = 0;
+		double frontLeft = 0;
+	}
 	public void resetEncPos(){
-		backLeft.setPosition(0);
-		backRight.setPosition(0);
-		frontRight.setPosition(0);
-		frontLeft.setPosition(0);
-
+		m_resetEncoderPositions.backLeft = backLeft.getPosition();
+		m_resetEncoderPositions.backRight = backRight.getPosition();
+		m_resetEncoderPositions.frontRight = frontRight.getPosition();
+		m_resetEncoderPositions.frontLeft = frontLeft.getPosition();
 
 	}
 	public double getEncoderDistance(){
@@ -274,8 +281,10 @@ public class DriveTrain extends Subsystem {
 	private class MovingInTheYEncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in y direction
-			return (frontLeft.getPosition() + backLeft.getPosition()
-			- frontRight.getPosition() - backRight.getPosition()) / 4;
+			return ((frontLeft.getPosition() - m_resetEncoderPositions.frontLeft) 
+					+ (backLeft.getPosition() - m_resetEncoderPositions.backLeft)
+					- (frontRight.getPosition() - m_resetEncoderPositions.frontRight)
+					- (backRight.getPosition() - m_resetEncoderPositions.backRight)) / 4;
 		}
 
 		@Override
@@ -339,6 +348,7 @@ public class DriveTrain extends Subsystem {
 		return m_moveYEncoderP;
 	}
 	public void moveToYEncoderRevolutions(double revolutionsToMove) {
+		
 		resetEncPos();
 		m_moveToTheYEncoderPID.setSetpoint(revolutionsToMove);
 		m_moveToTheYEncoderPID.enable();
@@ -372,8 +382,10 @@ public class DriveTrain extends Subsystem {
 	private class MovingInTheXEncoderPIDin implements PIDSource {
 		private double getEncoderPosition() {
 			//Used when moving in x direction
-			return (frontRight.getPosition() - backRight.getPosition()
-					+ frontLeft.getPosition() - backLeft.getPosition()) / 4;
+			return ((frontRight.getPosition() - m_resetEncoderPositions.frontRight)
+					- (backRight.getPosition() - m_resetEncoderPositions.backRight)
+					+ (frontLeft.getPosition() - m_resetEncoderPositions.frontLeft)
+					- (backLeft.getPosition() - m_resetEncoderPositions.backLeft)) / 4;
 		}
 
 		@Override
@@ -493,14 +505,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double initializeTurnToCompass(double angle) {
-		double initialAngle = getRobotAngle();
-		double angleMod = initialAngle % 360;
-		System.out.println("AngleMod = " + angleMod + 
-				" Initial Angle = " + initialAngle);
-		if (angleMod < 0) {
-			//Correcting Negative Modulus
-			angleMod = angleMod + 360; 
-		}
+		double angleMod = RobotMap.getNavxGyro().getCompassHeading();
 		double deltaAngle = angle - angleMod;
 		if (Math.abs(deltaAngle) > 180) { 
 			// Turn to the minimal angle
@@ -617,7 +622,19 @@ public class DriveTrain extends Subsystem {
 	public double getM4Speed(){
 		return backLeft.getSpeed();
 	}
-
+	
+	public double getM1EncPos(){
+		return frontLeft.getPosition();
+	}
+	public double getM2EncPos(){
+		return backRight.getPosition();
+	}
+	public double getM3EncPos(){
+		return frontRight.getPosition();
+	}
+	public double getM4EncPos(){
+		return backLeft.getPosition();
+	}
 
 }
 

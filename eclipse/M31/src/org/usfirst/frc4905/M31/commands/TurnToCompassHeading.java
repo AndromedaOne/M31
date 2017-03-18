@@ -26,7 +26,7 @@ public class TurnToCompassHeading extends Command {
 		System.out.println("Initialize TurnToCompassHeading");
 		double deltaAngle = Robot.driveTrain.initializeTurnToCompass(m_heading);
 		Robot.driveTrain.initializeGyroPID(deltaAngle);
-
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run

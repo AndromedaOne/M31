@@ -118,7 +118,7 @@ public class VisionProcessing extends Subsystem {
     	data.distanceAwayForward = m_networkTable.getNumber("distanceToDriveForwardLift",0);
     	data.distanceAwayLateral = m_networkTable.getNumber("distanceToDriveLaterallyLift",0);
     	data.timestamp = m_networkTable.getNumber("timestampLift",0);
-    	compensateLatency(data);
+    	compensateLiftLatency(data);
     	m_timestamp = data.timestamp;
     	m_foundTargetLift = data.foundLift;
     	m_angleToTurnLift = data.angletoTurn;
@@ -222,9 +222,18 @@ public class VisionProcessing extends Subsystem {
     	dataForRobotPoseHistory.timestamp = currentRobotPoseSpecifics.robotTimestamp;
     	setRobotPoseHistory(dataForRobotPoseHistory);
     	setOldRobotPoseSpecifics(currentRobotPoseSpecifics);
+    	putParallelStatusOnNetworkTables(currentRobotPoseSpecifics.angle);
     }
     
-	public void compensateLatency(DataForLift dataForLift){
+    public void putParallelStatusOnNetworkTables(double compassHeading){
+    	if (compassHeading == 330 || compassHeading == 270 || compassHeading == 210){
+    		m_networkTable.putBoolean("ParallelStatus", true);
+    	}
+    	else{
+    		m_networkTable.putBoolean("ParallelStatus", false);
+    	}
+    }
+	public void compensateLiftLatency(DataForLift dataForLift){
 		for (DataForRobotPoseHistory head : robotPoseHistory){
 			if (dataForLift.timestamp <= head.timestamp){
 				break;
@@ -238,6 +247,7 @@ public class VisionProcessing extends Subsystem {
 					+ head.deltaLateralDistance * Math.cos(dataForLift.angletoTurn);
 			dataForLift.angletoTurn -= head.deltaAngle;
 		}
+		
 	}
 
 }

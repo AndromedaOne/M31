@@ -80,6 +80,17 @@ public class NavxGyro {
 	
 		return correctedAngle;
 	}
+	public double getCompassHeading(){
+		double initialAngle = getRobotAngle();
+		double angleMod = initialAngle % 360;
+		System.out.println("AngleMod = " + angleMod + 
+				" Initial Angle = " + initialAngle);
+		if (angleMod < 0) {
+			//Correcting Negative Modulus
+			angleMod = angleMod + 360; 
+		}
+		return angleMod;
+	}
 
 	private class GyroPIDin implements PIDSource {
 
