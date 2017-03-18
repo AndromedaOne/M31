@@ -91,14 +91,14 @@ public class DriveTrain extends Subsystem {
 		traceInstance.addTrace(filename, header);
 	}
 
-	private void writeTraceData(String filename, CANTalon talon) {
+	private void writeTraceData(String filename, CANTalon talon, boolean invertSetpoint) {
 		
 		Trace traceInst = Trace.getInstance();
 		Vector<Double> entry = new Vector<Double>();
 		entry.add(talon.getSpeed());
 		entry.add(talon.getOutputVoltage() / talon.getBusVoltage() * 100);
 		entry.add(talon.getClosedLoopError() * 600.0 / 4096);
-		entry.add(talon.getSetpoint());
+		entry.add(invertSetpoint ? -talon.getSetpoint() : talon.getSetpoint());
 		traceInst.addEntry(filename, entry);
 	}
 
@@ -278,10 +278,10 @@ public class DriveTrain extends Subsystem {
 			
 		}
 
-		writeTraceData(m_frontLeftTrace, frontLeft);
-		writeTraceData(m_frontRightTrace, frontRight);
-		writeTraceData(m_backLeftTrace, backLeft);
-		writeTraceData(m_backRightTrace, backRight);
+		writeTraceData(m_frontLeftTrace, frontLeft, false);
+		writeTraceData(m_frontRightTrace, frontRight, true);
+		writeTraceData(m_backLeftTrace, backLeft, false);
+		writeTraceData(m_backRightTrace, backRight, true);
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
