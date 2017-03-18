@@ -62,9 +62,9 @@ public class DriveTrain extends Subsystem {
 	private void setPIDNormal() {
 		//                  P I D F Izone RampRate Profile
 		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0, 0, 0);
-		m_motorsFrontRight.setPID(0.465*2, 0, 0, 0, 0.1848, 0, 0);
-		m_motorsBackLeft.setPID(  0, 0, 0, 0, 0, 0, 0);
-		m_motorsBackRight.setPID( 0, 0, 0, 0, 0, 0, 0);
+		m_motorsFrontRight.setPID(0.465*2, 0, 0, 0.1848, 0, 0, 0);
+		m_motorsBackLeft.setPID(  0.341*2, 0, 0, 0.1929, 0, 0, 0);
+		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0, 0, 0);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
