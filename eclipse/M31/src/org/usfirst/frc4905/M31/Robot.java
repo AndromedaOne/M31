@@ -207,6 +207,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        visionProcessing.updateRobotPositionHistory();
     }
 
     public void teleopInit() {
@@ -225,7 +226,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
+        visionProcessing.updateRobotPositionHistory();
     }
 
     /**
@@ -233,6 +234,7 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        visionProcessing.updateRobotPositionHistory();
     }
     
     
