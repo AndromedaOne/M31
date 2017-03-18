@@ -59,26 +59,38 @@ public class DriveTrain extends Subsystem {
 		m_motorsBackRight.setProfile(1);
 	}
 	
-	private void setPIDNormal() {
-		//                  P I D F Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0, 0, 0);
-		m_motorsFrontRight.setPID(0.465*2, 0, 0, 0.1848, 0, 0, 0);
-		m_motorsBackLeft.setPID(  0.341*2, 0, 0, 0.1929, 0, 0, 0);
-		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0, 0, 0);
+	private void setNormalPIDParameters() {
+		//                        P         I  D  F       Izone RampRate Profile
+		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0,    0,       0);
+		m_motorsFrontRight.setPID(0.465*2,  0, 0, 0.1848, 0,    0,       0);
+		m_motorsBackLeft.setPID(  0.341*2,  0, 0, 0.1929, 0,    0,       0);
+		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0,    0,       0);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
 	}
 	
-	private void setPIDStrafe() {
-		//                  P I D F Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0, 0, 0, 0, 0, 0, 1);
-		m_motorsFrontRight.setPID(0, 0, 0, 0, 0, 0, 1);
-		m_motorsBackLeft.setPID(  0, 0, 0, 0, 0, 0, 1);
-		m_motorsBackRight.setPID( 0, 0, 0, 0, 0, 0, 1);
+	private void setStrafePIDParameters() {
+		//                        P         I  D  F       Izone RampRate Profile
+		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0,    0,       1);
+		m_motorsFrontRight.setPID(0.465*2,  0, 0, 0.1848, 0,    0,       1);
+		m_motorsBackLeft.setPID(  0.341*2,  0, 0, 0.1929, 0,    0,       1);
+		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0,    0,       1);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
+	}
+	
+	private void setCommonMotorParameters(CANTalon motorController) {
+		motorController.reverseSensor(false);
+		motorController.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		motorController.setPosition(0);
+		motorController.configNominalOutputVoltage(0, 0);
+		motorController.configPeakOutputVoltage(12.0, -12.0);
+		motorController.enableBrakeMode(true);
+		motorController.setVoltageRampRate(0); //(48);
+		motorController.changeControlMode(TalonControlMode.Speed);
+		motorController.set(0);
 	}
 
 
@@ -144,57 +156,20 @@ public class DriveTrain extends Subsystem {
 		createTraceFile(m_backLeftTrace);
 		createTraceFile(m_backRightTrace);
 
+		setNormalPIDParameters();
+		setStrafePIDParameters();
+		
 		//Front Left Motor PID
-		double ramprateFL = 0; //36;
-		m_motorsFrontLeft.reverseSensor(false);
-		m_motorsFrontLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_motorsFrontLeft.setPosition(0);
-		m_motorsFrontLeft.configNominalOutputVoltage(0, 0);
-		m_motorsFrontLeft.configPeakOutputVoltage(12.0, -12.0);
-		m_motorsFrontLeft.enableBrakeMode(true);
-		m_motorsFrontLeft.setVoltageRampRate(0); //(48);
-		m_motorsFrontLeft.changeControlMode(TalonControlMode.Speed);
-		m_motorsFrontLeft.set(0);
-		/* m_motors[i].setCloseLoopRampRate(0.1);
-			System.out.println("Current Ramp Rate is:" + m_motorsFrontLeft.getCloseLoopRampRate());
-			System.out.print(" Target Ramp Rate is: " + ramprate + " \n"); */
+		setCommonMotorParameters(m_motorsFrontLeft);
 
 		//Front Right Motor PID
-		double ramprateFR = 0; //36;
-		m_motorsFrontRight.reverseSensor(false);
-		m_motorsFrontRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_motorsFrontRight.setPosition(0);
-		m_motorsFrontRight.configNominalOutputVoltage(0, 0);
-		m_motorsFrontRight.configPeakOutputVoltage(12.0, -12.0);
-		m_motorsFrontRight.enableBrakeMode(true);
-		m_motorsFrontRight.setVoltageRampRate(0); //(48);
-		m_motorsFrontRight.changeControlMode(TalonControlMode.Speed);
-		m_motorsFrontRight.set(0);
+		setCommonMotorParameters(m_motorsFrontRight);
 
 		//Back Left Motor PID
-		double ramprateBL = 0; //36;
-		m_motorsBackLeft.reverseSensor(false);
-		m_motorsBackLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_motorsBackLeft.setPosition(0);
-		m_motorsBackLeft.configNominalOutputVoltage(0, 0);
-		m_motorsBackLeft.configPeakOutputVoltage(12.0, -12.0);
-		m_motorsBackLeft.enableBrakeMode(true);
-		m_motorsBackLeft.setVoltageRampRate(0); //(48);
-		m_motorsBackLeft.changeControlMode(TalonControlMode.Speed);
-		m_motorsBackLeft.set(0);
+		setCommonMotorParameters(m_motorsBackLeft);
 
 		//Back Right Motor PID
-		double ramprateBR = 0; //36;
-		m_motorsBackRight.reverseSensor(false);
-		m_motorsBackRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_motorsBackRight.setPosition(0);
-		m_motorsBackRight.configNominalOutputVoltage(0, 0);
-		m_motorsBackRight.configPeakOutputVoltage(12.0, -12.0);
-		m_motorsBackRight.enableBrakeMode(true);
-		m_motorsBackRight.setVoltageRampRate(0); //(48);
-		m_motorsBackRight.changeControlMode(TalonControlMode.Speed);
-		m_motorsBackRight.set(0);
-
+		setCommonMotorParameters(m_motorsBackRight);
 
 		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
