@@ -123,16 +123,14 @@ public class DriveTrain extends Subsystem {
 		Page 86 in CTR Documentation for f */
 		double kFLf = 0.1911;
 		int izoneFL = 0;
-		double ramprateFL = 36;
-		ramprateFL = prefs.getDouble("SpeedRamprate", ramprateFL);
-		izoneFL = prefs.getInt("SpeedIzone", izoneFL);
+		double ramprateFL = 0; //36;
 		m_motorsFrontLeft.reverseSensor(false);
 		m_motorsFrontLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		m_motorsFrontLeft.setPosition(0);
 		m_motorsFrontLeft.configNominalOutputVoltage(0, 0);
 		m_motorsFrontLeft.configPeakOutputVoltage(12.0, -12.0);
 		m_motorsFrontLeft.enableBrakeMode(true);
-		m_motorsFrontLeft.setVoltageRampRate(48);
+		m_motorsFrontLeft.setVoltageRampRate(0); //(48);
 		m_motorsFrontLeft.setPID(kFLp, kFLi, kFLd, kFLf, izoneFL, ramprateFL, 0);
 		m_motorsFrontLeft.changeControlMode(TalonControlMode.Speed);
 		m_motorsFrontLeft.set(0);
@@ -148,16 +146,14 @@ public class DriveTrain extends Subsystem {
 			Page 86 in CTR Documentation for f */
 		double kFRf = 0.1848;
 		int izoneFR = 0;
-		double ramprateFR = 36;
-		ramprateFR = prefs.getDouble("SpeedRamprate", ramprateFR);
-		izoneFR = prefs.getInt("SpeedIzone", izoneFR);
+		double ramprateFR = 0; //36;
 		m_motorsFrontRight.reverseSensor(false);
 		m_motorsFrontRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		m_motorsFrontRight.setPosition(0);
 		m_motorsFrontRight.configNominalOutputVoltage(0, 0);
 		m_motorsFrontRight.configPeakOutputVoltage(12.0, -12.0);
 		m_motorsFrontRight.enableBrakeMode(true);
-		m_motorsFrontRight.setVoltageRampRate(48);
+		m_motorsFrontRight.setVoltageRampRate(0); //(48);
 		m_motorsFrontRight.setPID(kFRp, kFRi, kFRd, kFRf, izoneFR, ramprateFR, 0);
 		m_motorsFrontRight.changeControlMode(TalonControlMode.Speed);
 		m_motorsFrontRight.set(0);
@@ -170,16 +166,14 @@ public class DriveTrain extends Subsystem {
 				Page 86 in CTR Documentation for f */
 		double kBLf = 0.1929;
 		int izoneBL = 0;
-		double ramprateBL = 36;
-		ramprateBL = prefs.getDouble("SpeedRamprate", ramprateBL);
-		izoneBL = prefs.getInt("SpeedIzone", izoneBL);
+		double ramprateBL = 0; //36;
 		m_motorsBackLeft.reverseSensor(false);
 		m_motorsBackLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		m_motorsBackLeft.setPosition(0);
 		m_motorsBackLeft.configNominalOutputVoltage(0, 0);
 		m_motorsBackLeft.configPeakOutputVoltage(12.0, -12.0);
 		m_motorsBackLeft.enableBrakeMode(true);
-		m_motorsBackLeft.setVoltageRampRate(48);
+		m_motorsBackLeft.setVoltageRampRate(0); //(48);
 		m_motorsBackLeft.setPID(kFRp, kBLi, kBLd, kBLf, izoneBL, ramprateBL, 0);
 		m_motorsBackLeft.changeControlMode(TalonControlMode.Speed);
 		m_motorsBackLeft.set(0);
@@ -192,16 +186,14 @@ public class DriveTrain extends Subsystem {
 					Page 86 in CTR Documentation for f */
 		double kBRf = 0.1876;
 		int izoneBR = 0;
-		double ramprateBR = 36;
-		ramprateBR = prefs.getDouble("SpeedRamprate", ramprateBR);
-		izoneBR = prefs.getInt("SpeedIzone", izoneBR);
+		double ramprateBR = 0; //36;
 		m_motorsBackRight.reverseSensor(false);
 		m_motorsBackRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		m_motorsBackRight.setPosition(0);
 		m_motorsBackRight.configNominalOutputVoltage(0, 0);
 		m_motorsBackRight.configPeakOutputVoltage(12.0, -12.0);
 		m_motorsBackRight.enableBrakeMode(true);
-		m_motorsBackRight.setVoltageRampRate(48);
+		m_motorsBackRight.setVoltageRampRate(0); //(48);
 		m_motorsBackRight.setPID(kBRp, kBRi, kBRd, kBRf, izoneBR, ramprateBR, 0);
 		m_motorsBackRight.changeControlMode(TalonControlMode.Speed);
 		m_motorsBackRight.set(0);
