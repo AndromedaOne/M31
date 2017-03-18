@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
+import org.usfirst.frc4905.M31.RobotMap;
 
 /**
  *
@@ -48,6 +49,8 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	
     	Joystick driveGamepad = Robot.oi.getDriveController();
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
@@ -65,7 +68,7 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.25;
+				mod = 0.2;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{
@@ -79,12 +82,22 @@ public class TeleopDrive extends Command {
 		if(Robot.oi.getDriveController().getRawButton(7)){
 			xIn = 0;
 		}
+		//the below code accounts for strafing drift from untuned pid speed control loops on mecanum wheels. may be irrelevant after
+		//tuning the loops and or adding a wheel in the middle of the robot
 		if(Robot.oi.getDriveController().getRawButton(6)){
-			yIn = 0;
+			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
+				yIn = 0.06; 
+			}else{
+				yIn = -0.07;
+			}
+		
 		}
 		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		//System.out.println(Robot.Ul)
-		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		
+			Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		
+		
 		
     }
 

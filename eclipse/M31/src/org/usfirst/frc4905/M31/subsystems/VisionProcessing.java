@@ -2,6 +2,8 @@ package org.usfirst.frc4905.M31.subsystems;
 
 
 
+import org.usfirst.frc4905.M31.RobotEnableStatus;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -13,7 +15,6 @@ public class VisionProcessing extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private NetworkTable m_networkTable;
-	private NetworkTable m_robotCommands;
 	private double m_timestamp = 0;
 	private boolean m_foundTargetLift = false;
 	private double m_angleToTurnLift = 0;
@@ -23,7 +24,7 @@ public class VisionProcessing extends Subsystem {
 	
 	public VisionProcessing() {
 		initNetworkTable("VisionProcessing");
-		m_robotCommands.putBoolean("TimestampRet", false);
+		m_networkTable.putBoolean("TimestampRet", false);
 		
 	}
 	
@@ -34,16 +35,16 @@ public class VisionProcessing extends Subsystem {
     	
     }
     private void initNetworkTable(String table){
+    	//NetworkTable.setIPAddress("10.49.5.77");
     	m_networkTable = NetworkTable.getTable(table);
-    	m_robotCommands = NetworkTable.getTable("RobotCommands");
     }
     public void putTimestampOnNetworkTables(){
-    	m_robotCommands.putBoolean("TimestampRet", true);
-    	m_robotCommands.putNumber("Timestamp", m_timestamp);
+    	m_networkTable.putBoolean("TimestampRet", true);
+    	m_networkTable.putNumber("Timestamp", m_timestamp);
     }
     public void resetTimestampOnNetworkTables(){
-    	m_robotCommands.putBoolean("TimestampRet", false);
-    	m_robotCommands.putNumber("Timestamp", 0.0);
+    	m_networkTable.putBoolean("TimestampRet", false);
+    	m_networkTable.putNumber("Timestamp", 0.0);
     }
     //start of public interface methods
     public boolean doesVisionSeeTarget(){
@@ -54,7 +55,7 @@ public class VisionProcessing extends Subsystem {
     public boolean isVisionReady(){
     	if(m_firstTime){
     		long startTime = System.currentTimeMillis();
-    		long delay = 2*1000; //2 seconds
+    		long delay = 1*1000; //1 seconds
     		m_endTime = startTime + delay;
     		m_firstTime = false;
     	}
@@ -117,9 +118,16 @@ public class VisionProcessing extends Subsystem {
     	return data;
     }
 
-    public void turnOffPi(){
-    	m_robotCommands.putBoolean("TurnOff", true);
+    public void putEnableStatus(RobotEnableStatus enableStatus){
+    	boolean boolEnableStatus;
+    	if (enableStatus == RobotEnableStatus.DISABLED) {
+    		boolEnableStatus = false;
+    	} else {
+    		boolEnableStatus = true;
+    	}
+    	m_networkTable.putBoolean("RobotEnabled", boolEnableStatus);
     }
+
 
 }
 
