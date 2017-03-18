@@ -48,7 +48,8 @@ public class TeleopDrive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @SuppressWarnings("unused")
+	protected void execute() {
     	
     	
     	Joystick driveGamepad = Robot.oi.getDriveController();
@@ -68,7 +69,7 @@ public class TeleopDrive extends Command {
 		if(m_delay > 24 && Robot.oi.getDriveController().getRawButton(5)){
 			m_delay = 0;
 			if(!slowModeEnabled){
-				mod = 0.2;
+				mod = 0.5;
 				slowModeEnabled = true;
 				System.out.println("Slowmode started");
 			}else{
@@ -86,11 +87,11 @@ public class TeleopDrive extends Command {
 		//tuning the loops and or adding a wheel in the middle of the robot
 		if(Robot.oi.getDriveController().getRawButton(6)){
 			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
-				yIn = 0.06; 
+				yIn = 0; //0.06; 
 			}else{
-				yIn = -0.07;
+				yIn = 0; //-0.07;
 			}
-		
+
 		}
 		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		//System.out.println(Robot.Ul)

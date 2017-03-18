@@ -87,6 +87,7 @@ public class DriveTrain extends Subsystem {
 		header.add("Speed");
 		header.add("Motor Output");
 		header.add("Closed Loop Error");
+		header.add("Setpoint");
 		traceInstance.addTrace(filename, header);
 	}
 
@@ -97,6 +98,7 @@ public class DriveTrain extends Subsystem {
 		entry.add(talon.getSpeed());
 		entry.add(talon.getOutputVoltage() / talon.getBusVoltage() * 100);
 		entry.add(talon.getClosedLoopError() * 600.0 / 4096);
+		entry.add(talon.getSetpoint());
 		traceInst.addEntry(filename, entry);
 	}
 
@@ -114,12 +116,12 @@ public class DriveTrain extends Subsystem {
 		 */
 
 		//Front Left Motor PID
-		double kFLp = 2.09;
+		double kFLp = 0.3935*2; //0.625;
 		double kFLi = 0.000;
-		double kFLd = 0.00;
+		double kFLd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 		Page 86 in CTR Documentation for f */
-		double kFLf = 0.244;
+		double kFLf = 0.1911;
 		int izoneFL = 0;
 		double ramprateFL = 36;
 		ramprateFL = prefs.getDouble("SpeedRamprate", ramprateFL);
@@ -139,18 +141,14 @@ public class DriveTrain extends Subsystem {
 			System.out.print(" Target Ramp Rate is: " + ramprate + " \n"); */
 
 		//Front Right Motor PID
-		double kFRp = 1.76;
+		double kFRp = 0.465*2; //0.63;
 		double kFRi = 0.000;
 		double kFRd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 			Page 86 in CTR Documentation for f */
-		double kFRf = 0.192;
+		double kFRf = 0.1848;
 		int izoneFR = 0;
 		double ramprateFR = 36;
-		kFRp = prefs.getDouble("SpeedP", kFRp);
-		kFRi = prefs.getDouble("SpeedI", kFRi);
-		kFRd = prefs.getDouble("SpeedD", kFRd);
-		kFRf = prefs.getDouble("SpeedF", kFRf);
 		ramprateFR = prefs.getDouble("SpeedRamprate", ramprateFR);
 		izoneFR = prefs.getInt("SpeedIzone", izoneFR);
 		m_motorsFrontRight.reverseSensor(false);
@@ -165,18 +163,14 @@ public class DriveTrain extends Subsystem {
 		m_motorsFrontRight.set(0);
 
 		//Back Left Motor PID
-		double kBLp = 1.86;
+		double kBLp = 0.341*2; //0.639;
 		double kBLi = 0.000;
 		double kBLd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 				Page 86 in CTR Documentation for f */
-		double kBLf = 0.203;
+		double kBLf = 0.1929;
 		int izoneBL = 0;
 		double ramprateBL = 36;
-		kBLp = prefs.getDouble("SpeedP", kBLp);
-		kBLi = prefs.getDouble("SpeedI", kBLi);
-		kBLd = prefs.getDouble("SpeedD", kBLd);
-		kBLf = prefs.getDouble("SpeedF", kBLf);
 		ramprateBL = prefs.getDouble("SpeedRamprate", ramprateBL);
 		izoneBL = prefs.getInt("SpeedIzone", izoneBL);
 		m_motorsBackLeft.reverseSensor(false);
@@ -191,18 +185,14 @@ public class DriveTrain extends Subsystem {
 		m_motorsBackLeft.set(0);
 
 		//Back Right Motor PID
-		double kBRp = 3.35;
+		double kBRp = 0.3654*2; //0.57;
 		double kBRi = 0.000;
 		double kBRd = 0;
 		/* 700/60/10*4096 = 4778.67  1023/4778.67 
 					Page 86 in CTR Documentation for f */
-		double kBRf = 0.233;
+		double kBRf = 0.1876;
 		int izoneBR = 0;
 		double ramprateBR = 36;
-		kBRp = prefs.getDouble("SpeedP", kBRp);
-		kBRi = prefs.getDouble("SpeedI", kBRi);
-		kBRd = prefs.getDouble("SpeedD", kBRd);
-		kBRf = prefs.getDouble("SpeedF", kBRf);
 		ramprateBR = prefs.getDouble("SpeedRamprate", ramprateBR);
 		izoneBR = prefs.getInt("SpeedIzone", izoneBR);
 		m_motorsBackRight.reverseSensor(false);
@@ -242,6 +232,8 @@ public class DriveTrain extends Subsystem {
 	int m_loops = 0;
 	public void mecanumDrive(double xIn, double yIn, double rotation){
 
+		xIn = xIn * 0.8;
+		yIn = yIn * 0.8;
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
