@@ -72,10 +72,10 @@ public class DriveTrain extends Subsystem {
 	
 	private void setStrafePIDParameters() {
 		//                        P         I  D  F       Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0, 0, 0, 1023.0*600.0/4096.0/575.0, 0,    0,       1);
-		m_motorsFrontRight.setPID(0,  0, 0, 1023.0*600.0/4096.0/590.0, 0,    0,       1);
-		m_motorsBackLeft.setPID(  0,  0, 0, 1023.0*600.0/4096.0/530.0, 0,    0,       1);
-		m_motorsBackRight.setPID( 0, 0, 0, 1023.0*600.0/4096.0/580.0, 0,    0,       1);
+		m_motorsFrontLeft.setPID( 102.3/30/10, 0, 0, 1023.0*600.0/4096.0/575.0, 0,    0,       1);
+		m_motorsFrontRight.setPID(102.3/30/10,  0, 0, 1023.0*600.0/4096.0/590.0, 0,    0,       1);
+		m_motorsBackLeft.setPID(  102.3/30/10,  0, 0, 1023.0*600.0/4096.0/530.0, 0,    0,       1);
+		m_motorsBackRight.setPID( 102.3/35/10, 0, 0, 1023.0*600.0/4096.0/580.0, 0,    0,       1);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
@@ -171,7 +171,7 @@ public class DriveTrain extends Subsystem {
 		//Back Right Motor PID
 		setCommonMotorParameters(m_motorsBackRight);
 
-		//robotDrive.setMaxOutput(m_RPMConversion);
+		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
 		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
@@ -196,8 +196,8 @@ public class DriveTrain extends Subsystem {
 	int m_loops = 0;
 	public void mecanumDrive(double xIn, double yIn, double rotation){
 
-		xIn = xIn * 0.5;
-		yIn = yIn * 0.5;
+		xIn = xIn * 0.4;
+		yIn = yIn * 0.4;
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
