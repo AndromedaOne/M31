@@ -184,13 +184,13 @@ public class VisionProcessing extends Subsystem {
     private DataForRobotPoseHistory getMovementDataForRobotPoseHistory(DeltaRobotSpecifics deltaRobotSpecifics) {
     	DataForRobotPoseHistory dataForRobotPoseHistory = new DataForRobotPoseHistory();
     	dataForRobotPoseHistory.deltaForwardDistance = (deltaRobotSpecifics.deltaBackLeftEncoder
-    			+ deltaRobotSpecifics.deltaBackRightEncoder
+    			- deltaRobotSpecifics.deltaBackRightEncoder
     			+ deltaRobotSpecifics.deltaFrontLeftEncoder
-    			+ deltaRobotSpecifics.deltaFrontRightEncoder)/4;
+    			- deltaRobotSpecifics.deltaFrontRightEncoder)/4;
     	
-    	dataForRobotPoseHistory.deltaLateralDistance = (-deltaRobotSpecifics.deltaFrontLeftEncoder
+    	dataForRobotPoseHistory.deltaLateralDistance = (deltaRobotSpecifics.deltaFrontLeftEncoder
     			+ deltaRobotSpecifics.deltaFrontRightEncoder
-    			+ deltaRobotSpecifics.deltaBackLeftEncoder
+    			- deltaRobotSpecifics.deltaBackLeftEncoder
     			- deltaRobotSpecifics.deltaBackRightEncoder)/4;
     	
     	return dataForRobotPoseHistory;
