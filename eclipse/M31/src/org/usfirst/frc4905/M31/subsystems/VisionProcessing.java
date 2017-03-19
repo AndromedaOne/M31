@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.RobotEnableStatus;
+import org.usfirst.frc4905.M31.RobotMap;
 
 import NavXGyro.NavxGyro;
 import edu.wpi.first.wpilibj.Timer;
@@ -157,10 +158,10 @@ public class VisionProcessing extends Subsystem {
     public RobotPoseSpecifics getRobotPoseSpecifics(){
     	RobotPoseSpecifics currentDataForRobotPoseHistory = new RobotPoseSpecifics();
     	currentDataForRobotPoseHistory.angle = Robot.driveTrain.getRobotAngle();
-    	currentDataForRobotPoseHistory.frontLeftEncoder = Robot.driveTrain.getM1Speed();
-    	currentDataForRobotPoseHistory.frontRightEncoder = Robot.driveTrain.getM3Speed();
-    	currentDataForRobotPoseHistory.backLeftEncoder = Robot.driveTrain.getM4Speed();
-    	currentDataForRobotPoseHistory.backRightEncoder = Robot.driveTrain.getM2Speed();
+    	currentDataForRobotPoseHistory.frontLeftEncoder = Robot.driveTrain.getM1EncPos();
+    	currentDataForRobotPoseHistory.frontRightEncoder = Robot.driveTrain.getM3EncPos();
+    	currentDataForRobotPoseHistory.backLeftEncoder = Robot.driveTrain.getM4EncPos();
+    	currentDataForRobotPoseHistory.backRightEncoder = Robot.driveTrain.getM2EncPos();
     	currentDataForRobotPoseHistory.robotTimestamp = Timer.getFPGATimestamp();
     	return currentDataForRobotPoseHistory;
     }
@@ -222,11 +223,11 @@ public class VisionProcessing extends Subsystem {
     	dataForRobotPoseHistory.timestamp = currentRobotPoseSpecifics.robotTimestamp;
     	setRobotPoseHistory(dataForRobotPoseHistory);
     	setOldRobotPoseSpecifics(currentRobotPoseSpecifics);
-    	putParallelStatusOnNetworkTables(currentRobotPoseSpecifics.angle);
     }
     
     public void putParallelStatusOnNetworkTables(double compassHeading){
-    	if (compassHeading == 330 || compassHeading == 270 || compassHeading == 210){
+    	if ((329 < compassHeading && compassHeading < 331) || (269 < compassHeading && compassHeading < 271) 
+    			|| ( 209 < compassHeading && compassHeading < 210)){
     		m_networkTable.putBoolean("ParallelStatus", true);
     	}
     	else{
@@ -235,7 +236,7 @@ public class VisionProcessing extends Subsystem {
     }
 	public void compensateLiftLatency(DataForLift dataForLift){
 		for (DataForRobotPoseHistory head : robotPoseHistory){
-			if (dataForLift.timestamp <= head.timestamp){
+			if (dataForLift.timestamp < head.timestamp){
 				break;
 			}
 			robotPoseHistory.removeFirst();
