@@ -44,6 +44,14 @@ public class RobotMap {
 	public static VictorSP gearHandlerRight;
 	public static VictorSP gearHandlerLeft;
 	public static DigitalInput gearHandlerLeftSwitch;
+	//new gear handler things below!
+	public static VictorSP newGHclaw;
+	public static VictorSP newGHraiselower;
+	public static DigitalInput newGHopen;
+	public static DigitalInput newGHclose;
+	public static DigitalInput newGHup;
+	public static DigitalInput newGHdown;
+	public static DigitalInput newGHoptical;
 	
 	public static DigitalInput gearHandlerRightSwitch;
 	public static DigitalInput gearHandlerSensePoleSwitch;
@@ -130,6 +138,19 @@ public class RobotMap {
 
        shooterSafetySwitch = new DigitalInput(9);
        LiveWindow.addSensor("Shooter", "Safety Switch", shooterSafetySwitch);
+       
+       //gear handler (new!)
+       		//DANA THIS IS YOUR CONSCIENCE MAKE SURE THE OPTICAL SENSOR IS A DIO
+       		//ALSO DOUBLE CHECK TO MAKE SURE PWM 4 AND 5 ARE OPEN FOR THE VSPs
+       		//JILL WILL KILL YOU!!!!!!!!!!!!!!! THATS BAD!!!!!!!!!
+       newGHclaw = new VictorSP(4);
+       newGHraiselower = new VictorSP(5);
+       newGHopen = new DigitalInput (10);
+       newGHclose = new DigitalInput (11);
+       newGHup = new DigitalInput (12);
+       newGHdown = new DigitalInput (13);
+       newGHoptical = new DigitalInput (14);
+       //end gear handler (new!)
 	}
 
 	public static NavxGyro getNavxGyro() {
