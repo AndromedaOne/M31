@@ -31,6 +31,7 @@ public class MoveLaterallyLiftWithVision extends Command {
     	}
     	else{
     		Robot.visionProcessing.putTimestampOnNetworkTables();
+    		distance = 0;
     	}
     	Robot.driveTrain.moveToYEncoderRevolutions(distance);
     	m_distance = distance;
