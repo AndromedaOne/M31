@@ -144,12 +144,19 @@ public class RobotMap {
        		//ALSO DOUBLE CHECK TO MAKE SURE PWM 4 AND 5 ARE OPEN FOR THE VSPs
        		//JILL WILL KILL YOU!!!!!!!!!!!!!!! THATS BAD!!!!!!!!!
        newGHclaw = new VictorSP(4);
+       LiveWindow.addActuator("NewGH", "Gear Handler Claw Motor", newGHclaw);
        newGHraiselower = new VictorSP(5);
+       LiveWindow.addActuator("NewGH", "Gear Handler Lower and Raise Motor", newGHraiselower);
        newGHopen = new DigitalInput (10);
+       LiveWindow.addSensor("NewGH", "Gear Handler Open Limit Switch", newGHopen);
        newGHclose = new DigitalInput (11);
+       LiveWindow.addSensor("NewGH", "Gear Handler Close Limit Switch", newGHclose);
        newGHup = new DigitalInput (12);
+       LiveWindow.addSensor("NewGH", "Gear Handler Raised Limit Switch", newGHup);
        newGHdown = new DigitalInput (13);
+       LiveWindow.addSensor("NewGH",  "Gear Handler Lowered Limit Switch", newGHup);
        newGHoptical = new DigitalInput (14);
+       LiveWindow.addSensor("NewGH",  "Gear Handler Optical Sensor", newGHoptical);
        //end gear handler (new!)
 	}
 
