@@ -61,10 +61,10 @@ public class DriveTrain extends Subsystem {
 	
 	private void setNormalPIDParameters() {
 		//                        P         I  D  F       Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0.3935/2, 0, 0, 0.1911, 0,    0,       0);
-		m_motorsFrontRight.setPID(0.465/2,  0, 0, 0.1848, 0,    0,       0);
-		m_motorsBackLeft.setPID(  0.341/2,  0, 0, 0.1929, 0,    0,       0);
-		m_motorsBackRight.setPID( 0.3654/2, 0, 0, 0.1876, 0,    0,       0);
+		m_motorsFrontLeft.setPID( 0, 0, 0, 0, 0,    0,       0);
+		m_motorsFrontRight.setPID(0,  0, 0, 0, 0,    0,       0);
+		m_motorsBackLeft.setPID(  0,  0, 0, 0, 0,    0,       0);
+		m_motorsBackRight.setPID( 0, 0, 0, 0, 0,    0,       0);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
@@ -72,10 +72,10 @@ public class DriveTrain extends Subsystem {
 	
 	private void setStrafePIDParameters() {
 		//                        P         I  D  F       Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 102.3/30/10, 0, 0, 1023.0*600.0/4096.0/575.0, 0,    0,       1);
-		m_motorsFrontRight.setPID(102.3/30/10,  0, 0, 1023.0*600.0/4096.0/590.0, 0,    0,       1);
-		m_motorsBackLeft.setPID(  102.3/30/10,  0, 0, 1023.0*600.0/4096.0/530.0, 0,    0,       1);
-		m_motorsBackRight.setPID( 102.3/35/10, 0, 0, 1023.0*600.0/4096.0/580.0, 0,    0,       1);
+		m_motorsFrontLeft.setPID( 102.3/27.5/10, 0.004, 0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    0,       1);
+		m_motorsFrontRight.setPID(102.3/75.0/3,  0.004, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    0,       1);
+		m_motorsBackLeft.setPID(  102.3/70.0/3,  0.004, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    0,       1);
+		m_motorsBackRight.setPID( 102.3/32.5/12, 0.003, 0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    0,       1);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 86 in CTR Documentation for f 
 		
@@ -135,6 +135,7 @@ public class DriveTrain extends Subsystem {
 		header.add("Motor Output");
 		header.add("Closed Loop Error");
 		header.add("Setpoint");
+		header.add("I Value");
 		traceInstance.addTrace(filename, header);
 	}
 
@@ -146,6 +147,7 @@ public class DriveTrain extends Subsystem {
 		entry.add(talon.getOutputVoltage() / talon.getBusVoltage() * 100);
 		entry.add(talon.getClosedLoopError() * 600.0 / 4096);
 		entry.add(invertSetpoint ? -talon.getSetpoint() : talon.getSetpoint());
+		entry.add((double) talon.GetIaccum()/300);
 		traceInst.addEntry(filename, entry);
 	}
 
@@ -196,8 +198,8 @@ public class DriveTrain extends Subsystem {
 	int m_loops = 0;
 	public void mecanumDrive(double xIn, double yIn, double rotation){
 
-		xIn = xIn * 0.4;
-		yIn = yIn * 0.4;
+		//xIn = xIn * 0.4;
+		//yIn = yIn * 0.4;
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
