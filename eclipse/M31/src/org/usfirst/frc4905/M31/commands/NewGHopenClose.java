@@ -6,24 +6,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
- *
- *Written by Dana and Jonathan
- *
- *
- *
  */
-public class NewGHmoveUpDown extends Command {
-	
+public class NewGHopenClose extends Command {
+
 	private double m_speed = 0;
 	
-    public NewGHmoveUpDown(double speed) {
+    public NewGHopenClose(double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
     	requires(Robot.newGH);
     	
     	m_speed = speed;
-    	
     }
 
     // Called just before this Command runs the first time
@@ -32,36 +25,33 @@ public class NewGHmoveUpDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.newGH.moveUpDown(m_speed);
+    	Robot.newGH.clawOpenCLose(m_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       if(m_speed > 0) {
-    	   //we think positive brings us towards being closed at the top
-    	   if (Robot.newGH.getGHupState() == true){
-    		   return true;
-    		   
-    	   }
-    	   else {
-    		   return false;
-    	   }
-       }
-       else {
-    	   //we think negative is bringing us to open @ the bottom!
-    	   if (Robot.newGH.getGHdownState() == true) {
-    		   return true;
-    	   }
-    	   else {
-    		   return false;
-    	   }
-       }
+    	if (m_speed > 0) {
+    		//assuming positive is opening it
+    		if (Robot.newGH.getGHopenState() == true){
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	else {
+    		if (Robot.newGH.getGHcloseState() == true){
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//written by Jonathan
-    	Robot.newGH.moveUpDown(0);
+    	Robot.newGH.clawOpenCLose(0);
     }
 
     // Called when another command which requires one or more of the same
