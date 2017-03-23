@@ -78,15 +78,14 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		Trace traceInstance = Trace.getInstance();
-		Vector<String> header = new Vector<String>();
-		header.add("Front Left Speed");
-		header.add("Back Left Speed");
-		header.add("Front Right Speed");
-		header.add("Back Right Speed");
-		header.add("Y commanded Speed");
-		header.add("Y commanded Speed");
-		header.add("Rotation");
-		traceInstance.addTrace(m_traceFileName, header);
+		traceInstance.addTrace(m_traceFileName, 
+				"Front Left Speed",
+				"Back Left Speed",
+				"Front Right Speed",
+				"Back Right Speed",
+				"Y commanded Speed",
+				"X commanded Speed",
+				"Rotation");
 		
 		double kp = 0.15;
 		double ki = 0.000;
@@ -195,15 +194,14 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Rotation", rotation);
 		}
 		Trace traceInst = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(Robot.driveTrain.getM1Speed());
-		entry.add(Robot.driveTrain.getM2Speed());
-		entry.add(Robot.driveTrain.getM3Speed());
-		entry.add(Robot.driveTrain.getM4Speed());
-		entry.add(yIn);
-		entry.add(xIn);
-		entry.add(rotation);
-		traceInst.addEntry(m_traceFileName, entry);
+		traceInst.addEntry(m_traceFileName, 
+				Robot.driveTrain.getM1Speed(),
+				Robot.driveTrain.getM2Speed(),
+				Robot.driveTrain.getM3Speed(),
+				Robot.driveTrain.getM4Speed(),
+				yIn,
+				xIn,
+				rotation);
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
