@@ -16,6 +16,7 @@ import org.usfirst.frc4905.M31.commands.*;
 
 import java.util.Vector;
 
+import org.usfirst.frc4905.M31.ButtonsEnumerated;
 import org.usfirst.frc4905.M31.OI;
 import org.usfirst.frc4905.M31.Robot;
 import Utilities.*;
@@ -167,7 +168,8 @@ public class DriveTrain extends Subsystem {
 		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (Robot.oi.getDriveController().getRawButton(6)){
+		if (Robot.oi.getDriveController().
+				getRawButton(ButtonsEnumerated.RIGHTBUMPERBUTTON.getValue())){
 			//This is strafe only mode
 			yIn = 0;
 			rotation = 0;
