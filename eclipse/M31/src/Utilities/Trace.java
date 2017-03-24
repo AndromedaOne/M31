@@ -111,41 +111,41 @@ public class Trace
 		}
 	}
 	
-	public void addTrace(String fileName, String... header) {
+	public void addTrace(String fileName, TracePair... header) {
 		if(m_pathOfTraceDir == null)
 		{
 			return;
 		}
-		if(m_traces.containsKey(fileName)) {
-			System.out.println("Warning: trace " + fileName + " already exists.");
-			return;
+		if(!m_traces.containsKey(fileName)) {
+
+			BufferedWriter outputFile = null;
+			try {
+				String fullFileName = new String(m_pathOfTraceDir  + "/" + fileName + ".csv");
+				FileWriter fstream = new FileWriter(fullFileName, false);
+				outputFile = new BufferedWriter(fstream);
+			}
+			catch(IOException e) {
+				System.err.println("ERROR: unable to open trace file " + fileName + " ;"
+						+ e.getMessage());
+				e.printStackTrace();
+			}
+			m_traces.put(fileName, new TraceEntry(outputFile, header.length));
+			String line = new String("Time");
+			for(TracePair pair : header) {
+				line += "," + pair.getColumnName();
+			}
+			try {
+				outputFile.write(line);
+				outputFile.newLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Opened trace file " + m_pathOfTraceDir + "/" + fileName);
 		}
-		BufferedWriter outputFile = null;
-		try {
-			String fullFileName = new String(m_pathOfTraceDir  + "/" + fileName + ".csv");
-			FileWriter fstream = new FileWriter(fullFileName, false);
-			outputFile = new BufferedWriter(fstream);
-		}
-		catch(IOException e) {
-			System.err.println("ERROR: unable to open trace file " + fileName + " ;"
-					+ e.getMessage());
-			e.printStackTrace();
-		}
-		m_traces.put(fileName, new TraceEntry(outputFile, header.length));
-		String line = new String("Time");
-		for(String name : header) {
-			line += "," + name;
-		}
-		try {
-			outputFile.write(line);
-			outputFile.newLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Opened trace file " + m_pathOfTraceDir + "/" + fileName);
+		addEntry(fileName, header);
 	}
 	
-	public void addEntry(String fileName, Double... values) {
+	private void addEntry(String fileName, TracePair... values) {
 		try {
 			if(m_pathOfTraceDir == null)
 			{
@@ -165,8 +165,8 @@ public class Trace
 			}
 			long correctedTime = System.currentTimeMillis() - m_startTime;
 			String line = new String(String.valueOf(correctedTime));
-			for(Double entry : values) {
-				line += "," + entry.toString();
+			for(TracePair entry : values) {
+				line += "," + entry.getValue();
 			}
 			traceEntry.getFile().write(line);
 			traceEntry.getFile().newLine();
