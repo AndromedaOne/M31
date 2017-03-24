@@ -21,10 +21,27 @@ public class NewGHopenClose extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//negative closes, positive opens
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(m_speed > 0){
+    		if(Robot.newGH.getGHopenState() == true){
+    			Robot.newGH.clawOpenCLose(0);
+    		}
+    		else{
+    			Robot.newGH.clawOpenCLose(m_speed);
+    		}
+    	}
+    	else{
+    		if(Robot.newGH.getGHcloseState() == true){
+    			Robot.newGH.clawOpenCLose(0);
+    		}else{
+    			Robot.newGH.clawOpenCLose(m_speed);
+    		}
+    	}
+    	
     	Robot.newGH.clawOpenCLose(m_speed);
     }
 
@@ -40,7 +57,7 @@ public class NewGHopenClose extends Command {
     		}
     	}
     	else {
-    		if (Robot.newGH.getGHcloseState() == true){
+    		if (Robot.newGH.getGHcloseState() == false){
     			return true;
     		}
     		else {
