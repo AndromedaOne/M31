@@ -26,8 +26,10 @@ public class NewGH extends Subsystem {
     
     
     
-    
-    
+    public boolean getGHopticalState() {
+    	//we don't know if true/false
+    	return newGHoptical.get();
+    }
     
     public void moveUpDown(double speed) {
     	raiselowerSP.setSpeed(speed);
