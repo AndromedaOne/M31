@@ -146,6 +146,7 @@ public class DriveTrain extends Subsystem {
 		
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
+		Trace traceInst = Trace.getInstance();
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
 		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
 		if (kNoisyDebug) {
@@ -183,6 +184,13 @@ public class DriveTrain extends Subsystem {
 			else if(m_iterationsSinceRotationAndYMoveCommanded > 5){
 				yIn = m_omniWheelPIDOutput;
 			}
+			
+			traceInst.addTrace(m_traceOmniFileName, 
+					new TracePair("xIn", xIn),
+					new TracePair("yIn", yIn),
+					new TracePair("m_desiredOmniWheelEncoderTick", m_desiredOmniWheelEncoderTick),
+					new TracePair("omniWheelEncoderTicks", getOmniWheelEncoderTicks()/100),
+					new TracePair("AverageError", getOmniWheelPIDContoller().getAvgError()));		
 		}
 		else{
 			if(m_iterationsSinceRotationAndYMoveCommanded != 0){
@@ -221,7 +229,7 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("X Commanded Speed", xIn);
 			SmartDashboard.putNumber("Rotation", rotation);
 		}
-		Trace traceInst = Trace.getInstance();
+		
 		traceInst.addTrace(m_traceFileName, 
 				new TracePair("Front Left Speed", Robot.driveTrain.getM1Speed()),
 				new TracePair("Back Left Speed", Robot.driveTrain.getM2Speed()),
@@ -231,11 +239,6 @@ public class DriveTrain extends Subsystem {
 				new TracePair("X commanded Speed", xIn),
 				new TracePair("Rotation", rotation));
 		
-		traceInst.addTrace(m_traceOmniFileName, 
-				new TracePair("xIn", xIn),
-				new TracePair("yIn", yIn),
-				new TracePair("m_desiredOmniWheelEncoderTick", m_desiredOmniWheelEncoderTick),
-				new TracePair("omniWheelEncoderTicks", getOmniWheelEncoderTicks()/100));
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
