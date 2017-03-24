@@ -44,7 +44,8 @@ public class VisionProcessing extends Subsystem {
 	private double m_angleToTurnLift = 0;
 	private double m_distanceToDriveLaterally = 0;
 	private double m_distanceToDriveForwardLift = 0;
-	private double m_liftTimestamp = 0;
+	private double m_robotTimestamp = 0;
+	private double m_piTimestamp = 0;
 	public ArrayDeque<DataForRobotPoseHistory> robotPoseHistory = new ArrayDeque<DataForRobotPoseHistory>();
 	public VisionProcessing() {
 		initNetworkTable("VisionProcessing");
@@ -64,7 +65,7 @@ public class VisionProcessing extends Subsystem {
     }
     public void putTimestampOnNetworkTables(){
     	m_networkTable.putBoolean("TimestampRet", true);
-    	m_networkTable.putNumber("Timestamp", m_timestamp);
+    	m_networkTable.putNumber("Timestamp", m_piTimestamp);
     }
     public void resetTimestampOnNetworkTables(){
     	m_networkTable.putBoolean("TimestampRet", false);
@@ -108,7 +109,8 @@ public class VisionProcessing extends Subsystem {
     	public double angletoTurn;
     	public double distanceAwayForward;
     	public double distanceAwayLateral;
-    	public double timestamp;
+    	public double robotTimestamp;
+    	public double piTimestamp;
     }
 
     public void initDataForLift(){
@@ -118,14 +120,15 @@ public class VisionProcessing extends Subsystem {
     	data.angletoTurn = m_networkTable.getNumber("radiansToTurnLift", 0);
     	data.distanceAwayForward = m_networkTable.getNumber("distanceToDriveForwardLift",0);
     	data.distanceAwayLateral = m_networkTable.getNumber("distanceToDriveLaterallyLift",0);
-    	data.timestamp = m_networkTable.getNumber("timestampLift",0);
+    	data.robotTimestamp = m_networkTable.getNumber("robotTimestampLift",0);
+    	data.piTimestamp = m_networkTable.getNumber("piTimestampLift", 0);
     	compensateLiftLatency(data);
-    	m_timestamp = data.timestamp;
+    	m_robotTimestamp = data.robotTimestamp;
+    	m_piTimestamp = data.piTimestamp;
     	m_foundTargetLift = data.foundLift;
     	m_angleToTurnLift = data.angletoTurn;
     	m_distanceToDriveForwardLift = data.distanceAwayForward;
     	m_distanceToDriveLaterally = data.distanceAwayLateral;
-    	m_liftTimestamp = data.timestamp;
     }
     private class dataForBoiler{
     	public boolean foundBoiler;
@@ -236,7 +239,7 @@ public class VisionProcessing extends Subsystem {
     }
 	public void compensateLiftLatency(DataForLift dataForLift){
 		for (DataForRobotPoseHistory head : robotPoseHistory){
-			if (dataForLift.timestamp < head.timestamp){
+			if (dataForLift.robotTimestamp < head.timestamp){
 				break;
 			}
 			robotPoseHistory.removeFirst();
