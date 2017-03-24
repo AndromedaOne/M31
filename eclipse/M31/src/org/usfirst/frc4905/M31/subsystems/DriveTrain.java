@@ -87,13 +87,6 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		
-		header.clear();
-		header.add("xIn");
-		header.add("yIn");
-		header.add("m_desiredOmniWheelEncoderTick");
-		header.add("omniWheelEncoderTicks");
-		traceInstance.addTrace(m_traceOmniFileName, header);
-		
 		double kp = 0.15;
 		double ki = 0.000;
 		double kd = 1.5;
@@ -238,14 +231,11 @@ public class DriveTrain extends Subsystem {
 				new TracePair("X commanded Speed", xIn),
 				new TracePair("Rotation", rotation));
 		
-		entry.clear();
-		entry.add(xIn);
-		entry.add(yIn);
-		entry.add(m_desiredOmniWheelEncoderTick);
-		
-		traceInst.addEntry(m_traceOmniFileName, entry);
-		
-		
+		traceInst.addTrace(m_traceOmniFileName, 
+				new TracePair("xIn", xIn),
+				new TracePair("yIn", yIn),
+				new TracePair("m_desiredOmniWheelEncoderTick", m_desiredOmniWheelEncoderTick),
+				new TracePair("omniWheelEncoderTicks", getOmniWheelEncoderTicks()/100));
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}

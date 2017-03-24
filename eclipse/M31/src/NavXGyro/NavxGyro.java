@@ -6,7 +6,7 @@ import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
 import com.kauailabs.navx.frc.*;
 
-import Utilities.Trace;
+import Utilities.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -39,11 +39,6 @@ public class NavxGyro {
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			m_navX = new AHRS(SPI.Port.kMXP);
 			System.out.println("Created NavX instance");
-			Trace.getInstance().addTrace(m_traceFileName, 
-					"Raw Angle",
-					"X Accel",
-					"Y Accel",
-					"Z Accel");
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
 					true);
@@ -68,10 +63,10 @@ public class NavxGyro {
 			SmartDashboard.putNumber("Raw Anlge", m_navX.getAngle());
 			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
 		}
-		Trace.getInstance().addEntry(m_traceFileName, 
-				(double) m_navX.getWorldLinearAccelX(),
-				(double) m_navX.getWorldLinearAccelY(),
-				(double) m_navX.getWorldLinearAccelZ());
+		Trace.getInstance().addTrace(m_traceFileName, 
+				new TracePair("Raw Angle", (double) m_navX.getWorldLinearAccelX()),
+				new TracePair("X Accel", (double) m_navX.getWorldLinearAccelY()),
+				new TracePair("Z Accel", (double) m_navX.getWorldLinearAccelZ()));
 	
 		return correctedAngle;
 	}
