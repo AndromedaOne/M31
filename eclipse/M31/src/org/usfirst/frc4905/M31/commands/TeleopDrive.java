@@ -84,7 +84,7 @@ public class TeleopDrive extends Command {
 		}
 		
 		
-			Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
 		
 		
 		

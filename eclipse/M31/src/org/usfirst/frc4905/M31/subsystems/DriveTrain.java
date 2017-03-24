@@ -77,6 +77,8 @@ public class DriveTrain extends Subsystem {
 	boolean omniWheelEncoderEnabled = true;
 	private String m_traceFileName = "mecanumDrive";
 	private String m_traceOmniFileName = "OmniWheel";
+	
+	private double m_omniWheelPIDOutput = 0.0;
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
 
@@ -98,7 +100,6 @@ public class DriveTrain extends Subsystem {
 		header.clear();
 		header.add("xIn");
 		header.add("yIn");
-		header.add("m_iterationsSinceRotationAndYMoveCommanded");
 		header.add("m_desiredOmniWheelEncoderTick");
 		header.add("omniWheelEncoderTicks");
 		traceInstance.addTrace(m_traceOmniFileName, header);
@@ -159,11 +160,10 @@ public class DriveTrain extends Subsystem {
 	}
 	int m_loops = 0;
 	public void mecanumDrive(double xIn, double yIn, double rotation){
-
+		
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
-		double omniWheelEncoderTicks = getOmniWheelEncoderTicks();
 		double motorOutput = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
 		if (kNoisyDebug) {
 			m_sb.append("\tout:");
@@ -180,25 +180,32 @@ public class DriveTrain extends Subsystem {
 			}
 			m_sb.setLength(0);
 		}
-
-
+		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		System.out.println("xIn: " + xIn);
-		if (omniWheelEncoderEnabled){
-			if (Math.abs(rotation) < 0.01 && Math.abs(yIn) < 0.1 && Math.abs(xIn) > 0.1){
-				m_iterationsSinceRotationAndYMoveCommanded++;
-				if (m_iterationsSinceRotationAndYMoveCommanded == 20){
-					m_desiredOmniWheelEncoderTick = omniWheelEncoderTicks;
-				}
-				else if (m_iterationsSinceRotationAndYMoveCommanded > 20){
-					yIn += -(omniWheelEncoderTicks - m_desiredOmniWheelEncoderTick)/1000;
-				}
+		if (Robot.oi.getDriveController().getRawButton(6)){
+			//This is strafe only mode
+			yIn = 0;
+			rotation = 0;
+			m_iterationsSinceRotationAndYMoveCommanded++;
+			if(m_iterationsSinceRotationAndYMoveCommanded == 1){
+				initializeOmniWheelEncoderPID();
 			}
-			else{
-				m_iterationsSinceRotationAndYMoveCommanded = 0;
+			else if(m_iterationsSinceRotationAndYMoveCommanded == 5){
+				// Need to make sure that the omni wheel has stopped 
+				// spinning(if we were turning moving etc.) so we wait till 5
+				m_desiredOmniWheelEncoderTick = getOmniWheelEncoderTicks();
+				enableOmniWheelPID(m_desiredOmniWheelEncoderTick);
 			}
-			
+			else if(m_iterationsSinceRotationAndYMoveCommanded > 5){
+				yIn = m_omniWheelPIDOutput;
+			}
+		}
+		else{
+			if(m_iterationsSinceRotationAndYMoveCommanded != 0){
+				stopMovingUsingOmniWheel();
+			}
+			m_iterationsSinceRotationAndYMoveCommanded = 0;
 		}
 		
 		
@@ -245,9 +252,7 @@ public class DriveTrain extends Subsystem {
 		entry.clear();
 		entry.add(xIn);
 		entry.add(yIn);
-		entry.add((double) m_iterationsSinceRotationAndYMoveCommanded);
 		entry.add(m_desiredOmniWheelEncoderTick);
-		entry.add(omniWheelEncoderTicks);
 		
 		traceInst.addEntry(m_traceOmniFileName, entry);
 		
@@ -307,7 +312,75 @@ public class DriveTrain extends Subsystem {
 		}
 		return output;
 	}
+	private PIDController m_omniWheelEncoder;
+	
+	public PIDController getOmniWheelPIDContoller(){
+		return m_omniWheelEncoder;
+	}
+	
+	public double getOmniWheelEncoderTicks(){
+		return omniWheelEncoder.getDistance();
+	}
+	
+	private class OmniWheelPIDIn implements PIDSource{
+		
+		public void setPIDSourceType(PIDSourceType pidSource){
+			
+		}
+		public PIDSourceType getPIDSourceType() {
+			return PIDSourceType.kDisplacement;
+		}
+		public double pidGet(){
+			return getOmniWheelEncoderTicks();
+		}
+		
+	}
+	
+	public class OmniWheelPIDOut implements PIDOutput{
+		public void pidWrite(double output) {
+			//output = raiseOutputAboveMin(output,0.03);
+			m_omniWheelPIDOutput = output;
+			
+		}
+	}
+	
+	public void initializeOmniWheelEncoderPID(){
 
+		double omniWheelEncoderKp = 0.25;
+		double omniWheelEncoderKi = 0.0;
+		double omniWheelEncoderKd = 0.0;
+		double omniWheelEncoderKf = 0.0;
+		double omniWheelEncoderTolerance = 0.1;
+		double omniWheelEncoderOutputMax = 0.3;
+
+		resetOmniWheelEncPos();
+		OmniWheelPIDIn encoderPIDin = new OmniWheelPIDIn();
+		OmniWheelPIDOut encoderPIDout = new OmniWheelPIDOut();
+		m_omniWheelEncoder = new PIDController(omniWheelEncoderKp, omniWheelEncoderKi, 
+				omniWheelEncoderKd, encoderPIDin, encoderPIDout);
+		m_omniWheelEncoder.setOutputRange(-omniWheelEncoderOutputMax, omniWheelEncoderOutputMax);
+		m_omniWheelEncoder.setAbsoluteTolerance(omniWheelEncoderTolerance);
+		LiveWindow.addActuator("DriveTrain", "OmniWheelEncoderPID", m_omniWheelEncoder);
+	}
+	
+	public void enableOmniWheelPID(double revolutionsToMove) {
+		m_omniWheelEncoder.setSetpoint(revolutionsToMove);
+		m_omniWheelEncoder.enable();
+	}
+	
+	public boolean isDoneMovingUsingOmniWheel() {
+		if (kNoisyDebug) {
+			System.out.println("encoder distance = " + getEncoderDistance());
+		}
+		return m_omniWheelEncoder.onTarget();
+	}
+	
+	public void stopMovingUsingOmniWheel() {
+		m_omniWheelEncoder.reset();
+	}
+	private void resetOmniWheelEncPos(){
+		omniWheelEncoder.reset();
+	}
 	// Encoder PID code
 
 	// Encoder PID controller
@@ -666,8 +739,6 @@ public class DriveTrain extends Subsystem {
 		return backLeft.getSpeed();
 	}
 
-	private double getOmniWheelEncoderTicks(){
-		return omniWheelEncoder.getDistance();
-	}
+	
 }
 
