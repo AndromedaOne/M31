@@ -10,20 +10,24 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SafeCloseNewGH extends Command {
 	
 	private boolean startingAllOpen = false;
-	private int m_delay = 30;
-	int m_counter = 0;
+	private static int m_delay = 50;
+	private int m_counter = 0;
     public SafeCloseNewGH() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.newGH);
-    	if(Robot.newGH.getGHopenState() == true){
-    		startingAllOpen = true;
-    	}
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(Robot.newGH.getGHopenState() == true){
+    		startingAllOpen = true;
+    	}
     	
+    	m_counter = 0;
+    	
+    	System.out.println("openstateswich = " + Robot.newGH.getGHopenState());
     }
 
     // Called repeatedly when this Command is scheduled to run
