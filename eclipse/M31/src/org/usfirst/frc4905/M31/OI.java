@@ -73,7 +73,7 @@ public class OI {
 	public JoystickButton toggleButton;
 	public JoystickButton climbButton;
 	public JoystickButton shootFromBoilerButton;
-	public JoystickButton reverseIntakeButton;
+	public JoystickButton safeCloseGroundGHButton;
 	
 	public static JoystickButton turnToLeftLift;
 	public static JoystickButton turnToMiddleLift;
@@ -142,8 +142,10 @@ public class OI {
 	
 		subController = new Joystick(1);		
 		toggleButton = new JoystickButton(subController, 3);
-		reverseIntakeButton = new JoystickButton(subController, 5);
-		reverseIntakeButton.whileHeld(new ReverseIntake());
+		
+		safeCloseGroundGHButton = new JoystickButton(subController, 5);
+		safeCloseGroundGHButton.whenPressed(new SafeCloseNewGH());
+		
 		climbButton = new JoystickButton(subController, 4);
 		climbButton.whileHeld(new climbRope());
 		shootFromBoilerButton = new JoystickButton(subController, 6);

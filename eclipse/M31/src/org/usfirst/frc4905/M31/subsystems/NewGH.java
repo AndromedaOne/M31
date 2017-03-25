@@ -4,6 +4,7 @@ import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.TeleopNewGH;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class NewGH extends Subsystem {
 //Declarations
-	private final static Talon clawSP = RobotMap.newGHclaw;
+	private final static Spark clawSP = RobotMap.newGHclaw;
 	private final static Talon raiselowerSP = RobotMap.newGHraiselower;
 	private final static DigitalInput newGHopen = RobotMap.newGHopen;
 	private final static DigitalInput newGHclose = RobotMap.newGHclose;

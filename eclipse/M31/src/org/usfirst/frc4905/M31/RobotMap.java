@@ -20,6 +20,7 @@ import com.ctre.CANTalon;
 import NavXGyro.NavxGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -46,7 +47,7 @@ public class RobotMap {
 	public static VictorSP gearHandlerLeft;
 	public static DigitalInput gearHandlerLeftSwitch;
 	//new gear handler things below!
-	public static Talon newGHclaw;
+	public static Spark newGHclaw;
 	public static Talon newGHraiselower;
 	public static DigitalInput newGHopen;
 	public static DigitalInput newGHclose;
@@ -114,11 +115,7 @@ public class RobotMap {
 		gearHandlerLeft = new VictorSP(1);
 		LiveWindow.addActuator("gearHandler", "gearHandlerLeft", (VictorSP) gearHandlerLeft);
 	
-		//commented out cuz we got rid of em and replaced em with stuff for the ground gh
-		//gearHandlerLeftSwitch = new DigitalInput(3);
-		//LiveWindow.addSensor("gearHandler", "Gear Handler Left Switch", gearHandlerLeftSwitch); 
-		//gearHandlerRightSwitch = new DigitalInput(2);
-		//LiveWindow.addSensor("gearHandler", "Gear Handler Right Switch", gearHandlerRightSwitch);
+		
 		gearHandlerSensePoleSwitch = new DigitalInput(8);
 		LiveWindow.addSensor("gearHandler", "gearHandler sense pole switch", gearHandlerSensePoleSwitch);
 		
@@ -144,7 +141,7 @@ public class RobotMap {
        		//DANA THIS IS YOUR CONSCIENCE MAKE SURE THE OPTICAL SENSOR IS A DIO
        		//ALSO DOUBLE CHECK TO MAKE SURE PWM 4 AND 5 ARE OPEN FOR THE VSPs
        		//JILL WILL KILL YOU!!!!!!!!!!!!!!! THATS BAD!!!!!!!!!
-       newGHclaw = new Talon(4);
+       newGHclaw = new Spark(4);
        LiveWindow.addActuator("NewGH", "Gear Handler Claw Motor", newGHclaw);
        newGHraiselower = new Talon(5);
        LiveWindow.addActuator("NewGH", "Gear Handler Lower and Raise Motor", newGHraiselower);
