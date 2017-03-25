@@ -36,7 +36,7 @@ public class GroupMiddleLift extends CommandGroup {
 		//Push Gear On
 		addSequential(new TurnDeltaAngleDegree(-90));
 		
-		addSequential(new MoveUsingUltrasonic(7));
+		addSequential(new MoveUsingUltrasonic(8));
 		addParallel(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(30));
 		addSequential(new CloseGearHandlerInAuto());
