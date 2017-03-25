@@ -15,7 +15,7 @@ public class GearHandler extends Subsystem {
 	private final static VictorSP rightSP = RobotMap.gearHandlerRight;
 	private final static VictorSP leftSP = RobotMap.gearHandlerLeft;
 	private final DigitalInput rightSwitch = RobotMap.gearHandlerRightSwitch;
-	private final DigitalInput leftSwitch = RobotMap.gearHandlerLeftSwitch;
+
 	private final static DigitalInput poleSensor = RobotMap.gearHandlerSensePoleSwitch;
 	private static boolean m_ClosedState = true;
     // Put methods for controlling this subsystem
@@ -67,15 +67,6 @@ public class GearHandler extends Subsystem {
 		moveLeftGearHandler(speed);
 	}
 	
-	public boolean shouldStopMovingLeft(){
-		
-		//if it is false, it is being pressed
-		if(leftSwitch.get() == false){
-			return true;
-		}else{
-			return false;
-		}
-	}
 	
 	
 	

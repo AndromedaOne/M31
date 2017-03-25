@@ -45,7 +45,7 @@ public class RobotMap {
 	public static SpeedController driveTrainClimber;
 	public static VictorSP gearHandlerRight;
 	public static VictorSP gearHandlerLeft;
-	public static DigitalInput gearHandlerLeftSwitch;
+	
 	//new gear handler things below!
 	public static Spark newGHclaw;
 	public static Talon newGHraiselower;
