@@ -16,26 +16,29 @@ import java.util.Vector;
 
 // utility to store trace information to a file on the roborio. this class uses the 
 // singleton pattern. to use this you must add a filename to the trace instance with
-// a vector of strings that contain the header information. for example if you want to
+// a set of strings that contain the header information. for example if you want to
 // trace a PID controller that is turning the robot with the gyro you can do this:
 // Vector<String> header = new Vector<String>();
 // header.add(new String("compass heading"));
 // header.add(new String("output")); 
 // ... as many columns as needed
-// Trace.getInstance().addTrace("GyroPID", header);
+// Trace.getInstance().addTrace("GyroPID", "compass heading", "output", 
+// 			<as many as you want>);
 // now you can start adding entries. the trace instance remembers the filename
 // and number of columns in the header
 // to add an entry to the following:
 // Vector<Double> entry = new Vector<Double>();
 // entry.add(new Double(gyro.getHeading());
 // entry.add(new Double(output));
-// Trace.getInstance().addEntry("GyroPID", entry);
+// Trace.getInstance().addEntry("GyroPID", gyro.getHeading(), output, 
+//			<more values if needed>);
 // each entry is time stamped with the number of milliseconds since the Trace instance
 // was created.
 // once all tracing in complete you need to call closeTraceFiles()
 public class Trace 
 {
-	private static String m_pathOfFile = "/home/lvuser/traceLogs";
+	private static String m_partialPathOfTraceDir = "/home/lvuser/traceLogs/Trace";
+	private String m_pathOfTraceDir;
 	private static String m_consoleOutput = "ConsoleOutput";
 	private static Trace m_instance;
 	private Map<String, TraceEntry> m_traces;
@@ -72,28 +75,54 @@ public class Trace
 	private Trace() {
 		m_traces = new TreeMap<String, TraceEntry>();
 		m_startTime = System.currentTimeMillis();
+		createNewTraceDir();
 		redirectOutput();
 		
 	}
 	
-	public void addTrace(String fileName, Vector<String> header) {
+	private String getDateStr()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+		Date date = new Date();
+		String dateStr = new String(dateFormat.format(date));
+		return(dateStr);
+	}
+	
+	private void createNewTraceDir()
+	{
+		try {
+			m_pathOfTraceDir = new String(m_partialPathOfTraceDir + getDateStr());
+			File directory = new File(m_pathOfTraceDir);
+			if(!directory.exists()) {
+				if(!directory.mkdir()) {
+					System.err.println("ERROR: failed to create directory " 
+							+ m_pathOfTraceDir +
+							" for tracing data.");
+					m_pathOfTraceDir = null;
+					return;
+				}
+			}
+		}
+		catch(SecurityException e) {
+			System.err.println("ERROR: unable to create trace directory"
+					+ e.getMessage());
+			e.printStackTrace();
+			m_pathOfTraceDir = null;
+		}
+	}
+	
+	public void addTrace(String fileName, String... header) {
+		if(m_pathOfTraceDir == null)
+		{
+			return;
+		}
 		if(m_traces.containsKey(fileName)) {
 			System.out.println("Warning: trace " + fileName + " already exists.");
 			return;
 		}
 		BufferedWriter outputFile = null;
 		try {
-			File directory = new File(m_pathOfFile);
-			if(!directory.exists()) {
-				if(!directory.mkdir()) {
-					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
-							" for tracing data.");
-				}
-			}
-			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
-			Date date = new Date();
-			String dateStr = new String(dateFormat.format(date));
-			String fullFileName = new String(m_pathOfFile  + "/" + fileName + dateStr + ".csv");
+			String fullFileName = new String(m_pathOfTraceDir  + "/" + fileName + ".csv");
 			FileWriter fstream = new FileWriter(fullFileName, false);
 			outputFile = new BufferedWriter(fstream);
 		}
@@ -102,7 +131,7 @@ public class Trace
 					+ e.getMessage());
 			e.printStackTrace();
 		}
-		m_traces.put(fileName, new TraceEntry(outputFile, header.size()));
+		m_traces.put(fileName, new TraceEntry(outputFile, header.length));
 		String line = new String("Time");
 		for(String name : header) {
 			line += "," + name;
@@ -113,20 +142,24 @@ public class Trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Opened trace file " + m_pathOfFile + "/" + fileName);
+		System.out.println("Opened trace file " + m_pathOfTraceDir + "/" + fileName);
 	}
 	
-	public void addEntry(String fileName, Vector<Double> values) {
+	public void addEntry(String fileName, Double... values) {
 		try {
+			if(m_pathOfTraceDir == null)
+			{
+				return;
+			}
 			if(!m_traces.containsKey(fileName)) {
 				String err = new String("Warning: trace file " + fileName);
 				err += " has not been added to the Trace instance";
 				throw(new Exception(err));
 			}
 			TraceEntry traceEntry = m_traces.get(fileName);
-			if(values.size() != traceEntry.getNumbOfValues()) {
+			if(values.length != traceEntry.getNumbOfValues()) {
 				String err = new String("ERROR: trace entry for " + fileName + " has ");
-				err += String.valueOf(values.size()) + " but should have ";
+				err += String.valueOf(values.length) + " but should have ";
 				err += String.valueOf(traceEntry.getNumbOfValues());
 				throw(new Exception(err));
 			}
@@ -147,6 +180,10 @@ public class Trace
 	}
 	
 	public void flushTraceFiles() {
+		if(m_pathOfTraceDir == null)
+		{
+			return;
+		}
 		if(m_traces != null) {
 			// new lambda functionality!!
 			m_traces.forEach((k,v) -> {
@@ -170,11 +207,12 @@ public class Trace
 	}
 	private void redirectOutput(){
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
-			Date date = new Date();
-			String dateStr = new String(dateFormat.format(date));
-			FileOutputStream fOut= new FileOutputStream(m_pathOfFile + "/" + 
-					m_consoleOutput + dateStr + ".log");
+			if(m_pathOfTraceDir == null)
+			{
+				return;
+			}
+			FileOutputStream fOut= new FileOutputStream(m_pathOfTraceDir + "/" + 
+					m_consoleOutput + ".log");
 			m_out= new MultipleOutputStream(System.out, fOut);
 			m_err= new MultipleOutputStream(System.err, fOut);
 			PrintStream stdOut= new PrintStream(m_out);
@@ -186,23 +224,19 @@ public class Trace
 			System.err.println("ERROR: Redirect Failed");
 		}
 	}
+	
 	public void matchStarted() {
+		if(m_pathOfTraceDir == null)
+		{ 
+			return;
+		}
 		BufferedWriter outputFile = null;
 		try {
-			File directory = new File(m_pathOfFile);
-			if(!directory.exists()) {
-				if(!directory.mkdir()) {
-					System.err.println("ERROR: failed to create directory " + m_pathOfFile +
-							" for match start data.");
-				}
-			}
-			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
-			Date date = new Date();
-			String dateStr = new String(dateFormat.format(date));
-			String fullFileName = new String(m_pathOfFile  + "/" + m_matchStartFname + dateStr + ".txt");
+			String fullFileName = new 
+					String(m_pathOfTraceDir  + "/" + m_matchStartFname + ".txt");
 			FileWriter fstream = new FileWriter(fullFileName, false);
 			outputFile = new BufferedWriter(fstream);
-			outputFile.write("Match Started @" + dateStr);
+			outputFile.write("Match Started @" + getDateStr());
 			outputFile.flush();
 			outputFile.close();
 		}

@@ -56,13 +56,11 @@ public class UltrasonicSubsystemFront extends Subsystem {
 		m_ultrasonic.setEnabled(true);
 		m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
-		Trace traceInstance = Trace.getInstance();
-		Vector<String> entry = new Vector<String>();
-		entry.add("PIDOutput");
-		entry.add("Avg Error");
-		entry.add("Ultra Distance");
-		entry.add("Ultra Distance Raw");
-		traceInstance.addTrace(m_traceFrontUltrasonicFileName, entry);
+		Trace.getInstance().addTrace(m_traceFrontUltrasonicFileName, 
+				"PIDOutput",
+				"Avg Error",
+				"Ultra Distance",
+				"Ultra Distance Raw");
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -124,13 +122,11 @@ public class UltrasonicSubsystemFront extends Subsystem {
 	}
 
 	public boolean doneUltrasonicPID() {
-		Trace traceInstance = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(m_ultrasonicPID.get() * 100);
-		entry.add(m_ultrasonicPID.getAvgError());
-		entry.add(getUltrasonicDistance());
-		entry.add(m_ultrasonic.getRangeInches());
-		traceInstance.addEntry(m_traceFrontUltrasonicFileName, entry);
+		Trace.getInstance().addEntry(m_traceFrontUltrasonicFileName, 
+				m_ultrasonicPID.get() * 100,
+				m_ultrasonicPID.getAvgError(),
+				getUltrasonicDistance(),
+				m_ultrasonic.getRangeInches());
 		return m_ultrasonicPID.onTarget();
 	}
 

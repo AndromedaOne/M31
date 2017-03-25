@@ -39,13 +39,11 @@ public class NavxGyro {
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			m_navX = new AHRS(SPI.Port.kMXP);
 			System.out.println("Created NavX instance");
-			Trace traceInst = Trace.getInstance();
-			Vector<String> header = new Vector<String>();
-			header.add("Raw Angle");
-			header.add("X Accel");
-			header.addElement("Y Accel");
-			header.addElement("Z Accel");
-			traceInst.addTrace(m_traceFileName, header);
+			Trace.getInstance().addTrace(m_traceFileName, 
+					"Raw Angle",
+					"X Accel",
+					"Y Accel",
+					"Z Accel");
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
 					true);
@@ -70,13 +68,10 @@ public class NavxGyro {
 			SmartDashboard.putNumber("Raw Anlge", m_navX.getAngle());
 			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
 		}
-		Trace traceInst = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(m_navX.getAngle());
-		entry.addElement((double) m_navX.getWorldLinearAccelX());
-		entry.addElement((double) m_navX.getWorldLinearAccelY());
-		entry.addElement((double) m_navX.getWorldLinearAccelZ());
-		traceInst.addEntry(m_traceFileName, entry);
+		Trace.getInstance().addEntry(m_traceFileName, 
+				(double) m_navX.getWorldLinearAccelX(),
+				(double) m_navX.getWorldLinearAccelY(),
+				(double) m_navX.getWorldLinearAccelZ());
 	
 		return correctedAngle;
 	}
