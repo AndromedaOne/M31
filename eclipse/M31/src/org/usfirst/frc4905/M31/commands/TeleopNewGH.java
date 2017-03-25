@@ -68,7 +68,7 @@ public class TeleopNewGH extends Command {
     	if(povReading == 270){
     		//270 means left, want to open ground gh
     		
-    		if(Robot.newGH.getGHdownState() == true){
+    		if(Robot.newGH.getGHopenState() == true){
     			Robot.newGH.clawOpenCLose(0);
         		Robot.newGH.moveUpDown(0);
     		}
