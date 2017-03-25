@@ -63,7 +63,7 @@ public class GearHandler extends Subsystem {
 	}
 	
 	public void moveGearHandlerTogether(double speed){
-		moveRightGearHandler(speed + 0.1);
+		moveRightGearHandler(speed);
 		moveLeftGearHandler(speed);
 	}
 	
