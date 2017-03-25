@@ -32,27 +32,42 @@ public class TeleopNewGH extends Command {
     	}
     	if(povReading == 0){
     		//0 means pointing up, raise gh
-    		Robot.newGH.clawOpenCLose(0);
-    		Robot.newGH.moveUpDown(-0.50);
+    		if(Robot.newGH.getGHupState() == true){
+    			Robot.newGH.clawOpenCLose(0);
+        		Robot.newGH.moveUpDown(0);
+    		}
+    		else{
+    			Robot.newGH.clawOpenCLose(0);
+        		Robot.newGH.moveUpDown(-0.50);	
+    		}
+    		
     	}
     	if(povReading == 90){
     		//90 means we're pushed to the right, close ground gh (close cuz pushing towards the middle of the controller)
     		if(Robot.newGH.getGHupState() == true){
-    			Robot.newGH.clawOpenCLose(0);
-        		Robot.newGH.moveUpDown(0);
+    			//Robot.newGH.clawOpenCLose(0);
+        		//Robot.newGH.moveUpDown(0);
     		}else{
-    			Robot.newGH.clawOpenCLose(-0.4);
-        		Robot.newGH.moveUpDown(0);
+    			//Robot.newGH.clawOpenCLose(-0.4);
+        		//Robot.newGH.moveUpDown(0);
     		}
     		
     	}
     	if(povReading == 180){
     		//180 means down, lower ground GH
-    		Robot.newGH.clawOpenCLose(0);
-    		Robot.newGH.moveUpDown(0.50);
+    		if(Robot.newGH.getGHdownState() == true){
+    			Robot.newGH.clawOpenCLose(0);
+        		Robot.newGH.moveUpDown(0);
+    		}
+    		else{
+    			Robot.newGH.clawOpenCLose(0);
+        		Robot.newGH.moveUpDown(0.50);
+    		}
+    		
     	}
     	if(povReading == 270){
     		//270 means left, want to open ground gh
+    		System.out.println(Robot.newGH.getGHopenState());
     		if(Robot.newGH.getGHdownState() == true){
     			Robot.newGH.clawOpenCLose(0);
         		Robot.newGH.moveUpDown(0);

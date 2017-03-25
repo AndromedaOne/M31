@@ -369,7 +369,7 @@ public class DriveTrain extends Subsystem {
 
 		// Encoder PID controller variables
 		double yEncoderKp = prefs.getDouble("YEncoderP", 0.25);
-		double yEncoderKi = prefs.getDouble("YEncoderI", 0.000);
+		double yEncoderKi =0;
 		double yEncoderKd = prefs.getDouble("YEncoderD", 0.000);
 		double yEncoderKf = prefs.getDouble("YEncoderF", 0.000);
 		double yEncoderTolerance = prefs.getDouble("YEncoderTolerance", 0.1);
@@ -470,7 +470,7 @@ public class DriveTrain extends Subsystem {
 
 		// Encoder PID controller variables
 		double xEncoderKp = prefs.getDouble("XEncoderP", 0.25);
-		double xEncoderKi = prefs.getDouble("XEncoderI", 0.000);
+		double xEncoderKi = 0;
 		double xEncoderKd = prefs.getDouble("XEncoderD", 0.000);
 		double xEncoderKf = prefs.getDouble("XEncoderF", 0.000);
 		double xEncoderTolerance = prefs.getDouble("XEncoderTolerance", 0.1);
