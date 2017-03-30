@@ -30,5 +30,16 @@ public class LEDs extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    /**
+     * Uses the three methods defined above to write a color to the LED strands.
+     * @param red A value up to 255, controls the Red value
+     * @param green A value up to 255, controls the Green value
+     * @param blue A value up to 255, controls the Blue value
+     */
+    public void writeColor(int red, int green, int blue) {
+    	setRed(red);
+    	setGreen(green);
+    	setBlue(blue);
+    }
 }
 

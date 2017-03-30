@@ -229,7 +229,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Robot.ledCtrl.setRed(255);
+        Robot.ledCtrl.writeColor(255, 0, 0);
     }
 
     /**
@@ -237,6 +237,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        Robot.ledCtrl.writeColor(255, 255, 255);
+        Robot.ledCtrl.writeColor(0, 255, 0);
+        Robot.ledCtrl.writeColor(255, 0, 0);
     }
     
     
