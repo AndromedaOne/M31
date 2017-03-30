@@ -60,21 +60,22 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	private void setNormalPIDParameters() {
-		//                        P         I  D  F       Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0,    0,       0);
-		m_motorsFrontRight.setPID(0.465*2,  0, 0, 0.1848, 0,    0,       0);
-		m_motorsBackLeft.setPID(  0.341*2,  0, 0, 0.1929, 0,    0,       0);
-		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0,    0,       0);
+		//                        P     I  D  F      Izone RampRate Profile
+		m_motorsFrontLeft.setPID( 0.15, 0, 0, 0.214, 0,    0,       0);
+		m_motorsFrontRight.setPID(0.15, 0, 0, 0.214, 0,    0,       0);
+		m_motorsBackLeft.setPID(  0.15, 0, 0, 0.214, 0,    0,       0);
+		m_motorsBackRight.setPID( 0.15, 0, 0, 0.214, 0,    0,       0);
 		// Page 88 in CTR Documentation for f 
 		
 	}
 	
 	private void setStrafePIDParameters() {
-		//                        P         I  D  F       Izone RampRate Profile
-		m_motorsFrontLeft.setPID( 0.3935*2, 0, 0, 0.1911, 0,    0,       1);
-		m_motorsFrontRight.setPID(0.465*2,  0, 0, 0.1848, 0,    0,       1);
-		m_motorsBackLeft.setPID(  0.341*2,  0, 0, 0.1929, 0,    0,       1);
-		m_motorsBackRight.setPID( 0.3654*2, 0, 0, 0.1876, 0,    0,       1);
+		//                        P               I       D  F                          Izone           RampRate Profile
+		m_motorsFrontLeft.setPID( 102.3/27.5/10,  0.004,  0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    0,       1);
+		m_motorsFrontRight.setPID(102.3/75.0/3.5, 0.0046, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    0,       1);
+		m_motorsBackLeft.setPID(  102.3/70.0/3.5, 0.0043, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    0,       1);
+		m_motorsBackRight.setPID( 102.3/32.5/12,  0.003,  0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    0,       1);
+		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 88 in CTR Documentation for f 
 		
 	}
@@ -86,7 +87,7 @@ public class DriveTrain extends Subsystem {
 		motorController.configNominalOutputVoltage(0, 0);
 		motorController.configPeakOutputVoltage(12.0, -12.0);
 		motorController.enableBrakeMode(true);
-		motorController.setVoltageRampRate(0); //(48);
+		motorController.setVoltageRampRate(48);
 		motorController.changeControlMode(TalonControlMode.Speed);
 		motorController.set(0);
 	}
@@ -118,7 +119,7 @@ public class DriveTrain extends Subsystem {
 
 	private final boolean kNoisyDebug = false;
 	StringBuilder m_sb = new StringBuilder();
-	boolean gyroEnabled = false;
+	boolean gyroEnabled = true;
 	private String m_frontLeftTrace = "frontLeftMotor";
 	private String m_frontRightTrace = "frontRightMotor";
 	private String m_backLeftTrace = "backLeftMotor";
@@ -133,6 +134,7 @@ public class DriveTrain extends Subsystem {
 		header.add("Motor Output");
 		header.add("Closed Loop Error");
 		header.add("Setpoint");
+		header.add("I Value");
 		traceInstance.addTrace(filename, header);
 	}
 
@@ -144,6 +146,7 @@ public class DriveTrain extends Subsystem {
 		entry.add(talon.getOutputVoltage() / talon.getBusVoltage() * 100);
 		entry.add(talon.getClosedLoopError() * 600.0 / 4096);
 		entry.add(invertSetpoint ? -talon.getSetpoint() : talon.getSetpoint());
+		entry.add((double) talon.GetIaccum()/300);
 		traceInst.addEntry(filename, entry);
 	}
 
@@ -194,8 +197,8 @@ public class DriveTrain extends Subsystem {
 	int m_loops = 0;
 	public void mecanumDrive(double xIn, double yIn, double rotation){
 
-		xIn = xIn * 0.8;
-		yIn = yIn * 0.8;
+		//xIn = xIn * 0.4;
+		//yIn = yIn * 0.4;
 		//Getting Gyro Angle Always, This Causes SmartDashBoard to Be updated
 		//With Current Angle
 		double gyroReading = RobotMap.getNavxGyro().getRobotAngle();
@@ -352,9 +355,9 @@ public class DriveTrain extends Subsystem {
 		@Override
 		public void pidWrite(double output) {
 			//output = raiseOutputAboveMin(output,0.03);
-			last_y_commanded_speed = output * m_RPMConversion;
 			mecanumDrive(0, -output, 0);
 			if (kNoisyDebug) {
+				last_y_commanded_speed = output * m_RPMConversion;
 				System.out.println("Encoder Output = " + output 
 						+ " Average Error = " + m_moveToTheYEncoderPID.getAvgError());
 			}

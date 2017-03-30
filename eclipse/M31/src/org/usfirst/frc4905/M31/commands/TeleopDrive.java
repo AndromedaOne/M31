@@ -87,10 +87,11 @@ public class TeleopDrive extends Command {
 		//tuning the loops and or adding a wheel in the middle of the robot
 		if(Robot.oi.getDriveController().getRawButton(6)){
 			Robot.driveTrain.useStrafeProfile();
+			//xIn = xIn* 0.4;
 			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
-				yIn = 0; //0.06; 
+				yIn = 0.06; 
 			}else{
-				yIn = 0; //-0.07;
+				yIn = -0.07;
 			}
 		}else{
 			Robot.driveTrain.useNormalProfile();
