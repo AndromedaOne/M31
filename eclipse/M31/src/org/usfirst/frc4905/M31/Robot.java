@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc4905.M31.commands.*;
 import org.usfirst.frc4905.M31.groupCommands.GroupPosCHopperFire;
 import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineBlue;
+import org.usfirst.frc4905.M31.groupCommands.GetInPositionLeft;
+import org.usfirst.frc4905.M31.groupCommands.GetInPositionRight;
 import org.usfirst.frc4905.M31.groupCommands.GroupDoNothing;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftVisionCorrect;
 import org.usfirst.frc4905.M31.groupCommands.GroupLiftRightNoVision;
@@ -133,6 +135,8 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Middle lift WITH VISION", new GroupMiddleLiftVision());
         autoChooser.addObject("Right Lift WITH VISION", new GroupLiftVisionRight());
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
+        autoChooser.addObject("Get In Position Left", new GetInPositionLeft());
+        autoChooser.addObject("Get In Position Right", new GetInPositionRight());
         
         
         sideChooser.addDefault("Red", m_side = SideOfField.Red);
