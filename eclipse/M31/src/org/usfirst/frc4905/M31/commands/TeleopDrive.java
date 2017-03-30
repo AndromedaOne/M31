@@ -11,6 +11,7 @@
 
 package org.usfirst.frc4905.M31.commands;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -53,6 +54,11 @@ public class TeleopDrive extends Command {
     	
     	
     	Joystick driveGamepad = Robot.oi.getDriveController();
+    	
+    	
+    	
+    	
+    	
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
 		double rotation = OI.getRightStickHorizontal(driveGamepad);
@@ -86,15 +92,13 @@ public class TeleopDrive extends Command {
 		//the below code accounts for strafing drift from untuned pid speed control loops on mecanum wheels. may be irrelevant after
 		//tuning the loops and or adding a wheel in the middle of the robot
 		if(Robot.oi.getDriveController().getRawButton(6)){
-			Robot.driveTrain.useStrafeProfile();
 			//xIn = xIn* 0.4;
 			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
 				yIn = 0.06; 
 			}else{
 				yIn = -0.07;
 			}
-		}else{
-			Robot.driveTrain.useNormalProfile();
+		
 		}
 		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
 		//System.out.println(Robot.Ul)
