@@ -2,6 +2,7 @@ package org.usfirst.frc4905.M31.groupCommands;
 
 import org.usfirst.frc4905.M31.Robot;
 import org.usfirst.frc4905.M31.commands.AutoMove;
+import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -22,6 +23,7 @@ public class SideGearLift extends CommandGroup {
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
     	requires(Robot.driveTrain);
+    	requires(Robot.gearHandler);
         // A command group will require all of the subsystems that each member
         // would require.
         // e.g. if Command1 requires chassis, and Command2 requires arm,
@@ -29,5 +31,6 @@ public class SideGearLift extends CommandGroup {
         // arm.
     	
     	addSequential(new AutoMove(12, 1, 0));
+    	addSequential(new PlaceGearAutomatically(0));
     }
 }
