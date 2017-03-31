@@ -56,6 +56,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<SideOfField> sideChooser;
 	private static SideOfField m_side = SideOfField.Red;
 	
+	private int m_counter = 0;
 	
     Command autonomousCommand;
     public static OI oi;
@@ -225,6 +226,12 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	m_counter++;
+    	if(m_counter %500 == 0){
+    		Trace.getInstance().flushTraceFiles();
+    		
+    	}
+    	
         Scheduler.getInstance().run();
     }
 

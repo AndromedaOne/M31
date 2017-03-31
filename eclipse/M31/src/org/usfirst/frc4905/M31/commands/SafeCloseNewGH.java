@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SafeCloseNewGH extends Command {
 	
 	private boolean startingAllOpen = false;
-	private static int m_delay = 33;
+	private static int m_delay = 28;
 	private int m_counter = 0;
     public SafeCloseNewGH() {
         // Use requires() here to declare subsystem dependencies
@@ -23,6 +23,8 @@ public class SafeCloseNewGH extends Command {
     protected void initialize() {
     	if(Robot.newGH.getGHopenState() == true){
     		startingAllOpen = true;
+    	}else{
+    		startingAllOpen = false;
     	}
     	
     	m_counter = 0;
