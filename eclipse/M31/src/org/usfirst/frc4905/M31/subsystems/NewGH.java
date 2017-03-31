@@ -47,6 +47,7 @@ public class NewGH extends Subsystem {
     public boolean getGHopenState(){
     	//We don't know if true is open or close!!!
     	return !newGHopen.get();
+    	
     }
     
     public boolean getGHcloseState(){
