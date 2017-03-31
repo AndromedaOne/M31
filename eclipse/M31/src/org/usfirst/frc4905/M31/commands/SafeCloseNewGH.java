@@ -7,33 +7,63 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveLeftGearHandler extends Command {
-	private double m_speed = 0;
-    public MoveLeftGearHandler(double speed) {
+public class SafeCloseNewGH extends Command {
+	
+	private boolean startingAllOpen = false;
+	private static int m_delay = 28;
+	private int m_counter = 0;
+    public SafeCloseNewGH() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.gearHandler);
-    	m_speed = speed;
+    	requires(Robot.newGH);
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(Robot.newGH.getGHopenState() == true){
+    		startingAllOpen = true;
+    	}else{
+    		startingAllOpen = false;
+    	}
+    	
+    	m_counter = 0;
+    	
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearHandler.moveLeftGearHandler(m_speed);
+    	if(!startingAllOpen){
+    		//do nothing...
+    	}
+    	else{
+    		if(m_counter < m_delay){
+    			Robot.newGH.clawOpenCLose(-0.9);
+    		}else{
+    			Robot.newGH.clawOpenCLose(0);
+    		}
+    		m_counter++;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+       if(!startingAllOpen){
+    	   return true;
+       }
+       
+       if(m_counter < m_delay){
+    	   return false;
+       }
+       else{
+    	   return true;
+       }
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.gearHandler.stopMovingLeft();
+    	Robot.newGH.clawOpenCLose(0);
     }
 
     // Called when another command which requires one or more of the same

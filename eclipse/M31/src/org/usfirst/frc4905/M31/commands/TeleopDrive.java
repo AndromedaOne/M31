@@ -11,6 +11,7 @@
 
 package org.usfirst.frc4905.M31.commands;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -48,10 +49,16 @@ public class TeleopDrive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @SuppressWarnings("unused")
+	protected void execute() {
     	
     	
     	Joystick driveGamepad = Robot.oi.getDriveController();
+    	
+    	
+    	
+    	
+    	
     	double xIn = OI.getLeftStickHorizontal(driveGamepad);
 		double yIn = OI.getLeftStickVertical(driveGamepad);
 		double rotation = OI.getRightStickHorizontal(driveGamepad);
