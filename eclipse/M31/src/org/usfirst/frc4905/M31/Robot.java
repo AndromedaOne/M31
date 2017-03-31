@@ -57,6 +57,13 @@ public class Robot extends IterativeRobot {
 	SendableChooser<SideOfField> sideChooser;
 	private static SideOfField m_side = SideOfField.Red;
 	
+	/*
+	 * ledMode controls the behavior of the LED strand. Modes are as follows.
+	 * 1: Standard purple
+	 * 2: Rainbow
+	 */
+	
+	int ledMode = 1;
 	
     Command autonomousCommand;
     public static OI oi;
@@ -229,7 +236,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Robot.ledCtrl.writeColor(255, 0, 0);
+        switch(ledMode) {
+        case(1):
+        	Robot.ledCtrl.modePurple();
+        case(2):
+        	Robot.ledCtrl.modeRainbow();
+        }
     }
 
     /**
@@ -237,9 +249,7 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-        Robot.ledCtrl.writeColor(255, 255, 255);
-        Robot.ledCtrl.writeColor(0, 255, 0);
-        Robot.ledCtrl.writeColor(255, 0, 0);
+        
     }
     
     
