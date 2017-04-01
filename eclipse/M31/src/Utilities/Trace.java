@@ -1,9 +1,11 @@
 package Utilities;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,7 +39,8 @@ import java.util.Vector;
 // once all tracing in complete you need to call closeTraceFiles()
 public class Trace 
 {
-	private static String m_partialPathOfTraceDir = "/home/lvuser/traceLogs/Trace";
+	private String m_basePathOfTraceDirs = "/home/lvuser/traceLogs";
+	private static String m_traceDirNumberFile = ".traceNumb";
 	private String m_pathOfTraceDir;
 	private static String m_consoleOutput = "ConsoleOutput";
 	private static Trace m_instance;
@@ -91,23 +94,70 @@ public class Trace
 	private void createNewTraceDir()
 	{
 		try {
-			m_pathOfTraceDir = new String(m_partialPathOfTraceDir + getDateStr());
-			File directory = new File(m_pathOfTraceDir);
+			File directory = new File(m_basePathOfTraceDirs);
 			if(!directory.exists()) {
 				if(!directory.mkdir()) {
 					System.err.println("ERROR: failed to create directory " 
-							+ m_pathOfTraceDir +
+							+ m_basePathOfTraceDirs +
 							" for tracing data.");
+					m_basePathOfTraceDirs = null;
 					m_pathOfTraceDir = null;
 					return;
 				}
 			}
+			// open the trace dir number file to retrieve the number to concatenate
+			// to the trace dir
+			int dirNumb = 0;
+			String traceNumFileName = m_basePathOfTraceDirs + m_traceDirNumberFile;
+			File traceNumbFile = new File(traceNumFileName);
+			if(!traceNumbFile.exists()) {
+				m_pathOfTraceDir = m_basePathOfTraceDirs + "trace0";
+			} else {
+				BufferedReader reader = new 
+					BufferedReader(new FileReader(m_basePathOfTraceDirs + m_traceDirNumberFile));
+				String line = reader.readLine();
+				reader.close();
+				traceNumbFile.delete();
+				if(line == null) {
+					System.err.println("ERROR: failed to read trace file number file: " 
+							+ m_basePathOfTraceDirs + m_traceDirNumberFile);
+					m_pathOfTraceDir = null;
+					return;
+				}
+				m_pathOfTraceDir = m_basePathOfTraceDirs + "trace" + line;
+				dirNumb = Integer.parseInt(line);
+			}
+			File traceDir = new File(m_pathOfTraceDir);
+			if(!traceDir.exists()) {
+				if(!traceDir.mkdirs()) {
+					System.err.println("ERROR: failed to create directory " 
+							+ m_pathOfTraceDir +
+							" for tracing data.");
+					m_basePathOfTraceDirs = null;
+					m_pathOfTraceDir = null;
+					return;
+				}
+			}
+			FileWriter fstream = new FileWriter(m_basePathOfTraceDirs + m_traceDirNumberFile, 
+					false);
+			BufferedWriter dirNumbFile = new BufferedWriter(fstream);
+			++dirNumb;
+			dirNumbFile.write(dirNumb);
+			dirNumbFile.close();
 		}
 		catch(SecurityException e) {
 			System.err.println("ERROR: unable to create trace directory"
 					+ e.getMessage());
 			e.printStackTrace();
 			m_pathOfTraceDir = null;
+		}
+		catch(FileNotFoundException e) {
+			System.err.println("ERROR: unable to open trace dir");
+			e.printStackTrace();
+			m_pathOfTraceDir = null;
+		} catch (IOException e) {
+			System.err.println("ERROR: unable to open trace dir");
+			e.printStackTrace();
 		}
 	}
 	
