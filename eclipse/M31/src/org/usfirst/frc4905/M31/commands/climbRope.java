@@ -1,6 +1,7 @@
 package org.usfirst.frc4905.M31.commands;
 
 import org.usfirst.frc4905.M31.Robot;
+import org.usfirst.frc4905.M31.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,6 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class climbRope extends Command {
+	
+	
+	private double m_current = 0;
 
     public climbRope() {
         // Use requires() here to declare subsystem dependencies
@@ -21,7 +25,15 @@ public class climbRope extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	m_current = RobotMap.CtrPdp.getCurrent(2);
+    	if (m_current > 35) {
+    		Robot.robotClimber.setHitCurrentTrue();
+    	}
+    	
+    	
+    	if (Robot.robotClimber.getHitCurrentMax() == false){
     	Robot.robotClimber.climbRope();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

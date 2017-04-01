@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class RopeClimber extends Subsystem {
-
+	
+	public boolean hitCurrentThreshold = false;
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	//declarations
@@ -34,6 +36,14 @@ public class RopeClimber extends Subsystem {
 	}
     public void stopClimbing() {
     	ropeMotor.setSpeed(0);
+    }
+    
+    public boolean getHitCurrentMax(){
+    	return hitCurrentThreshold;
+    }
+    
+    public void setHitCurrentTrue(){
+    	hitCurrentThreshold = true;
     }
 }
 
