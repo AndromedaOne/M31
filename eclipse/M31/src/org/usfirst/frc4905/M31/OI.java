@@ -166,7 +166,7 @@ public class OI {
         
         SpinNewGHRoller = new JoystickButton(subController, 3);
 	
-        SpinNewGHRoller.whileHeld(new RunGHRoller(1));
+        SpinNewGHRoller.whileHeld(new RunGHRoller(1.0));
 	
 	}
 	
