@@ -97,7 +97,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 				pdIn, ultrasonicPIDout);
 		m_ultrasonicPID.setAbsoluteTolerance(m_tolerance);
 		m_ultrasonicPID.setOutputRange(-m_maxSpeed, m_maxSpeed);
-		LiveWindow.addActuator("UltraPID", "ultrasonicPIDFront", m_ultrasonicPID);
+		LiveWindow.addActuator("UltraFrontPID", "ultrasonicPIDFront", m_ultrasonicPID);
 	}
 
 	private class UltrasonicPIDin implements PIDSource {

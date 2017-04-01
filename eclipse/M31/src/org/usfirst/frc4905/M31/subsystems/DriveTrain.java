@@ -70,11 +70,6 @@ public class DriveTrain extends Subsystem {
 	StringBuilder m_sb = new StringBuilder();
 	boolean gyroEnabled = true;
 	private String m_traceFileName = "mecanumDrive";
-	// Preferences Code
-	Preferences prefs = Preferences.getInstance();
-
-
-
 
 	public DriveTrain() {
 		Trace traceInstance = Trace.getInstance();
@@ -96,12 +91,6 @@ public class DriveTrain extends Subsystem {
 
 		int izone = 0;
 		double ramprate = 36;
-		kp = prefs.getDouble("SpeedP", kp);
-		ki = prefs.getDouble("SpeedI", ki);
-		kd = prefs.getDouble("SpeedD", kd);
-		kf = prefs.getDouble("SpeedF", kf);
-		ramprate = prefs.getDouble("SpeedRamprate", ramprate);
-		izone = prefs.getInt("SpeedIzone", izone);
 		int i;
 		for (i = 0; i < m_motors.length; i++) {
 			m_motors[i].reverseSensor(false);
@@ -123,9 +112,12 @@ public class DriveTrain extends Subsystem {
 		robotDrive.setMaxOutput(m_RPMConversion);
 		GyroPIDoutput gyroPIDoutPut = new GyroPIDoutput(0.08);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDoutPut);
-		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		
+		UltrasonicPIDOutput ultraPIDOutput= new UltrasonicPIDOutput();
 		RobotMap.getUltrasonicSubsystem().intializeUltrasonicPID(ultraPIDOutput);
+		
+		UltrasonicPIDOutputFront ultraFrontPIDOutput= new UltrasonicPIDOutputFront();
+		RobotMap.getUltrasonicFront().intializeUltrasonicPID(ultraFrontPIDOutput);
 		
 
 		initializeYEncoderPID(500);
@@ -185,15 +177,7 @@ public class DriveTrain extends Subsystem {
 				rotation = (m_desiredHeading - gyroReading) / 50.0;
 			}
 		}
-		if(prefs.getBoolean("Mecanum Logging", false)) {
-			SmartDashboard.putNumber("Front Left Speed", Robot.driveTrain.getM1Speed());
-			SmartDashboard.putNumber("Back Right Speed", -Robot.driveTrain.getM2Speed());
-			SmartDashboard.putNumber("Front Right Speed", -Robot.driveTrain.getM3Speed());
-			SmartDashboard.putNumber("Back Left Speed", Robot.driveTrain.getM4Speed());
-			SmartDashboard.putNumber("Y Commanded Speed",yIn);
-			SmartDashboard.putNumber("X Commanded Speed", xIn);
-			SmartDashboard.putNumber("Rotation", rotation);
-		}
+		
 		Trace traceInst = Trace.getInstance();
 		Vector<Double> entry = new Vector<Double>();
 		entry.add(Robot.driveTrain.getM1Speed());
@@ -318,12 +302,12 @@ public class DriveTrain extends Subsystem {
 	public void initializeYEncoderPID(double distanceToMove) {
 
 		// Encoder PID controller variables
-		double yEncoderKp = prefs.getDouble("YEncoderP", 0.25);
-		double yEncoderKi = prefs.getDouble("YEncoderI", 0.000);
-		double yEncoderKd = prefs.getDouble("YEncoderD", 0.000);
-		double yEncoderKf = prefs.getDouble("YEncoderF", 0.000);
-		double yEncoderTolerance = prefs.getDouble("YEncoderTolerance", 0.1);
-		double yEncoderOutputMax = prefs.getDouble("YEncoderOutputMax", 0.3);
+		double yEncoderKp = 0.25;
+		double yEncoderKi = 0.000;
+		double yEncoderKd = 0.000;
+		double yEncoderKf = 0.000;
+		double yEncoderTolerance = 0.1;
+		double yEncoderOutputMax = 0.3;
 		m_moveYEncoderP = yEncoderKp;
 
 		resetEncPos();
@@ -344,7 +328,7 @@ public class DriveTrain extends Subsystem {
 		m_moveToTheYEncoderPID.enable();
 	}
 	public void setI(double i){
-		m_moveToTheYEncoderPID.setPID(prefs.getDouble("YEncoderP", 0.25), i, prefs.getDouble("YEncoderD", 0.000));
+		m_moveToTheYEncoderPID.setPID(0.25, i,  0.000);
 	}
 	public void setTolerance(double tol){
 		m_moveToTheYEncoderPID.setAbsoluteTolerance(tol);
@@ -419,12 +403,12 @@ public class DriveTrain extends Subsystem {
 	public void initializeXEncoderPID(double distanceToMove) {
 
 		// Encoder PID controller variables
-		double xEncoderKp = prefs.getDouble("XEncoderP", 0.25);
-		double xEncoderKi = prefs.getDouble("XEncoderI", 0.000);
-		double xEncoderKd = prefs.getDouble("XEncoderD", 0.000);
-		double xEncoderKf = prefs.getDouble("XEncoderF", 0.000);
-		double xEncoderTolerance = prefs.getDouble("XEncoderTolerance", 0.1);
-		double xEncoderOutputMax = prefs.getDouble("XEncoderOutputMax", 0.3);
+		double xEncoderKp =  0.25;
+		double xEncoderKi = 0.000;
+		double xEncoderKd = 0.000;
+		double xEncoderKf = 0.000;
+		double xEncoderTolerance = 0.1;
+		double xEncoderOutputMax = 0.3;
 
 		resetEncPos();
 		MovingInTheXEncoderPIDin encoderPIDin = new MovingInTheXEncoderPIDin();

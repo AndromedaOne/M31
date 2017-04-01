@@ -77,7 +77,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		m_tolerance = tolerance;
 		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
-		LiveWindow.addActuator("UltraPID", "ultrasonicPID", m_ultrasonicPID);
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> entry = new Vector<String>();
 		entry.add("PIDOutput");
@@ -121,7 +120,7 @@ public class UltrasonicSubsystem extends Subsystem {
 				pdIn, ultrasonicPIDout);
 		m_ultrasonicPID.setAbsoluteTolerance(m_tolerance);
 		m_ultrasonicPID.setOutputRange(-m_maxSpeed, m_maxSpeed);
-		LiveWindow.addActuator("UltraPID", "ultrasonicPID", m_ultrasonicPID);
+		LiveWindow.addActuator("UltraLifterPID", "ultrasonicPID", m_ultrasonicPID);
 	}
 
 	private class UltrasonicPIDin implements PIDSource {
