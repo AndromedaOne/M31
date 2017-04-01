@@ -7,6 +7,7 @@ import org.usfirst.frc4905.M31.commands.MoveY;
 import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
+import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;

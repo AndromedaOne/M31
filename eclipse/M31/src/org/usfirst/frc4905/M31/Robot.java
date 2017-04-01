@@ -25,16 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc4905.M31.commands.*;
-import org.usfirst.frc4905.M31.groupCommands.GroupPosCHopperFire;
-import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineBlue;
-import org.usfirst.frc4905.M31.groupCommands.GroupDoNothing;
-import org.usfirst.frc4905.M31.groupCommands.GroupLiftLeftVisionCorrect;
-import org.usfirst.frc4905.M31.groupCommands.GroupLiftRightNoVision;
-import org.usfirst.frc4905.M31.groupCommands.GroupLiftVisionRight;
-import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
-import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
-import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
-import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineRed;
+import org.usfirst.frc4905.M31.groupCommands.*;
 import org.usfirst.frc4905.M31.subsystems.*;
 
 import com.ctre.CANTalon.*;
@@ -134,6 +125,9 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Lift WITH VISION", new GroupLiftVisionRight());
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
+        
+        autoChooser.addObject("Right Lift Vision and Run", new RightLiftVisionRun());
+        autoChooser.addObject("Left Lift Vision and Run", new LeftLiftVisionRun());
         
         sideChooser.addDefault("Red", m_side = SideOfField.Red);
         sideChooser.addObject("Blue", m_side = SideOfField.Blue);
