@@ -65,8 +65,10 @@ public class NavxGyro {
 			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
 		}
 		Trace.getInstance().addTrace(m_traceFileName, 
-				new TracePair("Raw Angle", (double) m_navX.getWorldLinearAccelX()),
-				new TracePair("X Accel", (double) m_navX.getWorldLinearAccelY()),
+				new TracePair("Raw Angle", m_navX.getAngle()),
+				new TracePair("Corrected Angle", correctedAngle),
+				new TracePair("X Accel", (double) m_navX.getWorldLinearAccelX()),
+				new TracePair("Y Accel", (double) m_navX.getWorldLinearAccelY()),
 				new TracePair("Z Accel", (double) m_navX.getWorldLinearAccelZ()));
 	
 		return correctedAngle;
@@ -108,7 +110,12 @@ public class NavxGyro {
 	}
 
 	public boolean isDoneGyroPID() {
-		//System.out.println("angle = " + getRobotAngle());
+		Trace.getInstance().addTrace("Gyro PID", 
+				new TracePair("Target", m_gyroEncoderPID.getSetpoint()),
+				new TracePair("Robot Angle", getRobotAngle()),
+				new TracePair("Raw Angle", m_navX.getAngle()),
+				new TracePair("Avg Error", m_gyroEncoderPID.getAvgError()),
+				new TracePair("Output", m_gyroEncoderPID.get()));
 		return m_gyroEncoderPID.onTarget();
 	}
 	public void stopGyroPID() {

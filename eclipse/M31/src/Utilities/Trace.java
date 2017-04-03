@@ -17,26 +17,41 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 // utility to store trace information to a file on the roborio. this class uses the 
-// singleton pattern. to use this you must add a filename to the trace instance with
-// a set of strings that contain the header information. for example if you want to
-// trace a PID controller that is turning the robot with the gyro you can do this:
-// Vector<String> header = new Vector<String>();
-// header.add(new String("compass heading"));
-// header.add(new String("output")); 
-// ... as many columns as needed
-// Trace.getInstance().addTrace("GyroPID", "compass heading", "output", 
-// 			<as many as you want>);
-// now you can start adding entries. the trace instance remembers the filename
-// and number of columns in the header
-// to add an entry to the following:
-// Vector<Double> entry = new Vector<Double>();
-// entry.add(new Double(gyro.getHeading());
-// entry.add(new Double(output));
-// Trace.getInstance().addEntry("GyroPID", gyro.getHeading(), output, 
-//			<more values if needed>);
-// each entry is time stamped with the number of milliseconds since the Trace instance
-// was created.
-// once all tracing in complete you need to call closeTraceFiles()
+// singleton pattern. on the first call to Trace.getInstance(), the utility will
+// create a trace directory in /home/lvuser/traceLogs/trace<next number>. the utility
+// uses a file, .traceNumb, that is written in the traceLogs dir to store the next 
+// number to use. if the .traceNumb file does not exist, the next number will be 0
+// and a .traceNumb file will be created containing the number 1. when the robot
+// code is restarted, the number is read from the file and then incremented and stored
+// back. 
+// to use this utility you simply call 
+// Trace.getInstance().addTrace(...) at the point where you want to trace some
+// interesting values. the addTrace signature is as follow:
+// addTrace(<filename for trace file, .csv will be appended>,
+// 			new TracePair(<name of this column>, <value to be written>),
+//  		new TracePair(...),
+//			<as many items as you want to log>);
+//
+// on the first call to this method with a unique filename, 
+// this method will create the csv file to store the data as well as the
+// header row with the names of the columns. it will then store the set
+// of values. on subsequent calls to this method with a filename that has already
+// been encountered, the method will simply store the values passed in.
+// an example for tracing the navx:
+// Trace.getInstance().addTrace("NavxGyro", 
+// 		new TracePair("Raw Angle", m_navX.getAngle()),
+//		new TracePair("X Accel", (double) m_navX.getWorldLinearAccelX()),
+//		new TracePair("X Accel", (double) m_navX.getWorldLinearAccelY()),
+//		new TracePair("Z Accel", (double) m_navX.getWorldLinearAccelZ()));
+//
+// on the first call a file NavxGyro will be created in the trace directory.
+// the header: Raw Angle, X Accel, Y Accel, Z Accel will be written to the file along
+// with the angle, x, y and z values. on subsequent calls only the values will be
+// written.
+// once all tracing in complete you need to call closeTraceFiles() if possible.
+// you can also call flush periodically so that values are flushed out to the trace
+// file so that at least something will be written out before the robot it turned 
+// off.
 public class Trace 
 {
 	private String m_basePathOfTraceDirs = "/home/lvuser/traceLogs";
@@ -158,43 +173,40 @@ public class Trace
 		} catch (IOException e) {
 			System.err.println("ERROR: unable to open trace dir");
 			e.printStackTrace();
+			m_pathOfTraceDir = null;
 		}
 	}
-	
+
 	public void addTrace(String fileName, TracePair... header) {
 		if(m_pathOfTraceDir == null)
 		{
 			return;
 		}
-		if(!m_traces.containsKey(fileName)) {
-
-			BufferedWriter outputFile = null;
-			try {
+		try {
+			if(!m_traces.containsKey(fileName)) {
+				BufferedWriter outputFile = null;
 				String fullFileName = new String(m_pathOfTraceDir  + "/" + fileName + ".csv");
 				FileWriter fstream = new FileWriter(fullFileName, false);
 				outputFile = new BufferedWriter(fstream);
-			}
-			catch(IOException e) {
-				System.err.println("ERROR: unable to open trace file " + fileName + " ;"
-						+ e.getMessage());
-				e.printStackTrace();
-			}
-			m_traces.put(fileName, new TraceEntry(outputFile, header.length));
-			String line = new String("Time");
-			for(TracePair pair : header) {
-				line += "," + pair.getColumnName();
-			}
-			try {
+				m_traces.put(fileName, new TraceEntry(outputFile, header.length));
+				String line = new String("Time");
+				for(TracePair pair : header) {
+					line += "," + pair.getColumnName();
+				}
 				outputFile.write(line);
 				outputFile.newLine();
-			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Opened trace file " + m_pathOfTraceDir + "/" + fileName);
 			}
-			System.out.println("Opened trace file " + m_pathOfTraceDir + "/" + fileName);
+			addEntry(fileName, header);
 		}
-		addEntry(fileName, header);
+		catch(IOException e) {
+			System.err.println("ERROR: unable to open/write to trace file " + 
+					fileName + " ;" + e.getMessage());
+			e.printStackTrace();
+			return;
+		}
 	}
-	
+
 	private void addEntry(String fileName, TracePair... values) {
 		try {
 			if(m_pathOfTraceDir == null)
@@ -269,6 +281,7 @@ public class Trace
 			PrintStream stdErr= new PrintStream(m_err);
 			System.setOut(stdOut);
 			System.setErr(stdErr);
+			System.out.println("Redirected console output.");
 		}
 		catch (FileNotFoundException E) {
 			System.err.println("ERROR: Redirect Failed");
@@ -289,6 +302,7 @@ public class Trace
 			outputFile.write("Match Started @" + getDateStr());
 			outputFile.flush();
 			outputFile.close();
+			System.out.println("Logged match started.");
 		}
 		catch(IOException e) {
 			System.err.println("ERROR: unable to open text file " + m_matchStartFname + " ;"
