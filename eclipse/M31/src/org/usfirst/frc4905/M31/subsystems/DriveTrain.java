@@ -246,10 +246,14 @@ public class DriveTrain extends Subsystem {
 			SmartDashboard.putNumber("Rotation", rotation);
 		}
 
-		writeTraceData(m_frontLeftTrace, frontLeft, false);
-		writeTraceData(m_frontRightTrace, frontRight, true);
-		writeTraceData(m_backLeftTrace, backLeft, false);
-		writeTraceData(m_backRightTrace, backRight, true);
+		traceInst.addTrace(m_traceFileName, 
+				new TracePair("Front Left Speed", Robot.driveTrain.getM1Speed()),
+				new TracePair("Back Left Speed", Robot.driveTrain.getM2Speed()),
+				new TracePair("Front Right Speed", Robot.driveTrain.getM3Speed()),
+				new TracePair("Back Right Speed", Robot.driveTrain.getM4Speed()),
+				new TracePair("Y commanded Speed", yIn),
+				new TracePair("X commanded Speed", xIn),
+				new TracePair("Rotation", rotation));
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
@@ -510,7 +514,7 @@ public class DriveTrain extends Subsystem {
 			m_minimumOutput = minimumOutput;
 		}
 
-		private double m_minimumOutput = 0.08;
+		private double m_minimumOutput = 0.30;
 
 		@Override
 		public void pidWrite(double output) {
@@ -522,7 +526,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initializeGyroPID(double deltaAngle) {
-		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.08);
+		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.18);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDout);
 		RobotMap.getNavxGyro().turnWithGyroPID(deltaAngle);
 	}

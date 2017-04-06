@@ -7,6 +7,7 @@ import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 import com.kauailabs.navx.frc.*;
 
 import Utilities.Trace;
+import Utilities.TracePair;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -39,13 +40,6 @@ public class NavxGyro {
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			m_navX = new AHRS(SPI.Port.kMXP);
 			System.out.println("Created NavX instance");
-			Trace traceInst = Trace.getInstance();
-			Vector<String> header = new Vector<String>();
-			header.add("Raw Angle");
-			header.add("X Accel");
-			header.addElement("Y Accel");
-			header.addElement("Z Accel");
-			traceInst.addTrace(m_traceFileName, header);
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), 
 					true);
@@ -70,13 +64,12 @@ public class NavxGyro {
 			SmartDashboard.putNumber("Raw Anlge", m_navX.getAngle());
 			SmartDashboard.putNumber("Get Robot Angle", correctedAngle);
 		}
-		Trace traceInst = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(m_navX.getAngle());
-		entry.addElement((double) m_navX.getWorldLinearAccelX());
-		entry.addElement((double) m_navX.getWorldLinearAccelY());
-		entry.addElement((double) m_navX.getWorldLinearAccelZ());
-		traceInst.addEntry(m_traceFileName, entry);
+		Trace.getInstance().addTrace(m_traceFileName, 
+				new TracePair("Raw Angle", m_navX.getAngle()),
+				new TracePair("Corrected Angle", correctedAngle),
+				new TracePair("X Accel", (double) m_navX.getWorldLinearAccelX()),
+				new TracePair("Y Accel", (double) m_navX.getWorldLinearAccelY()),
+				new TracePair("Z Accel", (double) m_navX.getWorldLinearAccelZ()));
 	
 		return correctedAngle;
 	}
@@ -117,7 +110,12 @@ public class NavxGyro {
 	}
 
 	public boolean isDoneGyroPID() {
-		//System.out.println("angle = " + getRobotAngle());
+		Trace.getInstance().addTrace("Gyro PID", 
+				new TracePair("Target", m_gyroEncoderPID.getSetpoint()),
+				new TracePair("Robot Angle", getRobotAngle()),
+				new TracePair("Raw Angle", m_navX.getAngle()),
+				new TracePair("Avg Error", m_gyroEncoderPID.getAvgError()),
+				new TracePair("Output", m_gyroEncoderPID.get()));
 		return m_gyroEncoderPID.onTarget();
 	}
 	public void stopGyroPID() {

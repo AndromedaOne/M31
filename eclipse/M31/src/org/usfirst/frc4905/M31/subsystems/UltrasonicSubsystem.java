@@ -16,7 +16,7 @@ import java.util.Vector;
 import org.usfirst.frc4905.M31.RobotMap;
 import org.usfirst.frc4905.M31.commands.*;
 
-import Utilities.Trace;
+import Utilities.*;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -56,16 +56,10 @@ public class UltrasonicSubsystem extends Subsystem {
 		m_ultrasonic.setEnabled(true);
 		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
-		Trace traceInstance = Trace.getInstance();
-		Vector<String> entry = new Vector<String>();
-		entry.add("PIDOutput");
-		entry.add("Avg Error");
-		entry.add("Ultra Distance");
-		entry.add("Ultra distance raw");
-		traceInstance.addTrace(m_traceUltrasonicFileName, entry);
 	}
 	
-	public UltrasonicSubsystem(int ping, int echo, double p, double i, double d,  double f, double maxSpeed, double tolerance) {
+	public UltrasonicSubsystem(int ping, int echo, double p, double i, double d,  double f, 
+			double maxSpeed, double tolerance) {
 		m_ultrasonic = new Ultrasonic(ping, echo);
 		m_ultrasonic.setEnabled(true);
 		m_P = p;
@@ -76,12 +70,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		//m_ultrasonic.setAutomaticMode(true);
 		System.out.println("Ultrasonic Constructed");
 		LiveWindow.addActuator("UltraPID", "ultrasonicPID", m_ultrasonicPID);
-		Trace traceInstance = Trace.getInstance();
-		Vector<String> entry = new Vector<String>();
-		entry.add("PIDOutput");
-		entry.add("Avg Error");
-		entry.add("Ultra Distance");
-		traceInstance.addTrace(m_traceUltrasonicFileName, entry);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -147,13 +135,11 @@ public class UltrasonicSubsystem extends Subsystem {
 	}
 
 	public boolean doneUltrasonicPID() {
-		Trace traceInstance = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(m_ultrasonicPID.get() * 100);
-		entry.add(m_ultrasonicPID.getAvgError());
-		entry.add(getUltrasonicDistance());
-		entry.add(m_ultrasonic.getRangeInches());
-		traceInstance.addEntry(m_traceUltrasonicFileName, entry);
+		Trace.getInstance().addTrace(m_traceUltrasonicFileName, 
+				new TracePair("PIDOutput", m_ultrasonicPID.get() * 100),
+				new TracePair("Avg Error", m_ultrasonicPID.getAvgError()),
+				new TracePair("Ultra Distance", getUltrasonicDistance()),
+				new TracePair("Ultra Distance Raw", m_ultrasonic.getRangeInches()));
 		return m_ultrasonicPID.onTarget();
 	}
 
