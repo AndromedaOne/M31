@@ -35,6 +35,7 @@ import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLift;
 import org.usfirst.frc4905.M31.groupCommands.GroupMiddleLiftVision;
 import org.usfirst.frc4905.M31.groupCommands.GroupMovePastBaseline;
 import org.usfirst.frc4905.M31.groupCommands.GroupShootFromStartCrossBaseLineRed;
+import org.usfirst.frc4905.M31.groupCommands.MiddleLiftNewGH;
 import org.usfirst.frc4905.M31.subsystems.*;
 
 import com.ctre.CANTalon.*;
@@ -134,6 +135,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Left Lift WITH VISION", new GroupLiftLeftVisionCorrect());
         autoChooser.addObject("Middle lift WITH VISION", new GroupMiddleLiftVision());
         autoChooser.addObject("Right Lift WITH VISION", new GroupLiftVisionRight());
+        autoChooser.addObject("MiddleLift NEWGH", new MiddleLiftNewGH());
         autoChooser.addDefault("Do Nothing", new GroupDoNothing());
         
         
