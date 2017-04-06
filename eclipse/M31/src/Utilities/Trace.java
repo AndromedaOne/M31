@@ -123,13 +123,15 @@ public class Trace
 			// open the trace dir number file to retrieve the number to concatenate
 			// to the trace dir
 			int dirNumb = 0;
-			String traceNumFileName = m_basePathOfTraceDirs + m_traceDirNumberFile;
+			String traceNumFileName = m_basePathOfTraceDirs + "/" + m_traceDirNumberFile;
 			File traceNumbFile = new File(traceNumFileName);
 			if(!traceNumbFile.exists()) {
+				System.out.println("Trace numb file does not exist");
 				m_pathOfTraceDir = m_basePathOfTraceDirs + "trace0";
 			} else {
+				System.out.println("Found trace numb file: " + traceNumFileName);
 				BufferedReader reader = new 
-					BufferedReader(new FileReader(m_basePathOfTraceDirs + m_traceDirNumberFile));
+					BufferedReader(new FileReader(traceNumbFile));
 				String line = reader.readLine();
 				reader.close();
 				traceNumbFile.delete();
@@ -156,6 +158,7 @@ public class Trace
 			FileWriter fstream = new FileWriter(m_basePathOfTraceDirs + m_traceDirNumberFile, 
 					false);
 			BufferedWriter dirNumbFile = new BufferedWriter(fstream);
+			System.out.println("Created trace file " + m_basePathOfTraceDirs + m_traceDirNumberFile);
 			++dirNumb;
 			dirNumbFile.write(dirNumb);
 			dirNumbFile.close();
