@@ -59,7 +59,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		System.out.println("Ultrasonic Lifter Constructed");
 	}
 	
-			double maxSpeed, double tolerance) {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
