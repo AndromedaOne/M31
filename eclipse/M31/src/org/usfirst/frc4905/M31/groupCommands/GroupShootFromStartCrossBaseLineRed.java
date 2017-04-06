@@ -33,16 +33,8 @@ public class GroupShootFromStartCrossBaseLineRed extends CommandGroup {
     	//Turn Towards the Boiler
     	addSequential(new TurnToCompassHeading(130));
     	addSequential(new MoveUsingUltrasonicFront(6));
-    	addParallel(new RunIntakeInAuto());
-    	addSequential(new AutoShootBoiler(5, 780));//6 before bedford playoffs
-    	
-    	//addSequential(new MoveY(-3.25));
-    	//addSequential(new TurnToCompassHeading(180));
-    	
-    	//addSequential(new StopIntake());
-    	addSequential(new MoveY(-8));
-    	addSequential(new ControlledFeederStop());
-    	
+    	addSequential(new AutoShootBoiler(6, 780));//6 before bedford playoffs
+    	addSequential(new MoveY(-10));
     	
     	
     }
