@@ -55,6 +55,8 @@ public class RobotMap {
 	public static DigitalInput newGHup;
 	public static DigitalInput newGHdown;
 	public static DigitalInput newGHoptical;
+	public static Spark newGHRoller;
+	
 	
 	public static DigitalInput gearHandlerRightSwitch;
 	public static DigitalInput gearHandlerSensePoleSwitch;
@@ -160,6 +162,8 @@ public class RobotMap {
        LiveWindow.addSensor("NewGH",  "Gear Handler Lowered Limit Switch", newGHdown);
        newGHoptical = new DigitalInput (10);
        LiveWindow.addSensor("NewGH",  "Gear Handler Optical Sensor", newGHoptical);
+       newGHRoller = new Spark(6);
+       LiveWindow.addActuator("NewGH", "NewGH Roller", newGHRoller);
        //end gear handler (new!)
 	}
 
