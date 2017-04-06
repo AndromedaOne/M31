@@ -451,7 +451,7 @@ public class DriveTrain extends Subsystem {
 			m_minimumOutput = minimumOutput;
 		}
 
-		private double m_minimumOutput = 0.08;
+		private double m_minimumOutput = 0.30;
 
 		@Override
 		public void pidWrite(double output) {
@@ -463,7 +463,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initializeGyroPID(double deltaAngle) {
-		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.08);
+		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.18);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDout);
 		RobotMap.getNavxGyro().turnWithGyroPID(deltaAngle);
 	}
