@@ -27,7 +27,7 @@ public class NavxGyro {
 	private static final double gyroEncoderKd = 0.000;
 	private static final double gyroEncoderKf = 0.000;
 	private static final double gyroEncoderTolerance = 1.0;
-	private static final double gyroEncoderOutputMax = 1.0/2; 
+	private static final double gyroEncoderOutputMax = 0.6 ; 
 	private double m_initialAngleReading = 0;
 
 	private static String m_traceFileName = "GyroValues";

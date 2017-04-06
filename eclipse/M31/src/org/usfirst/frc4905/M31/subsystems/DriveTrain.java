@@ -451,7 +451,7 @@ public class DriveTrain extends Subsystem {
 			m_minimumOutput = minimumOutput;
 		}
 
-		private double m_minimumOutput = 0;
+		private double m_minimumOutput = 0.08;
 
 		@Override
 		public void pidWrite(double output) {
