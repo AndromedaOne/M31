@@ -6,7 +6,7 @@ import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
 
 import com.kauailabs.navx.frc.*;
 
-import Utilities.Trace;
+import Utilities.*;
 import Utilities.TracePair;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
