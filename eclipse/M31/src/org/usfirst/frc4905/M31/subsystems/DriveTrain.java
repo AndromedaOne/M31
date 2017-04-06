@@ -73,16 +73,6 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		System.out.println("Constructing drivetrain");
-		Trace traceInstance = Trace.getInstance();
-		Vector<String> header = new Vector<String>();
-		header.add("Front Left Speed");
-		header.add("Back Left Speed");
-		header.add("Front Right Speed");
-		header.add("Back Right Speed");
-		header.add("Y commanded Speed");
-		header.add("Y commanded Speed");
-		header.add("Rotation");
-		traceInstance.addTrace(m_traceFileName, header);
 		
 		double kp = 0.15;
 		double ki = 0.000;
@@ -180,15 +170,14 @@ public class DriveTrain extends Subsystem {
 		}
 		
 		Trace traceInst = Trace.getInstance();
-		Vector<Double> entry = new Vector<Double>();
-		entry.add(Robot.driveTrain.getM1Speed());
-		entry.add(Robot.driveTrain.getM2Speed());
-		entry.add(Robot.driveTrain.getM3Speed());
-		entry.add(Robot.driveTrain.getM4Speed());
-		entry.add(yIn);
-		entry.add(xIn);
-		entry.add(rotation);
-		traceInst.addEntry(m_traceFileName, entry);
+		traceInst.addTrace(m_traceFileName, 
+				new TracePair("Front Left Speed", Robot.driveTrain.getM1Speed()),
+				new TracePair("Back Left Speed", Robot.driveTrain.getM2Speed()),
+				new TracePair("Front Right Speed", Robot.driveTrain.getM3Speed()),
+				new TracePair("Back Right Speed", Robot.driveTrain.getM4Speed()),
+				new TracePair("Y commanded Speed", yIn),
+				new TracePair("X commanded Speed", xIn),
+				new TracePair("Rotation", rotation));
 		
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
@@ -447,7 +436,7 @@ public class DriveTrain extends Subsystem {
 			m_minimumOutput = minimumOutput;
 		}
 
-		private double m_minimumOutput = 0.08;
+		private double m_minimumOutput = 0.30;
 
 		@Override
 		public void pidWrite(double output) {
@@ -459,7 +448,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initializeGyroPID(double deltaAngle) {
-		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.08);
+		GyroPIDoutput gyroPIDout = new GyroPIDoutput(0.18);
 		RobotMap.getNavxGyro().initializeGyroPID(gyroPIDout);
 		RobotMap.getNavxGyro().turnWithGyroPID(deltaAngle);
 	}
