@@ -127,7 +127,7 @@ public class Trace
 			File traceNumbFile = new File(traceNumFileName);
 			if(!traceNumbFile.exists()) {
 				System.out.println("Trace numb file does not exist");
-				m_pathOfTraceDir = m_basePathOfTraceDirs + "trace0";
+				m_pathOfTraceDir = m_basePathOfTraceDirs + "/" + "trace0";
 			} else {
 				System.out.println("Found trace numb file: " + traceNumFileName);
 				BufferedReader reader = new 
@@ -141,7 +141,7 @@ public class Trace
 					m_pathOfTraceDir = null;
 					return;
 				}
-				m_pathOfTraceDir = m_basePathOfTraceDirs + "trace" + line;
+				m_pathOfTraceDir = m_basePathOfTraceDirs + "/trace" + line;
 				dirNumb = Integer.parseInt(line);
 			}
 			File traceDir = new File(m_pathOfTraceDir);
@@ -155,12 +155,11 @@ public class Trace
 					return;
 				}
 			}
-			FileWriter fstream = new FileWriter(m_basePathOfTraceDirs + m_traceDirNumberFile, 
-					false);
+			FileWriter fstream = new FileWriter(traceNumFileName, false);
 			BufferedWriter dirNumbFile = new BufferedWriter(fstream);
 			System.out.println("Created trace file " + m_basePathOfTraceDirs + m_traceDirNumberFile);
 			++dirNumb;
-			dirNumbFile.write(dirNumb);
+			dirNumbFile.write(Integer.toString(dirNumb));
 			dirNumbFile.close();
 		}
 		catch(SecurityException e) {
