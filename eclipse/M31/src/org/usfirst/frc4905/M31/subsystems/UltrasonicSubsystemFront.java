@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,10 +33,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class UltrasonicSubsystemFront extends Subsystem {
 
 	private PIDController m_ultrasonicPID;
-	private double m_P=.02;
+	private double m_P=.0000001;
 	private double m_I=.00000;
 	private double m_D=.0;
-	private double m_maxSpeed=0.2;
+	private double m_maxSpeed=0.5;
 	private double m_f=0;
 	private double m_tolerance=1;
 	String m_traceFrontUltrasonicFileName = "FrontUltrasonicPID";
@@ -56,7 +55,7 @@ public class UltrasonicSubsystemFront extends Subsystem {
 		m_ultrasonic = new SuperUltrasonic(4, 5);
 		m_ultrasonic.setEnabled(true);
 		m_ultrasonic.setAutomaticMode(true);
-		System.out.println("Ultrasonic Constructed");
+		System.out.println("UltrasonicFront Constructed");
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> entry = new Vector<String>();
 		entry.add("PIDOutput");

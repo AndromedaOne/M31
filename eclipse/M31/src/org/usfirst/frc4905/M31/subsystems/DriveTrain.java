@@ -72,6 +72,7 @@ public class DriveTrain extends Subsystem {
 	private String m_traceFileName = "mecanumDrive";
 
 	public DriveTrain() {
+		System.out.println("Constructing drivetrain");
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> header = new Vector<String>();
 		header.add("Front Left Speed");
@@ -557,17 +558,8 @@ public class DriveTrain extends Subsystem {
 
 		@Override
 		public void pidWrite(double output) {
-			SmartDashboard.putNumber("Output", output);
-			SmartDashboard.putNumber("Distance",
-					RobotMap.getUltrasonicFront().getUltrasonicDistance());
-			if(Math.abs(output) < 0.12){
-				if(output > 0){
-					output = 0.12;
-				}else{
-					output = -0.12;
-				}
-				
-			}
+			
+			System.out.println("ultra front output " + output);
 			robotDrive.mecanumDrive_Cartesian(0, output, 0, 0);
 
 		}
