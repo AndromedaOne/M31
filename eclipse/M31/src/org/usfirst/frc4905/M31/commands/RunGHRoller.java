@@ -12,7 +12,7 @@ public class RunGHRoller extends Command {
     public RunGHRoller(double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires (Robot.newGH);
+    	requires (Robot.newGHRoller);
     	m_speed = speed;
     }
 

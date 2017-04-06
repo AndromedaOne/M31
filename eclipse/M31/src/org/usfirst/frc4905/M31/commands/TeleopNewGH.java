@@ -38,7 +38,7 @@ public class TeleopNewGH extends Command {
     		}
     		else{
     			Robot.newGH.clawOpenCLose(0);
-        		Robot.newGH.moveUpDown(-0.50);	
+        		Robot.newGH.moveUpDown(-0.65);	
     		}
     		
     	}
@@ -61,7 +61,7 @@ public class TeleopNewGH extends Command {
     		}
     		else{
     			Robot.newGH.clawOpenCLose(0);
-        		Robot.newGH.moveUpDown(0.60);
+        		Robot.newGH.moveUpDown(0.75);
     		}
     		
     	}
