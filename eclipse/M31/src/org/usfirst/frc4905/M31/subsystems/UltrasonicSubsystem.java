@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -57,7 +56,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		m_ultrasonic.setEnabled(true);
 		m_ultrasonic.setTimeDelayPing(0.007);
 		//m_ultrasonic.setAutomaticMode(true);
-		System.out.println("Ultrasonic Constructed");
+		System.out.println("Ultrasonic Lifter Constructed");
 		Trace traceInstance = Trace.getInstance();
 		Vector<String> entry = new Vector<String>();
 		entry.add("PIDOutput");
@@ -67,23 +66,6 @@ public class UltrasonicSubsystem extends Subsystem {
 		traceInstance.addTrace(m_traceUltrasonicFileName, entry);
 	}
 	
-	public UltrasonicSubsystem(int ping, int echo, double p, double i, double d,  double f, double maxSpeed, double tolerance) {
-		m_ultrasonic = new SuperUltrasonic(ping, echo);
-		m_ultrasonic.setEnabled(true);
-		m_P = p;
-		m_I = i;
-		m_D = d;
-		m_maxSpeed = maxSpeed;
-		m_tolerance = tolerance;
-		//m_ultrasonic.setAutomaticMode(true);
-		System.out.println("Ultrasonic Constructed");
-		Trace traceInstance = Trace.getInstance();
-		Vector<String> entry = new Vector<String>();
-		entry.add("PIDOutput");
-		entry.add("Avg Error");
-		entry.add("Ultra Distance");
-		traceInstance.addTrace(m_traceUltrasonicFileName, entry);
-	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
