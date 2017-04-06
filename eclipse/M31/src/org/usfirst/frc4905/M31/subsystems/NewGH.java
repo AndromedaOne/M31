@@ -21,7 +21,9 @@ public class NewGH extends Subsystem {
 	private final static DigitalInput newGHup = RobotMap.newGHup;
 	private final static DigitalInput newGHdown = RobotMap.newGHdown;
 	private final static DigitalInput newGHoptical = RobotMap.newGHoptical;
-
+	private final static Spark newGHRoller = RobotMap.newGHRoller;
+	
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -62,6 +64,10 @@ public class NewGH extends Subsystem {
     public boolean getGHdownState(){
     	//We don't know if true is open or close!!!
     	return !newGHdown.get();
+    }
+    
+    public void spinRoller(double speed){
+    	newGHRoller.set(speed);
     }
 }
 
