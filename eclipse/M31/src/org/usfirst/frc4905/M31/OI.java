@@ -139,7 +139,7 @@ public class OI {
 		SmartDashboard.putData("Group Right Lift No Vision", new GroupLiftRightNoVision());
 		SmartDashboard.putData("Group Shoot From Start Cross Baseline", new GroupShootFromStartCrossBaseLineRed());
 		SmartDashboard.putData("MoveForward with ultrasonic to 6 inches", new TestMoveUltraFront());
-	
+		SmartDashboard.putData("Move SIDEWAYS with side ultrasonic to 12 inches", new MoveUsingUltrasonic(12));
 		subController = new Joystick(1);		
 		toggleButton = new JoystickButton(subController, ButtonsEnumerated.XBUTTON.getValue());
 		
