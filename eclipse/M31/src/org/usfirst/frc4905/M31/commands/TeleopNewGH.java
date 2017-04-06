@@ -38,18 +38,18 @@ public class TeleopNewGH extends Command {
     		}
     		else{
     			Robot.newGH.clawOpenCLose(0);
-        		Robot.newGH.moveUpDown(-0.50);	
+        		Robot.newGH.moveUpDown(-0.65);	
     		}
     		
     	}
     	if(povReading == 90){
     		//90 means we're pushed to the right, close ground gh (close cuz pushing towards the middle of the controller)
-    		if(Robot.newGH.getGHupState() == true){
-    			//Robot.newGH.clawOpenCLose(0);
-        		//Robot.newGH.moveUpDown(0);
+    		if(Robot.newGH.getGHcloseState() == true){
+    			Robot.newGH.clawOpenCLose(0);
+        		Robot.newGH.moveUpDown(0);
     		}else{
-    			//Robot.newGH.clawOpenCLose(-0.4);
-        		//Robot.newGH.moveUpDown(0);
+    			Robot.newGH.clawOpenCLose(-0.4);
+        		Robot.newGH.moveUpDown(0);
     		}
     		
     	}
@@ -61,7 +61,7 @@ public class TeleopNewGH extends Command {
     		}
     		else{
     			Robot.newGH.clawOpenCLose(0);
-        		Robot.newGH.moveUpDown(0.60);
+        		Robot.newGH.moveUpDown(0.75);
     		}
     		
     	}
