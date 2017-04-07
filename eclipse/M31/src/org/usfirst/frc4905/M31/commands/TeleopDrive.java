@@ -86,8 +86,9 @@ public class TeleopDrive extends Command {
 		}
 		//System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
 		m_delay++;
-		if(Robot.oi.getDriveController().getRawButton(7)){
-			xIn = 0;
+		if(Robot.oi.getDriveController().getRawButton(6)){
+			yIn = 0;
+			xIn *= 0.4;
 			Robot.driveTrain.useStrafeProfile();
 		}
 		else{
