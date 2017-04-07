@@ -29,10 +29,10 @@ public class RightLiftNewGH extends CommandGroup {
         // arm.
     	
     	addParallel(new NewGHRaiseInAuto());
-    	addSequential(new MoveY(10.6));
+    	addSequential(new MoveY(9.5));
     	addSequential(new TurnDeltaAngleDegree(-60));
-    	addSequential(new MoveY(6.8));
-    	addSequential(new MoveUsingUltrasonic(7));
+    	addSequential(new MoveY(5.5));
+    	addSequential(new MoveUsingUltrasonicFront(8));
     	addSequential(new NewGHOpenInAuto());
     	addSequential(new MoveY(-5.0));
     	

@@ -29,7 +29,7 @@ public class GroupShootFromStartCrossBaseLineRed extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//CONFIGURED FOR RED
-    	addSequential(new MoveY(4));
+    	addSequential(new MoveY(4.2));
     	//Turn Towards the Boiler
     	addSequential(new TurnToCompassHeading(130));
     	addSequential(new MoveUsingUltrasonicFront(6));

@@ -32,7 +32,7 @@ public class GroupShootFromStartCrossBaseLineBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new MoveY(4));
+    	addSequential(new MoveY(4.2));
     	addSequential(new TurnToCompassHeading(230));
     	addSequential(new MoveUsingUltrasonicFront(6.5));
     	addSequential(new AutoShootBoiler(6, 780));//6 before bedford playoffs
