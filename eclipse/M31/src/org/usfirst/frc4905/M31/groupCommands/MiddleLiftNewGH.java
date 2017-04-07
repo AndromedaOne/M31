@@ -28,7 +28,7 @@ public class MiddleLiftNewGH extends CommandGroup {
         // arm.
     	addParallel(new NewGHRaiseInAuto());
     	addSequential(new MoveY(7.7));
-    	addSequential(new MoveUsingUltrasonicFront(7));
+    	addSequential(new MoveUsingUltrasonicFront(9));
     	addSequential(new NewGHOpenInAuto());
     	addSequential(new MoveY(-3.0));
     	
