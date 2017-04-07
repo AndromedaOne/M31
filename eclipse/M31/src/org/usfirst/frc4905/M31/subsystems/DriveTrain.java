@@ -209,7 +209,7 @@ public class DriveTrain extends Subsystem {
 		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (Robot.oi.getDriveController().getRawButton(6)){
+		if (Robot.oi.getDriveController().getRawButton(6) && false){
 			//This is strafe only mode
 			yIn = 0;
 			rotation = 0;
@@ -281,6 +281,10 @@ public class DriveTrain extends Subsystem {
 				new TracePair("X commanded Speed", xIn),
 				new TracePair("Rotation", rotation));
 		
+		writeTraceData(m_frontLeftTrace, frontLeft, false);
+		writeTraceData(m_frontRightTrace, frontRight, true);
+		writeTraceData(m_backLeftTrace, backLeft, false);
+		writeTraceData(m_backRightTrace, backRight, true);
 		robotDrive.mecanumDrive_Cartesian(xIn, yIn, rotation, 0);
 	}
 
