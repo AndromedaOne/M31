@@ -209,7 +209,7 @@ public class DriveTrain extends Subsystem {
 		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (Robot.oi.getDriveController().getRawButton(6) && false){
+		if (Robot.oi.getDriveController().getRawButton(6)){
 			//This is strafe only mode
 			yIn = 0;
 			rotation = 0;
@@ -373,7 +373,7 @@ public class DriveTrain extends Subsystem {
 	
 	public void initializeOmniWheelEncoderPID(){
 
-		double omniWheelEncoderKp = 0.25;
+		double omniWheelEncoderKp = 0.025;
 		double omniWheelEncoderKi = 0.0;
 		double omniWheelEncoderKd = 0.0;
 		double omniWheelEncoderKf = 0.0;
