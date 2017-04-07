@@ -3,6 +3,7 @@ package org.usfirst.frc4905.M31.groupCommands;
 import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveX;
 import org.usfirst.frc4905.M31.commands.MoveY;
+import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectDisabled;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -36,6 +37,7 @@ public class GroupMiddleLiftFire extends CommandGroup {
     	addSequential(new MoveX(-1));
 		addSequential(new TurnDeltaAngleDegree(120));
 		addSequential(new MoveY(3));
+		addSequential(new SetOmniWheelCorrectDisabled());
 		//Shoot 10 Balls into the Boiler
 		
     }

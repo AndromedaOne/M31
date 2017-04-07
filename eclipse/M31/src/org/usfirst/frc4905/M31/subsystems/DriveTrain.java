@@ -131,6 +131,8 @@ public class DriveTrain extends Subsystem {
 	private String m_traceOmniFileName = "OmniWheel";
 	
 	private double m_omniWheelPIDOutput = 0.0;
+	
+	private boolean m_autoModeEnabled = false;
 	// Preferences Code
 	Preferences prefs = Preferences.getInstance();
 
@@ -209,7 +211,7 @@ public class DriveTrain extends Subsystem {
 		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (Robot.oi.getDriveController().getRawButton(6)){
+		if (Robot.oi.getDriveController().getRawButton(6) || m_autoModeEnabled == true){
 			//This is strafe only mode
 			yIn = 0;
 			rotation = 0;
@@ -373,8 +375,8 @@ public class DriveTrain extends Subsystem {
 	
 	public void initializeOmniWheelEncoderPID(){
 
-		double omniWheelEncoderKp = 0.025;
-		double omniWheelEncoderKi = 0.0;
+		double omniWheelEncoderKp = 0.0002;
+		double omniWheelEncoderKi = 0.000000;
 		double omniWheelEncoderKd = 0.0;
 		double omniWheelEncoderKf = 0.0;
 		double omniWheelEncoderTolerance = 0.1;
@@ -768,6 +770,8 @@ public class DriveTrain extends Subsystem {
 		return backLeft.getSpeed();
 	}
 
-	
+	public void setOmniWheelEnabled(boolean autoModeEnabled){
+		autoModeEnabled = m_autoModeEnabled;
+	}
 }
 
