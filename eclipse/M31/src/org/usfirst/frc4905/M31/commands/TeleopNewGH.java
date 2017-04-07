@@ -73,7 +73,7 @@ public class TeleopNewGH extends Command {
         		Robot.newGH.moveUpDown(0);
     		}
     		else{
-    			Robot.newGH.clawOpenCLose(0.875);
+    			Robot.newGH.clawOpenCLose(0.9);
         		Robot.newGH.moveUpDown(0);
     		}
     		
