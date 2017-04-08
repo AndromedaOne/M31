@@ -35,12 +35,12 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
     	else{
     		sideoffieldFactor = 1;
     	}
-    	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(60 * sideoffieldFactor));
-    	addSequential(new MoveY(6.5));
+    	addSequential(new MoveY(9.5));
+    	addSequential(new TurnDeltaAngleDegree(60));
+    	addSequential(new MoveY(5.5));
     	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(330));
-    	addSequential(new MoveUsingUltrasonic(10));
+    	addSequential(new MoveUsingUltrasonic(8));
     	addSequential(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());

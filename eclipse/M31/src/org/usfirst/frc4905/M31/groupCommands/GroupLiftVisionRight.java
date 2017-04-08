@@ -37,18 +37,13 @@ public class GroupLiftVisionRight extends CommandGroup {
         // arm.
     	
     	//Start with the robot's "front" Facing the left wall on the rightS side
-    	int sideOfFieldFactor;
-    	if(Robot.getSide() == SideOfField.Blue){
-    		sideOfFieldFactor = -1;
-    	}else{
-    		sideOfFieldFactor = 1;
-    	}
-    	addSequential(new MoveY(10.6));
-    	addSequential(new TurnDeltaAngleDegree(-60/* * sideOfFieldFactor*/));
-    	addSequential(new MoveY(6.8));
+    	
+    	addSequential(new MoveY(9.5));
+    	addSequential(new TurnDeltaAngleDegree(-60));
+    	addSequential(new MoveY(5.5));
     	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(210));
-    	addSequential(new MoveUsingUltrasonic(10));
+    	addSequential(new MoveUsingUltrasonic(8));
     	addSequential(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());
