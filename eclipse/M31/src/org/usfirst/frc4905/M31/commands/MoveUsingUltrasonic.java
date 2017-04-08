@@ -23,6 +23,7 @@ public class MoveUsingUltrasonic extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveTrain.setOmniWheelEnabled(true);
 		Robot.driveTrain.intializeUltrasonicPID(m_distanceToDriveTo);
 
 	}
@@ -40,6 +41,7 @@ public class MoveUsingUltrasonic extends Command {
 	protected void end() {
 		Robot.driveTrain.stop();
 		Robot.driveTrain.stopUltrasonicPID();
+		Robot.driveTrain.setOmniWheelEnabled(false);
 	}
 
 	// Called when another command which requires one or more of the same

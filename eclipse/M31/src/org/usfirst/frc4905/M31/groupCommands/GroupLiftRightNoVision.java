@@ -38,8 +38,7 @@ public class GroupLiftRightNoVision extends CommandGroup {
     	addSequential(new OpenGearHandlerInAuto());
     	addParallel(new MoveUsingUltrasonic(30));
     	addSequential(new CloseGearHandlerInAuto());
-    	
-    	//GEAR SPITTER COMMAND
+
     	
     	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
     	

@@ -52,6 +52,7 @@ public class GroupLiftVisionRight extends CommandGroup {
     	addSequential(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());
+
     	//commented out because we want to sit and have Ben take gear out
     	/*addSequential(new OpenGearHandlerInAuto());
     	addSequential(new MoveUsingUltrasonic(18));

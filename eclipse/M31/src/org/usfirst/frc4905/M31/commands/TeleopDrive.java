@@ -86,23 +86,15 @@ public class TeleopDrive extends Command {
 		}
 		//System.out.print("xIn: " + xIn * mod + " yIn: " + yIn * mod + " rotation " + rotation * mod + "\n");
 		m_delay++;
-		if(Robot.oi.getDriveController().getRawButton(7)){
-			xIn = 0;
-		}
-		//the below code accounts for strafing drift from untuned pid speed control loops on mecanum wheels. may be irrelevant after
-		//tuning the loops and or adding a wheel in the middle of the robot
 		if(Robot.oi.getDriveController().getRawButton(6)){
-			if(Robot.oi.getDriveController().getRawAxis(0) > 0.15){
-				yIn = 0.0; 
-			}else{
-				yIn = 0.0;
-			}
-		
+			yIn = 0;
+			xIn *= 0.6;
+			Robot.driveTrain.useStrafeProfile();
 		}
-		//System.out.println("xIn: " + xIn + "yIn: " + yIn + "rotation" + rotation);
-		//System.out.println(Robot.Ul)
-		
-			Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
+		else{
+			Robot.driveTrain.useNormalProfile();
+		}
+		Robot.driveTrain.mecanumDrive(xIn * mod, yIn * mod, rotation * mod);
 		
 		
 		
