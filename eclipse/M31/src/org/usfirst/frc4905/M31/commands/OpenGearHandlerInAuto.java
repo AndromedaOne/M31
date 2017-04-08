@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class OpenGearHandlerInAuto extends Command {
-	private double m_outSpeed = 0.3;
+	private double m_outSpeed = 0.5;
 	private double m_inSpeed = -0.2;
 	private double m_delay = 0;
     public OpenGearHandlerInAuto() {
@@ -39,7 +39,7 @@ public class OpenGearHandlerInAuto extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(m_delay < 50){
+        if(m_delay < 70){
         	return false;
         }else{
         	return true;
