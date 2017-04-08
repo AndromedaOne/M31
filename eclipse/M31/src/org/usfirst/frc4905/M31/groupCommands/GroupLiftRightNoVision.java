@@ -34,13 +34,11 @@ public class GroupLiftRightNoVision extends CommandGroup {
     	addSequential(new TurnDeltaAngleDegree(-55));
     	addSequential(new MoveY(6.5));
     	addSequential(new TurnDeltaAngleDegree(-90));
-    	addSequential(new SetOmniWheelCorrectEnabled());
     	addSequential(new MoveUsingUltrasonic(10));
     	addSequential(new OpenGearHandlerInAuto());
     	addParallel(new MoveUsingUltrasonic(30));
     	addSequential(new CloseGearHandlerInAuto());
-    	addSequential(new SetOmniWheelCorrectDisabled());
-    	//GEAR SPITTER COMMAND
+
     	
     	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
     	

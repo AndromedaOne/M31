@@ -7,8 +7,8 @@ import org.usfirst.frc4905.M31.commands.MoveX;
 import org.usfirst.frc4905.M31.commands.MoveY;
 import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectDisabled;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectEnabled;
+
+
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -43,12 +43,10 @@ public class GroupMiddleLiftVision extends CommandGroup {
 		addSequential(new MoveY(8.1));
 		addSequential(new MoveUsingUltrasonicFront(20));
 		addSequential(new PlaceGearAutomatically(270));
-		addSequential(new SetOmniWheelCorrectEnabled());
 		addSequential(new MoveUsingUltrasonic(8));
 		addParallel(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());
-		addSequential(new SetOmniWheelCorrectDisabled());
 		 //commented out because we want to sit and have Ben take gear out
 		/*
 		addSequential(new MoveUsingUltrasonic(18));

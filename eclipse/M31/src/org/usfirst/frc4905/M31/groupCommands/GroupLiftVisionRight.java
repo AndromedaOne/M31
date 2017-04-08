@@ -8,8 +8,6 @@ import org.usfirst.frc4905.M31.commands.MoveX;
 import org.usfirst.frc4905.M31.commands.MoveY;
 import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectDisabled;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectEnabled;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import Utilities.SideOfField;
@@ -50,12 +48,11 @@ public class GroupLiftVisionRight extends CommandGroup {
     	addSequential(new MoveY(6.8));
     	addSequential(new MoveUsingUltrasonicFront(20));
     	addSequential(new PlaceGearAutomatically(210));
-    	addSequential(new SetOmniWheelCorrectEnabled());
     	addSequential(new MoveUsingUltrasonic(10));
     	addSequential(new OpenGearHandlerInAuto());
 		addSequential(new MoveUsingUltrasonic(20));
 		addSequential(new CloseGearHandlerInAuto());
-		addSequential(new SetOmniWheelCorrectDisabled());
+
     	//commented out because we want to sit and have Ben take gear out
     	/*addSequential(new OpenGearHandlerInAuto());
     	addSequential(new MoveUsingUltrasonic(18));

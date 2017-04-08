@@ -6,8 +6,6 @@ import org.usfirst.frc4905.M31.commands.MoveX;
 import org.usfirst.frc4905.M31.commands.MoveY;
 import org.usfirst.frc4905.M31.commands.OpenGearHandlerInAuto;
 import org.usfirst.frc4905.M31.commands.PlaceGearAutomatically;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectDisabled;
-import org.usfirst.frc4905.M31.commands.SetOmniWheelCorrectEnabled;
 import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -41,12 +39,10 @@ public class GroupLiftVisionLeft extends CommandGroup {
     	addSequential(new TurnDeltaAngleDegree(60));
     	addSequential(new MoveY(8));
     	addSequential(new PlaceGearAutomatically(330));
-    	addSequential(new SetOmniWheelCorrectEnabled());
     	addSequential(new MoveUsingUltrasonic(10));
     	addSequential(new OpenGearHandlerInAuto());
     	Timer.delay(0.5);
     	addSequential(new MoveUsingUltrasonic(18));
     	addSequential(new CloseGearHandlerInAuto());
-    	addSequential(new SetOmniWheelCorrectDisabled());
     }
 }
