@@ -218,14 +218,13 @@ public class DriveTrain extends Subsystem {
 			m_iterationsSinceRotationAndYMoveCommanded++;
 			if(m_iterationsSinceRotationAndYMoveCommanded == 1){
 				initializeOmniWheelEncoderPID();
-			}
-			else if(m_iterationsSinceRotationAndYMoveCommanded == 5){
+			
 				// Need to make sure that the omni wheel has stopped 
 				// spinning(if we were turning moving etc.) so we wait till 5
 				m_desiredOmniWheelEncoderTick = getOmniWheelEncoderTicks();
 				enableOmniWheelPID(m_desiredOmniWheelEncoderTick);
 			}
-			else if(m_iterationsSinceRotationAndYMoveCommanded > 5){
+			else if(m_iterationsSinceRotationAndYMoveCommanded > 1){
 				yIn = m_omniWheelPIDOutput;
 			}
 			
@@ -380,7 +379,7 @@ public class DriveTrain extends Subsystem {
 		double omniWheelEncoderKd = 0.0;
 		double omniWheelEncoderKf = 0.0;
 		double omniWheelEncoderTolerance = 0.1;
-		double omniWheelEncoderOutputMax = 0.3;
+		double omniWheelEncoderOutputMax = 0.8;
 
 		resetOmniWheelEncPos();
 		OmniWheelPIDIn encoderPIDin = new OmniWheelPIDIn();
