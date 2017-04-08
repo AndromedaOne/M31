@@ -1,21 +1,20 @@
 package org.usfirst.frc4905.M31.groupCommands;
 
-import org.usfirst.frc4905.M31.commands.AutoShootBoiler;
-import org.usfirst.frc4905.M31.commands.ControlledFeederStop;
+import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonic;
 import org.usfirst.frc4905.M31.commands.MoveUsingUltrasonicFront;
 import org.usfirst.frc4905.M31.commands.MoveY;
-import org.usfirst.frc4905.M31.commands.RunIntakeInAuto;
-import org.usfirst.frc4905.M31.commands.StopIntake;
-import org.usfirst.frc4905.M31.commands.TurnToCompassHeading;
+import org.usfirst.frc4905.M31.commands.NewGHOpenInAuto;
+import org.usfirst.frc4905.M31.commands.NewGHRaiseInAuto;
+import org.usfirst.frc4905.M31.commands.TurnDeltaAngleDegree;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GroupShootFromStartCrossBaseLineBlue extends CommandGroup {
+public class LeftLiftNewGH extends CommandGroup {
 
-    public GroupShootFromStartCrossBaseLineBlue() {
+    public LeftLiftNewGH() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -32,10 +31,19 @@ public class GroupShootFromStartCrossBaseLineBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new MoveY(4.2));
-    	addSequential(new TurnToCompassHeading(230));
-    	addSequential(new MoveUsingUltrasonicFront(6.5));
-    	addSequential(new AutoShootBoiler(6, 780));//6 before bedford playoffs
-    	addSequential(new MoveY(-10));
+    	
+    	addParallel(new NewGHRaiseInAuto());
+    	addSequential(new MoveY(9.5));
+    	addSequential(new TurnDeltaAngleDegree(60));
+    	addSequential(new MoveY(5.5));
+    	addSequential(new MoveUsingUltrasonicFront(8));
+    	addSequential(new NewGHOpenInAuto());
+    	addSequential(new MoveY(-5.0));
+    	
+    	//next two get us across the field
+    	/*
+    	addSequential(new TurnDeltaAngleDegree(-60));
+    	addSequential(new MoveY(50));
+    	*/
     }
 }
