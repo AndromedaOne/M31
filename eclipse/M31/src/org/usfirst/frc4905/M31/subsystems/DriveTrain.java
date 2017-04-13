@@ -53,6 +53,11 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void useStrafeProfile() {
+		m_motorsFrontLeft.ClearIaccum();
+		m_motorsFrontRight.ClearIaccum();
+		m_motorsBackLeft.ClearIaccum();
+		m_motorsBackRight.ClearIaccum();
+		
 		m_motorsFrontLeft.setProfile(1);
 		m_motorsFrontRight.setProfile(1);
 		m_motorsBackLeft.setProfile(1);
@@ -71,10 +76,10 @@ public class DriveTrain extends Subsystem {
 	
 	private void setStrafePIDParameters() {
 		//                        P               I       D  F                          Izone           RampRate Profile
-		m_motorsFrontLeft.setPID( 102.3/27.5/10,  0.004,  0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    0,       1);
-		m_motorsFrontRight.setPID(102.3/75.0/3.5, 0.0046, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    0,       1);
-		m_motorsBackLeft.setPID(  102.3/70.0/3.5, 0.0043, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    0,       1);
-		m_motorsBackRight.setPID( 102.3/32.5/12,  0.003,  0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    0,       1);
+		m_motorsFrontLeft.setPID( 102.3/27.5/10,  0.004,  0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    1,       1);
+		m_motorsFrontRight.setPID(102.3/75.0/3.5, 0.0046, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    1,       1);
+		m_motorsBackLeft.setPID(  102.3/70.0/3.5, 0.0043, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    1,       1);
+		m_motorsBackRight.setPID( 102.3/32.5/12,  0.003,  0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    1,       1);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 88 in CTR Documentation for f 
 		
@@ -233,7 +238,7 @@ public class DriveTrain extends Subsystem {
 					new TracePair("yIn", yIn),
 					new TracePair("m_desiredOmniWheelEncoderTick", m_desiredOmniWheelEncoderTick),
 					new TracePair("omniWheelEncoderTicks", getOmniWheelEncoderTicks()/100),
-					new TracePair("AverageError", getOmniWheelPIDContoller().getAvgError()));		
+					new TracePair("AverageError", getOmniWheelPIDContoller().getAvgError()/100));		
 		}
 		else{
 			if(m_iterationsSinceRotationAndYMoveCommanded != 0){
@@ -374,8 +379,8 @@ public class DriveTrain extends Subsystem {
 	
 	public void initializeOmniWheelEncoderPID(){
 
-		double omniWheelEncoderKp = 0.0002;
-		double omniWheelEncoderKi = 0.000000;
+		double omniWheelEncoderKp = 0.000175;
+		double omniWheelEncoderKi = 0.00000;
 		double omniWheelEncoderKd = 0.0;
 		double omniWheelEncoderKf = 0.0;
 		double omniWheelEncoderTolerance = 0.1;
