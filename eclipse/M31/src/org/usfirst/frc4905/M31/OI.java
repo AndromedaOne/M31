@@ -149,7 +149,7 @@ public class OI {
 		
 		climbButton.whileHeld(new climbRope());
 		shootFromBoilerButton = new JoystickButton(subController, ButtonsEnumerated.RIGHTBUMPERBUTTON.getValue());
-		shootFromBoilerButton.whileHeld(new ShootFromTheBoiler(720));
+		shootFromBoilerButton.whileHeld(new ShootFromTheBoiler(760));
 		shootFromBoilerButton.whenReleased(new ControlledFeederStop());
 		saveVisionStateButton = new JoystickButton(driveController, ButtonsEnumerated.ABUTTON.getValue());
         saveVisionStateButton.whenPressed(new SaveVisionState());
