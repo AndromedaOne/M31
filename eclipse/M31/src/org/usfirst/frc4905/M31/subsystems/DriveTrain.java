@@ -76,10 +76,10 @@ public class DriveTrain extends Subsystem {
 	
 	private void setStrafePIDParameters() {
 		//                        P               I       D  F                          Izone           RampRate Profile
-		m_motorsFrontLeft.setPID( 102.3/27.5/10,  0.004,  0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    1,       1);
-		m_motorsFrontRight.setPID(102.3/75.0/3.5, 0.0046, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    1,       1);
-		m_motorsBackLeft.setPID(  102.3/70.0/3.5, 0.0043, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    1,       1);
-		m_motorsBackRight.setPID( 102.3/32.5/12,  0.003,  0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    1,       1);
+		m_motorsFrontLeft.setPID( 102.3/27.5/10,  0.004,  0, 1023.0*600.0/4096.0/550.0, 50*4096/600,    100,       1);
+		m_motorsFrontRight.setPID(102.3/75.0/3.5, 0.0046, 0, 1023.0*600.0/4096.0/620.0, 50*4096/600,    100,       1);
+		m_motorsBackLeft.setPID(  102.3/70.0/3.5, 0.0043, 0, 1023.0*600.0/4096.0/590.0, 50*4096/600,    100,       1);
+		m_motorsBackRight.setPID( 102.3/32.5/12,  0.003,  0, 1023.0*600.0/4096.0/570.0, 50*4096/600,    100,       1);
 		// 700/60/10*4096 = 4778.67  1023/4778.67 
 		// Page 88 in CTR Documentation for f 
 		
@@ -216,7 +216,7 @@ public class DriveTrain extends Subsystem {
 		
 		// Greatest Regards to 1519
 		// update count of iterations since rotation last commanded
-		if (Robot.oi.getDriveController().getRawButton(6) || m_autoModeEnabled == true){
+		if ((Robot.oi.getDriveController().getRawButton(6) && Robot.oi.getDriveController().getRawAxis(0) >	0.15) || m_autoModeEnabled == true){
 			//This is strafe only mode
 			yIn = 0;
 			rotation = 0;
@@ -379,7 +379,7 @@ public class DriveTrain extends Subsystem {
 	
 	public void initializeOmniWheelEncoderPID(){
 
-		double omniWheelEncoderKp = 0.000175;
+		double omniWheelEncoderKp = 0.0003;//0.000175;
 		double omniWheelEncoderKi = 0.00000;
 		double omniWheelEncoderKd = 0.0;
 		double omniWheelEncoderKf = 0.0;
