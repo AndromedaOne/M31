@@ -159,7 +159,7 @@ public class OI {
         RaiseGroundGH = new JoystickButton(subController, 7);
         RaiseGroundGH.whileHeld(new NewGHmoveUpDown(-0.50));
         LowerGroundGH = new JoystickButton(subController, 8);
-        LowerGroundGH.whileHeld(new NewGHmoveUpDown(0.50));
+        LowerGroundGH.whileHeld(new NewGHmoveUpDown(0.50));	
         
         SpinNewGHRoller = new JoystickButton(subController, 3);
 	
