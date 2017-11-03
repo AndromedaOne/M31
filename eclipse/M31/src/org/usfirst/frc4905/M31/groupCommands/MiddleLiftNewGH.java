@@ -26,6 +26,8 @@ public class MiddleLiftNewGH extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+        
+        //added at New Englands to have an auto mode in the center
     	addParallel(new NewGHRaiseInAuto());
     	addSequential(new MoveY(7.7));
     	addSequential(new MoveUsingUltrasonicFront(9));
