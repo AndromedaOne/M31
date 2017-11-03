@@ -34,7 +34,7 @@ public class GroupLiftVisionLeft extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	//Start with the robot's "front" Facing the left wall on the left side
+        // Never added vision code.
     	addSequential(new MoveY(10.6));
     	addSequential(new TurnDeltaAngleDegree(60));
     	addSequential(new MoveY(8));
