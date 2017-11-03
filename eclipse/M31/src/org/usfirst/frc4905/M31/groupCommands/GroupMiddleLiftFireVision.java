@@ -31,14 +31,13 @@ public class GroupMiddleLiftFireVision extends CommandGroup {
         // arm.
     	
     	addSequential(new MoveX(1));
-		addSequential(new TurnDeltaAngleDegree(-90));
+	addSequential(new TurnDeltaAngleDegree(-90));
     	addSequential(new MoveX(4));
-    	//Push Gear On
-    	addSequential(new MoveX(-1));
-		addSequential(new TurnDeltaAngleDegree(120));
-		addSequential(new MoveY(3));
 
-		//Shoot 10 Balls into the Boiler With Vision
+    	addSequential(new MoveX(-1));
+	addSequential(new TurnDeltaAngleDegree(120));
+	addSequential(new MoveY(3));
+
 		
     }
 }
