@@ -28,13 +28,7 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	int sideoffieldFactor;
-    	if(Robot.getSide() == SideOfField.Blue){
-    		sideoffieldFactor = -1;
-    	}
-    	else{
-    		sideoffieldFactor = 1;
-    	}
+    	
     	addSequential(new MoveY(9.5));
     	addSequential(new TurnDeltaAngleDegree(60));
     	addSequential(new MoveY(5.5));
@@ -42,12 +36,8 @@ public class GroupLiftLeftVisionCorrect extends CommandGroup {
     	addSequential(new PlaceGearAutomatically(330));
     	addSequential(new MoveUsingUltrasonic(8));
     	addSequential(new OpenGearHandlerInAuto());
-		addSequential(new MoveUsingUltrasonic(20));
-		addSequential(new CloseGearHandlerInAuto());
-    	 //commented out because we want to sit and have Ben take gear out
-    	 /*
-    	addSequential(new OpenGearHandlerInAuto());
-    	addSequential(new MoveUsingUltrasonic(18));*/
-    	//GEAR SPIT COMMAND
+	addSequential(new MoveUsingUltrasonic(20));
+	addSequential(new CloseGearHandlerInAuto());
+    	 
     }
 }
