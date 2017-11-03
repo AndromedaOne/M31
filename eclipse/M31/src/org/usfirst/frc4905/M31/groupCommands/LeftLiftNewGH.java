@@ -32,6 +32,7 @@ public class LeftLiftNewGH extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+        //used late in worlds
     	addParallel(new NewGHRaiseInAuto());
     	addSequential(new MoveY(9.5));
     	addSequential(new TurnDeltaAngleDegree(60));
