@@ -39,8 +39,7 @@ public class GroupLiftRightNoVision extends CommandGroup {
     	addParallel(new MoveUsingUltrasonic(30));
     	addSequential(new CloseGearHandlerInAuto());
 
-    	
-    	//VISION CODE: GEAR HANDLER SHOULD BE APPROXIMATELY FACING LIFT
+   
     	
     }
 }
