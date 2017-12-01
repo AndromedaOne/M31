@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SafeCloseNewGH extends Command {
 	
 	private boolean startingAllOpen = false;
-	private static int m_delay = 24;
+	private static int m_delay = 19;
 	private int m_counter = 0;
     public SafeCloseNewGH() {
         // Use requires() here to declare subsystem dependencies

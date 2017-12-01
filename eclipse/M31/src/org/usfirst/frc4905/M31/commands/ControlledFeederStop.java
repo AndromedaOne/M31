@@ -23,20 +23,6 @@ public class ControlledFeederStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if(Robot.Shooter.getSafetySwitch() == true){
-    		m_safetyCount++;
-    	}
-    	else{
-    		m_safetyCount = 0;
-    	}
-		if(m_safetyCount < 25){
-			Robot.Shooter.moveFeederUntilSwitchPressed();
-		}
-		else{
-			Robot.Shooter.spinFeederCCW();
-		}
-    	
-    	Robot.Shooter.stopFeeder();*/
     	
     	m_safetyCount++;
     	if(m_safetyCount < 80){

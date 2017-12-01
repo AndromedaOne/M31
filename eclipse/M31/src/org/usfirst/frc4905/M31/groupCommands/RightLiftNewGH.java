@@ -28,6 +28,7 @@ public class RightLiftNewGH extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+        //added to have a right lift auto with newgh
     	addParallel(new NewGHRaiseInAuto());
     	addSequential(new MoveY(9.5));
     	addSequential(new TurnDeltaAngleDegree(-60));
@@ -36,11 +37,7 @@ public class RightLiftNewGH extends CommandGroup {
     	addSequential(new NewGHOpenInAuto());
     	addSequential(new MoveY(-5.0));
     	
-    	//next two get us across the field
-    	/*
-    	addSequential(new TurnDeltaAngleDegree(60));
-    	addSequential(new MoveY(50));
-    	*/
+    	
     	
     }
 }

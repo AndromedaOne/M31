@@ -31,6 +31,7 @@ public class GroupPosCHopperFire extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+        //never tested or used in competition
     	addSequential(new MoveY(14));
     	addSequential(new TurnToCompassHeading(90));
     	addSequential(new MoveY(5));
