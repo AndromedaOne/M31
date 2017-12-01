@@ -33,12 +33,12 @@ public class GroupMiddleLiftFire extends CommandGroup {
     	
     	//Start With Gear Handler Facing the AirShip
     	addSequential(new MoveUsingUltrasonic(4));
-    	//Push Gear On
+    	
     	addSequential(new MoveX(-1));
-		addSequential(new TurnDeltaAngleDegree(120));
-		addSequential(new MoveY(3));
+	addSequential(new TurnDeltaAngleDegree(120));
+	addSequential(new MoveY(3));
 
-		//Shoot 10 Balls into the Boiler
+		
 		
     }
 }
