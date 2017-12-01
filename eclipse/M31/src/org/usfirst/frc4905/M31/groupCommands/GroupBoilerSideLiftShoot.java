@@ -30,10 +30,8 @@ public class GroupBoilerSideLiftShoot extends CommandGroup {
     	
     	addSequential(new MoveY(10));
     	addSequential(new TurnDeltaAngleDegree(-160));
-    	//SEAN'S VISION CODE FOR PUTTING THE GEAR ON
     	addSequential(new MoveY(-2));
     	addSequential(new TurnDeltaAngleDegree(-20));
-    	//Potentially add a move forward here after facing boiler
-    	//Sean's vision code
+    	
     }
 }
