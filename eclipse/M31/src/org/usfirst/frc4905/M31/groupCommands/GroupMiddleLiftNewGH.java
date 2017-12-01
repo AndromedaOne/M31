@@ -4,9 +4,7 @@ import org.usfirst.frc4905.M31.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
+
 public class GroupMiddleLiftNewGH extends CommandGroup {
 
     public GroupMiddleLiftNewGH() {
